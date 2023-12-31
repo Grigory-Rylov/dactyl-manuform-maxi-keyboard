@@ -49,9 +49,13 @@
 (def low-profile false)
 (def plate-height 2)
 (def plate-border-height 1)
+
+;;;;;;;;;;;;;;;;;;;;
+;; Column offsets ;;
+;;;;;;;;;;;;;;;;;;;;
 (defn column-offset [column] (cond
                                (= column 2) [0 2.82 -4.5]
-                               (>= column 4) [0 -19 5.64]   ; pinky finger
+                               (>= column 4) [0 -18 5.64]   ; pinky finger
                                (< column 2) [0 -5.8 3]      ; index finger
                                :else [0 0 0]))              ; ring finger
 
@@ -938,7 +942,7 @@
    (screw-insert 0 0         bottom-radius top-radius height [6 7 0])
    (screw-insert 0 lastrow   bottom-radius top-radius height [-4 1 0])
    (screw-insert lastcol lastrow  bottom-radius top-radius height [-4 15 0])
-   (screw-insert lastcol 0         bottom-radius top-radius height [-4 7 0])
+   (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
 
    (screw-insert 0 lastrow         bottom-radius top-radius height [10 -44 0])
    (screw-insert 2 lastrow         bottom-radius top-radius height [-3 -5 0])
