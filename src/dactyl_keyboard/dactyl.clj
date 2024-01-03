@@ -48,16 +48,26 @@
 (def hot-swap true)
 (def low-profile false)
 (def plate-height 2)
-(def plate-border-height 1)
+(def plate-border-height 2)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Column offsets ;;
 ;;;;;;;;;;;;;;;;;;;;
 (defn column-offset [column] (cond
                                (= column 2) [0 2.82 -4.5]
-                               (>= column 4) [0 -18 5.64]   ; pinky finger
+                               (>= column 4) [0 -19 5.64]   ; pinky finger
                                (< column 2) [0 -5.8 3]      ; index finger
                                :else [0 0 0]))              ; ring finger
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; General variables ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(def lastrow (dec nrows))
+(def cornerrow (dec lastrow))
+(def lastcol (dec ncols))
+(def extra-cornerrow (if extra-row lastrow cornerrow))
+(def innercol-offset (if inner-column 1 0))
 
 (def thumb-offsets [6 -3 7])
 
@@ -961,7 +971,12 @@
 
 ; Wall Thickness W:\t1.65
 (def screw-insert-outers (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5)))
-(def screw-insert-screw-holes  (screw-insert-all-shapes 1.7 1.7 350))
+(def screw-insert-screw-holes
+  (union
+   (translate [0, 0, plate-border-height] (screw-insert-all-shapes 1.7 1.7 plate-border-height))
+   (screw-insert-all-shapes 2.75 1.7  plate-height)
+    )
+  )
 
 (def pinky-connectors
   (apply union
