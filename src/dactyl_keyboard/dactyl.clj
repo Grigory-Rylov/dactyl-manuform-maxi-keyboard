@@ -55,7 +55,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 (defn column-offset [column] (cond
                                (= column 2) [0 2.82 -4.5]
-                               (>= column 4) [0 -19 5.64]   ; pinky finger
+                               (>= column 4) [0 -18 5.64]   ; pinky finger
                                (< column 2) [0 -5.8 3]      ; index finger
                                :else [0 0 0]))              ; ring finger
 
@@ -133,8 +133,8 @@
 ;;;;;;;;;;;;;;
 
 (def socket-height-adjust 1.2)
-(def socket-thickness 2)
-(def socket-wall-height 2.9)
+(def socket-thickness 1.2)
+(def socket-wall-height 3.2)
 (def hot-swap-diameter 3.3)
 (def hot-swap-vertical-offset -1)
 (def hot-swap-radius (/ hot-swap-diameter 2))
@@ -187,6 +187,7 @@
   )
 
 (def hot-socket-standart
+  (translate [0,0, 0.4]
   (difference
    (union
     ; hot-swap plate
@@ -199,10 +200,9 @@
       )
     )
 
-      (translate [0, 0, -4.1]
-        (difference
-          (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
-
+    (translate [0, 0, -4.1]
+      (difference
+        (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
           (union
             (translate [-4.2, 4.9, 0]
               (binding [*fn* 100] (cylinder 2.2 , socket-wall-height))
@@ -216,10 +216,10 @@
             (difference
               (translate [-4.0, 2.8, 0]
                         (cube 9, 4,socket-wall-height)
-                        )
+              )
               (translate [0, 0.55, 0]
                         (binding [*fn* 100] (cylinder 2.3 socket-wall-height))
-                        )
+              )
             )
             (translate [7.4, 4.5, 0]
                        (cube 4, 9.5, socket-wall-height)
@@ -259,6 +259,7 @@
     ;(binding [*fn* 50] (cylinder 2 2))
   )
 )
+  )
 
 (def hot-socket
   (if low-profile
