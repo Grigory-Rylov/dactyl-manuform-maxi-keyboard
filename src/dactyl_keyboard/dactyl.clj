@@ -971,10 +971,13 @@
 
 ; Wall Thickness W:\t1.65
 (def screw-insert-outers (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5)))
+
+(def screw-head-height 1.65)
+(def plate-total-height (+ plate-border-height plate-height))
 (def screw-insert-screw-holes
   (union
-   (translate [0, 0, plate-border-height] (screw-insert-all-shapes 1.7 1.7 plate-border-height))
-   (screw-insert-all-shapes 2.75 1.7  plate-height)
+   (translate [0, 0, (- plate-total-height screw-head-height)] (screw-insert-all-shapes 1.7 1.7 (- plate-total-height screw-head-height)))
+   (translate [0, 0, -0.1] (screw-insert-all-shapes 2.75 1.7 ( + screw-head-height 0.2)))
     )
   )
 
