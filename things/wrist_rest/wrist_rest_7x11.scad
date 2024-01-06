@@ -5,7 +5,7 @@ magnetDiameter = 10.1;
 magnetDepth = 4;
 
 connectionOffset1 = 1.5;
-connectionLen1 = 42 - 4.5 + connectionOffset1;
+connectionLen1 = 42 - 4.5 + connectionOffset1-2;
 connectionLen2 = 34;
 
 shouldUseConnections = true;
@@ -13,7 +13,7 @@ shouldUseConnections = true;
 // Крепление
 width1 = 8;
 width2 = 5;
-height = 6;
+height = 8;
 outerDiameter = 13;
 
 
@@ -198,8 +198,6 @@ module connectionsHoles() {
                 } 
             }
         }
-
-    }
 }
 
 module wristRestRight() {
@@ -216,8 +214,8 @@ module wristRestRight() {
     };
 }
 
-wristRestRight();
-//connection1();
-//connection2();
+//wristRestRight();
+connection1();
+connection2();
 //translate([0,0,height/2]) cube([200, 200, height], true);
 
