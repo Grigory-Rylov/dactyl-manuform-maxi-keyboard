@@ -6,10 +6,9 @@
 //controllerHeight = 1.5;
 
 // rp2040 purple
-controllerWidth = 22;
+controllerWidth = 21;
 controllerLen = 55;
 controllerHeight = 1.7;
-
 
 isExternalResetButtonEnabled = false;
 
