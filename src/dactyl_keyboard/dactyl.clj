@@ -30,7 +30,7 @@
 
 ;external case for controller and ports
 (def external-controller true)
-(def external-controller-height 10)
+(def external-controller-height 11)
 (def external-controller-step 1.5)
 (def external-controller-width 31.666)
 
@@ -80,7 +80,7 @@
 
 (def wall-z-offset -5)                 ; original=-15 length of the first downward-sloping part of the wall (negative)
 (def wall-xy-offset 5)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
-(def wall-thickness 2)                  ; wall thickness parameter; originally 5
+(def wall-thickness 3)                  ; wall thickness parameter; originally 5
 
 ;; Settings for column-style == :fixed
 ;; The defaults roughly match Maltron settings
@@ -133,7 +133,7 @@
 ;;;;;;;;;;;;;;
 
 (def socket-height-adjust 1.2)
-(def socket-thickness 1.2)
+(def socket-thickness 1.0)
 (def socket-wall-height 3.2)
 (def hot-swap-diameter 3.3)
 (def hot-swap-vertical-offset -1)
@@ -187,7 +187,7 @@
   )
 
 (def hot-socket-standart
-  (translate [0,0, 0.4]
+  (translate [0,0, 0.7]
   (difference
    (union
     ; hot-swap plate
@@ -247,7 +247,7 @@
         )
       )
       ; keyboard center hole
-      (binding [*fn* 100] (cylinder 2.3 20))
+           (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
       ; 5ft - socket holes
       (translate [-5.08 0 0] (binding [*fn* 100] (cylinder 1.1 20)))
       (translate [5.08 0 0] (binding [*fn* 100] (cylinder 1.1 20)))
@@ -919,8 +919,9 @@
    ))
 
 (def left-offset -8)
+(def controller-holder-y-offset -0.0)
 (def usb-holder-hole-space
-  (shape-insert 1, 0, [left-offset -0.5 (/ external-controller-height 2)]
+  (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
                 (usb-holder-hole external-controller-width external-controller-step external-controller-height)
                 )
   )
@@ -1029,13 +1030,13 @@
   )
 ; keyboard's magnet hole
 (def magnet-place (union
-                   (magnet-shape-insert 4, 2, [0 -13.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+                   (magnet-shape-insert 4, 2, [0 -14 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
                    (magnet-shape-insert 3, 3, [0 -0.35 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
                    )
   )
 
 (def magnet-stiffness-booster (union
-                               (magnet-shape-insert 4, 2, [0 (+ -13.5 wall-thickness) 0]
+                               (magnet-shape-insert 4, 2, [0 (+ -14 wall-thickness) 0]
                                                    (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
                                                    )
                                (magnet-shape-insert 3, 3, [0 (+ -0.35 wall-thickness) 0]
