@@ -1192,7 +1192,7 @@
    )
   )
 (def case-walls-outline
-  (project case-walls)
+  (cut case-walls )
   )
 
 (def wall-shape
