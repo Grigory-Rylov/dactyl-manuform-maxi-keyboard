@@ -242,15 +242,13 @@
           (translate [-3.875 -2.215 0]
             (binding [*fn* 200] (cylinder hot-swap-radius 20))
           )
-
-
         )
       )
       ; keyboard center hole
-           (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
+      (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
       ; 5ft - socket holes
-      (translate [-5.08 0 0] (binding [*fn* 100] (cylinder 1.1 20)))
-      (translate [5.08 0 0] (binding [*fn* 100] (cylinder 1.1 20)))
+      (translate [-5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
+      (translate [5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
     )
     ;half hole
     (translate [0 (/ (+ keyswitch-width 3) -3) (- -2.05 socket-height-adjust) ]
