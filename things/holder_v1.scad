@@ -13,7 +13,7 @@ controllerHeight = 1.7;
 isExternalResetButtonEnabled = false;
 
 buttonAdditionalHeight = 4.5;
-controllerBoxHeight = 10;
+controllerBoxHeight = 11;
 controllerWallWidth = 1;
 controllerBottomHeight = 1;
 controllerHolderCylinderDiameter = 1.5;
