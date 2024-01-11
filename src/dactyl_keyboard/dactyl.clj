@@ -57,9 +57,11 @@
 ;;;;;;;;;;;;;;;;;;;;
 (defn column-offset [column] (cond
                                (= column 2) [0 2.82 -4.5]
-                               (>= column 4) [0 -18 5.64]   ; pinky finger
-                               (< column 2) [0 -5.8 3]      ; index finger
-                               :else [0 0 0]))              ; ring finger
+                               (= column 4) [0 -18 5.64]   ; pinky finger1
+                               (= column 5) [0 -20 5.64]   ; pinky finger2
+                               (= column 0) [0 -6.8 3]      ; index finger1
+                               (= column 1) [0 -5.8 3]      ; index finger2
+                               :else [0 -2 0]))              ; ring finger
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; General variables ;;
@@ -1187,13 +1189,13 @@
   )
 ; keyboard's magnet hole
 (def magnet-place (union
-                   (magnet-shape-insert 4, 2, [0 -14 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+                   (magnet-shape-insert 4, 2, [-10 -14 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
                    (magnet-shape-insert 3, 3, [0 -0.35 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
                    )
   )
 
 (def magnet-stiffness-booster (union
-                               (magnet-shape-insert 4, 2, [0 (+ -14 wall-thickness) 0]
+                               (magnet-shape-insert 4, 2, [-10 (+ -14 wall-thickness) 0]
                                                    (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
                                                    )
                                (magnet-shape-insert 3, 3, [0 (+ -0.35 wall-thickness) 0]
