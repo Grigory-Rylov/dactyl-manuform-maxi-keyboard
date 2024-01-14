@@ -19,7 +19,7 @@
 (def row-curvature (deg2rad 6))                             ; 5                   ; curvature of the rows
 
 (def centerrow (- nrows 3))             ; controls front-back tilt
-(def centercol 3)                       ; controls left-right tilt / tenting (higher number is more tenting)
+(def centercol 2)                       ; controls left-right tilt / tenting (higher number is more tenting)
 (def tenting-angle (deg2rad 15))            ; or, change this for more precise tenting control
 (def column-style
   (if (> nrows 5) :orthographic :standard))  ; options include :standard, :orthographic, and :fixed
@@ -45,8 +45,8 @@
 (def magnet-inner-diameter 3)
 
 ; If you want hot swap sockets enable this
-(def hot-swap false)
-(def low-profile false)
+(def hot-swap true)
+(def low-profile true)
 (def plate-height 2)
 (def plate-border-height 2)
 
@@ -76,7 +76,7 @@
 (def thumb-offsets [6 -3 7])
 
 (def keyboard-z-offset
-  8 ;(if hot-swap 12 9)
+  9 ;(if hot-swap 12 9)
   )               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
@@ -154,41 +154,105 @@
 (def hot-swap-low-profile-length 9.55)
 (def hot-swap-low-profile-half-length 4.75)
 
-(def hot-socket-low-profile
-  (difference
-   ; hot-swap plate
+(def gateron-hot-socket
+  (union
+   (translate [-4.2, 4.9, 0]
+              (binding [*fn* 100] (cylinder 2.2 , socket-wall-height))
+              )
+   (translate [-4.2, 4, 0]
+              (cube 4, 2, socket-wall-height)
+              )
+   (translate [1, 4.8, 0]
+              (cube 9, 4.3, socket-wall-height)
+              )
    (difference
-    (translate [0 0 (- hot-swap-vertical-offset (/ socket-height-adjust 2)) ]
-               (cube (+ keyswitch-height 3.6) (+ keyswitch-width 3) (+ plate-thickness socket-height-adjust))
+    (translate [-4.0, 2.8, 0]
+               (cube 9, 4,socket-wall-height)
                )
-    (translate [0 0 (- (/ socket-height-adjust -2) -0.5)]
-               (cube keyswitch-height keyswitch-width (+ socket-height-adjust plate-thickness))
+    (translate [0, 0.55, 0]
+               (binding [*fn* 100] (cylinder 2.3 socket-wall-height))
                )
     )
-
-   ; hot-swap socket hole
-   (scale [1 1 1]
-          ; keyboard center hole
-          (binding [*fn* 100] (cylinder 2.5 20))
-
-          ; socket connector 1 hole
-          (translate [4.4 4.7 0]
-                     (binding [*fn* 200] (cylinder hot-swap-radius 20))
-                     )
-
-          ; socket connector 2 hole
-          (translate [-2.6 5.75 0] ; -3.875 -2.215
-                     (binding [*fn* 200] (cylinder hot-swap-radius 20))
-                     )
-          )
-   ;half hole
-   (translate [0 (/ (+ keyswitch-width 3) -4) (- -2.05 socket-height-adjust) ]
-              (cube (+ keyswitch-height 3.6) (/ (+ keyswitch-width 3) 2) 3.1)
+   (translate [7.4, 4.5, 0]
+              (cube 4, 11, socket-wall-height)
               )
-   ;(binding [*fn* 50] (cylinder 2 2))
+   (translate [-9, 4.9, 0]
+              (cube 3, 8, socket-wall-height)
+              )
    )
-
   )
+
+(def gateron-hot-socket2
+  (union
+   (translate [-4.2, 4.9, 0]
+              (binding [*fn* 100] (cylinder 2.2 , socket-wall-height))
+              )
+   (translate [-4.2, 4, 0]
+              (cube 4, 2, socket-wall-height)
+              )
+   (translate [1, 4.8, 0]
+              (cube 9, 4.5, socket-wall-height)
+              )
+   (difference
+    (translate [-4.0, 2.8, 0]
+               (cube 9, 4.5,socket-wall-height)
+               )
+    (translate [0, 0.55, 0]
+               (binding [*fn* 100] (cylinder 2.3 socket-wall-height))
+               )
+    )
+   (translate [7.4, 4.5, 0]
+              (cube 4, 12, socket-wall-height)
+              )
+   (translate [-9, 4.9, 0]
+              (cube 3, 8, socket-wall-height)
+              )
+   )
+  )
+
+(def hot-socket-low-profile
+  (translate [0,0, 1.04]
+  (difference
+    (union
+      ; hot-swap plate
+     ; hot-swap plate
+
+      (translate [0 0 (- hot-swap-vertical-offset (/ socket-thickness 2))]
+                 (cube (+ keyswitch-height 2.8) (+ keyswitch-width 3) socket-thickness)
+                 )
+
+      (translate [0, 0, -3.1]
+        (difference
+          (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
+          (rotate [0,0, (deg2rad -31)]
+                  (translate [0, 1.1, 0] gateron-hot-socket2)
+                  )
+        )
+       )
+    )
+
+    ; hot-swap socket hole
+    ; keyboard center hole
+    (translate [0, 0, -2.6] (binding [*fn* 100] (cylinder 2.5 3.2)))
+
+    ; socket connector 1 hole
+    (translate [4.4 4.7 (* (+ socket-height-adjust socket-thickness) -1)]
+             (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10)))
+             )
+
+    ; socket connector 2 hole
+    (translate [-2.6 5.75 (* (+ socket-height-adjust socket-thickness) -1)] ; -3.875 -2.215
+             (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10)))
+             )
+
+   ;half hole
+   (translate [0 (/ (+ keyswitch-width 3) -3) (- -1.05 socket-thickness) ]
+              (cube (+ keyswitch-height 3.6) (/ (+ keyswitch-width 3) 3) 3.1)
+              )
+    ;(binding [*fn* 50] (cylinder 2 2))
+  )
+             )
+)
 
 (def hot-socket-standart
   (translate [0,0, 0.7]
@@ -207,53 +271,28 @@
     (translate [0, 0, -4.1]
       (difference
         (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
-          (union
-            (translate [-4.2, 4.9, 0]
-              (binding [*fn* 100] (cylinder 2.2 , socket-wall-height))
-            )
-            (translate [-4.2, 4, 0]
-              (cube 4, 2, socket-wall-height)
-            )
-            (translate [1, 4.8, 0]
-                       (cube 9, 4.3, socket-wall-height)
-            )
-            (difference
-              (translate [-4.0, 2.8, 0]
-                        (cube 9, 4,socket-wall-height)
-              )
-              (translate [0, 0.55, 0]
-                        (binding [*fn* 100] (cylinder 2.3 socket-wall-height))
-              )
-            )
-            (translate [7.4, 4.5, 0]
-                       (cube 4, 9.5, socket-wall-height)
-                       )
-            (translate [-9, 4.9, 0]
-                       (cube 3, 8, socket-wall-height)
-            )
-          )
-        )
+        gateron-hot-socket
       )
     )
+   )
 
-    ; hot-swap socket hole
-    (scale [1 1 1]
-      (translate [0.075 4.815 (- -2.75 socket-height-adjust)]
-        (union
-          (translate [2.475 0.325 0]
-            (binding [*fn* 200] (cylinder hot-swap-radius 20))
-          )
-          (translate [-3.875 -2.215 0]
-            (binding [*fn* 200] (cylinder hot-swap-radius 20))
-          )
+   ; hot-swap socket hole
+   (translate [0.075 4.815 (- -2.75 socket-height-adjust)]
+      (union
+        (translate [2.475 0.325 0]
+          (binding [*fn* 200] (cylinder hot-swap-radius 20))
+        )
+        (translate [-3.875 -2.215 0]
+          (binding [*fn* 200] (cylinder hot-swap-radius 20))
         )
       )
-      ; keyboard center hole
-      (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
-      ; 5ft - socket holes
-      (translate [-5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
-      (translate [5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
     )
+    ; keyboard center hole
+    (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
+    ; 5ft - socket holes
+    (translate [-5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
+    (translate [5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
+
     ;half hole
     (translate [0 (/ (+ keyswitch-width 3) -3) (- -2.05 socket-height-adjust) ]
                (cube (+ keyswitch-height 3.6) (/ (+ keyswitch-width 3) 3) 3.1)
@@ -1070,8 +1109,10 @@
 ; Cutout for controller/trrs jack holder https://github.com/rianadon/dactyl-configurator/blob/main/src/connectors.md
 (defn usb-holder-hole [width step height]
   (union
+   ;(translate [0, (* +1 step), 0] (cube width, step, height))
    (translate [0, (* -1 step), 0] (cube (- width (* step 2)), (* step  4), height ))
    (translate [0, step, 0] (cube width, step, height))
+   (translate [0, (* step 2), 0] (cube width, (* step 2), height))
    (translate [0, (* -1 step), 0] (cube width, step, height))
    ))
 
@@ -1109,11 +1150,17 @@
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
   (union
    (screw-insert 0 0         bottom-radius top-radius height [6 7 0])
-   (screw-insert 0 lastrow   bottom-radius top-radius height [-4 1 0])
+   (if six-thumb-mode
+     (screw-insert 0 lastrow   bottom-radius top-radius height [-4 1 0])
+     (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
+     )
    (screw-insert lastcol lastrow  bottom-radius top-radius height [-4 15 0])
    (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
 
-   (screw-insert 0 lastrow         bottom-radius top-radius height [10 -44 0])
+   (if six-thumb-mode
+      (screw-insert 0 lastrow         bottom-radius top-radius height [10 -44 0])
+      (screw-insert 0 lastrow         bottom-radius top-radius height [14 -42 0])
+      )
    (if six-thumb-mode
      (screw-insert 2 lastrow         bottom-radius top-radius height [-3 -5 0])
      )
@@ -1189,8 +1236,8 @@
   )
 ; keyboard's magnet hole
 (def magnet-place (union
-                   (magnet-shape-insert 4, 2, [-10 -14 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
-                   (magnet-shape-insert 3, 3, [0 -0.35 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+                   (magnet-shape-insert 4, 2, [-10 -14.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+                   (magnet-shape-insert 3, 3, [0 -0.7 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
                    )
   )
 
