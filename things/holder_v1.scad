@@ -13,15 +13,15 @@ controllerHeight = 1.7;
 isExternalResetButtonEnabled = false;
 
 buttonAdditionalHeight = 4.5;
-controllerBoxHeight = 11;
+controllerBoxHeight = 10.8;
 controllerWallWidth = 1;
 controllerBottomHeight = 1;
 controllerHolderCylinderDiameter = 1.5;
 
 //usb hole
 usbHoleTopOffset = 1;
-usbHoleHeight = 9;
-usbHoleWidth = 12.2;
+usbHoleHeight = 9.5;
+usbHoleWidth = 13.5;
 usbConnectorWidth = 9;
 
 // trrs
@@ -38,7 +38,9 @@ roundCornerRadius = 1;
 
 //bracing
 bracingWidth = 1.5;
-bracingOuterSize = 31.366;
+bracingLen = 1.9;
+
+bracingOuterSize = 31.366; //32.5
 
 //button
 buttonDiameter = 3;
@@ -71,7 +73,7 @@ module trrs() {
 }
 
 module usbCableHole() {
-    radius = 2;
+    radius = 3;
     holeDepth = controllerWallWidth + 3 * bracingWidth;
     cubeWidth = usbHoleWidth - radius * 2;
     if (cubeWidth < 0) {
@@ -168,7 +170,7 @@ module controllerBox() {
                     difference() {
                         cube([bracingWidth *2, bracingWidth*3, boxHeight]);
                         translate([bracingWidth, bracingWidth, 0])
-                        cube([bracingWidth, bracingWidth, boxHeight]);
+                        cube([bracingWidth, bracingLen, boxHeight]);
                     }
                 }
             }
@@ -189,10 +191,10 @@ module controllerBox() {
             translate([usbHoleLeftOffset , -controllerWallWidth - 3*bracingWidth, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbCableHole();
             
             usbConnectorLeftOffset = controllerWidth / 2 - usbConnectorWidth / 2;
-            translate([usbConnectorLeftOffset, 0, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) #usbHole();
+            translate([usbConnectorLeftOffset, 0, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbHole();
             
             // controller small hole
-            translate([0, 0, controllerBottomHeight]) #cube([controllerWidth, 1, controllerHeight])
+            translate([0, 0, controllerBottomHeight]) cube([controllerWidth, 1, controllerHeight])
             
             if (isExternalResetButtonEnabled) {
                 buttonBottomOffset = 0.5;
@@ -245,11 +247,10 @@ module trrsBox() {
 module bracingLeft() {
     //left
     translate([-trrsOutterDiameter - controllerWallWidth - bracingWidth *2, -controllerWallWidth , 0]) {
-        color("brown")
         difference() {
             cube([bracingWidth *2, bracingWidth*3, boxHeight]);
              translate([0, bracingWidth, 0])
-            cube([bracingWidth, bracingWidth, boxHeight]);
+            cube([bracingWidth, bracingLen, boxHeight]);
         }
     }
 }

@@ -29,10 +29,13 @@
 (def inner-column false)                ; adds an extra inner column (two less rows than nrows)
 
 ;external case for controller and ports
+(def niceNanoMode true)
 (def external-controller true)
-(def external-controller-height 11)
+(def external-controller-height 10)
 (def external-controller-step 1.5)
-(def external-controller-width 31.666)
+(def external-controller-width
+  (if niceNanoMode 25 31.666)
+  )
 
 ; magnet holes for external wrist rest
 (def magnet-holes true)
@@ -45,10 +48,10 @@
 (def magnet-inner-diameter 3)
 
 ; If you want hot swap sockets enable this
-(def hot-swap true)
+(def hot-swap false)
 (def low-profile true)
 (def plate-height 2)
-(def plate-border-height 2)
+(def plate-border-height 1)
 
 (def six-thumb-mode false)
 
@@ -59,7 +62,7 @@
                                (= column 2) [0 2.82 -4.5]
                                (= column 4) [0 -18 5.64]   ; pinky finger1
                                (= column 5) [0 -20 5.64]   ; pinky finger2
-                               (= column 0) [0 -6.8 3]      ; index finger1
+                               (= column 0) [0 -7.8 3]      ; index finger1
                                (= column 1) [0 -5.8 3]      ; index finger2
                                :else [0 -2 0]))              ; ring finger
 
@@ -983,8 +986,11 @@
   (union
    right-wall
    ; back wall
-   (for [x (range 0 ncols)] (key-wall-brace x 0 0 1 web-post-tl x       0 0 1 web-post-tr))
-   (for [x (range 1 ncols)] (key-wall-brace x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr))
+   (for [x (range 0 ncols)] (if (not= x 1) (key-wall-brace x 0 0 1 web-post-tl x       0 0 1 web-post-tr)))
+   (for [x (range 1 ncols)] (if (not= x 2) (key-wall-brace x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr)))
+   (key-wall-brace 2 0 0 1 web-post-tl 2       0 -0.2 1 web-post-tr)
+   (key-wall-brace 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr)
+   (key-wall-brace 1 0 0 1 web-post-tl 1       0 -0.2 1 web-post-tr)
 
    ; left wall
    (for [y (range 0 lastrow)] (union (wall-brace (partial left-key-place y 1)       -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
@@ -1046,7 +1052,9 @@
     (thumb-bl-place (translate (wall-locate1 -0.3 1) web-post-tr))
     (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
     (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr))
-    (thumb-tl-place web-post-tl))))
+    (thumb-tl-place web-post-tl))
+   )
+  )
 
 
 (def case-walls
@@ -1116,7 +1124,9 @@
    (translate [0, (* -1 step), 0] (cube width, step, height))
    ))
 
-(def left-offset -8)
+(def left-offset
+  (if niceNanoMode -16 -8)
+  )
 (def controller-holder-y-offset -0.0)
 (def usb-holder-hole-space
   (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
@@ -1149,23 +1159,27 @@
 
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0         bottom-radius top-radius height [6 7 0])
+   (screw-insert 0 0         bottom-radius top-radius height [6 7 0]) ; bottom left
+   ; top left
    (if six-thumb-mode
      (screw-insert 0 lastrow   bottom-radius top-radius height [-4 1 0])
      (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
      )
+   ; top right
    (screw-insert lastcol lastrow  bottom-radius top-radius height [-4 15 0])
+   ; bottom right
    (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
-
+   ; top
    (if six-thumb-mode
       (screw-insert 0 lastrow         bottom-radius top-radius height [10 -44 0])
       (screw-insert 0 lastrow         bottom-radius top-radius height [14 -42 0])
       )
+   ; top middle
    (if six-thumb-mode
      (screw-insert 2 lastrow         bottom-radius top-radius height [-3 -5 0])
      )
-
-   (screw-insert 3 0         bottom-radius top-radius height [-10 -2 0])
+   ; bottom middle
+   (screw-insert 3 0         bottom-radius top-radius height [-7 -1.5 0])
    )
   )
 
@@ -1378,7 +1392,7 @@
    (thumb-tr-place shape)
    (thumb-tl-place shape)
    (thumb-mr-place shape)
-   (thumb-6-place shape)
+   (if six-thumb-mode (thumb-6-place shape))
    (thumb-br-place shape)
    (thumb-bl-place shape)
    ))
