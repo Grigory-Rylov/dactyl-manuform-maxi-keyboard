@@ -1166,7 +1166,7 @@
      (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
      )
    ; top right
-   (screw-insert lastcol lastrow  bottom-radius top-radius height [-4 15 0])
+   (screw-insert lastcol lastrow  bottom-radius top-radius height [-3 14 0])
    ; bottom right
    (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
    ; top
