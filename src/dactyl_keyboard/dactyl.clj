@@ -312,7 +312,12 @@
             (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
             (translate [0, 1.1, 0] gateron-hot-socket-low-profile)
           )
-        )
+          (translate [-1.7, 3.3, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 6))))
+          (translate [-2, 8.1, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 5.5))))
+
+          (translate [5, 2.5, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 3.6))))
+          (translate [5.2, 7, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 3.2))))
+         )
       )
       ; hot-swap socket hole
 
@@ -1329,21 +1334,23 @@
           )
   )
 ; keyboard's magnet hole
-(def magnet-place (union
-                   (magnet-shape-insert 4, 2, [-10 -14.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
-                   (magnet-shape-insert 3, 3, [0 -0.7 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
-                   )
-  )
+(def magnet-place
+  (union
+    (magnet-shape-insert 4, 2, [-10 -14.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+    (magnet-shape-insert 3, 3, [0 -0.7 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+   )
+)
 
-(def magnet-stiffness-booster (union
-                               (magnet-shape-insert 4, 2, [-10 (+ -14 wall-thickness) 0]
-                                                   (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
-                                                   )
-                               (magnet-shape-insert 3, 3, [0 (+ -0.35 wall-thickness) 0]
-                                                   (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
-                                                   )
-                               )
+(def magnet-stiffness-booster
+  (union
+    (magnet-shape-insert 4, 2, [-10 (+ -14.5 wall-thickness) 0]
+      (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
+    )
+    (magnet-shape-insert 3, 3, [0 (+ -0.7 wall-thickness) 0]
+      (magnet-stiffness-booster (+ magnet-diameter 2) magnet-booster-width)
+    )
   )
+)
 
 ; wrist rest magnet holder
 (def magnet-connector
