@@ -48,7 +48,11 @@
 (def magnet-inner-diameter 3)
 
 ; If you want hot swap sockets enable this
-(def hot-swap false)
+; hotswap types:
+; 0 - no hot-swap
+; 1 - gateron standart
+; 2 - gateron low profile
+(def hot-swap 2)
 (def low-profile true)
 (def plate-height 2)
 (def plate-border-height 1)
@@ -79,7 +83,7 @@
 (def thumb-offsets [6 -3 7])
 
 (def keyboard-z-offset
-  9 ;(if hot-swap 12 9)
+  10 ;(if hot-swap 12 9)
   )               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
@@ -213,7 +217,44 @@
    )
   )
 
-(def hot-socket-low-profile
+(defn gateronHotSocketShape [height]
+  (def x1 6.55)
+  (def y1 0)
+  (def x2 (+ x1 1.28))
+  (def y2 (+ y1 0.91))
+  (def x3 (+ x2 4))
+  (def y3 y2)
+  (def x4 x3)
+  (def y4 (- y3 4.42))
+  (def x5 (- x4 3.43))
+  (def y5 y4)
+  (def x6 (- x5 2.33))
+  (def y6 (- y5 1.18))
+  (def x7 (- x6 6.1))
+  (def y7 y6)
+  (mirror [0,1,0]
+          (extrude-linear {:height height :twist 0 :convexity 0}
+                          (polygon [[0,0],[x1,y1],[x2,y2],[x3,y3],[x4,y4],[x5,y5], [x6,y6], [x7, y7]])
+          )
+  )
+)
+(def gateron-hot-socket-low-profile
+  (union
+   (translate[-5, 2.3, 0]
+      (gateronHotSocketShape socket-wall-height)
+             )
+
+   (translate [8.8, 5, 0]
+              (cube 4, 6.5, socket-wall-height)
+              )
+
+   (translate [-7.0, 5.2, 0]
+              (cube 4, 5.0, socket-wall-height)
+              )
+   )
+  )
+; adapte standart hot socket to low profile switches
+(def hot-socket-standart-to-low-profile
   (translate [0,0, 1.04]
   (difference
     (union
@@ -255,6 +296,45 @@
     ;(binding [*fn* 50] (cylinder 2 2))
   )
              )
+)
+
+(def hot-socket-low-profile
+  (translate [0,0, 1.04]
+    (difference
+      (union
+        ; hot-swap plate
+        (translate [0 0 (- hot-swap-vertical-offset (/ socket-thickness 2))]
+          (cube (+ keyswitch-height 2.8) (+ keyswitch-width 3) socket-thickness)
+        )
+
+        (translate [0, 0, -3.1]
+          (difference
+            (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
+            (translate [0, 1.1, 0] gateron-hot-socket-low-profile)
+          )
+        )
+      )
+      ; hot-swap socket hole
+
+      ; keyboard center hole
+      (translate [0, 0, -2.6] (binding [*fn* 100] (cylinder 2.5 3.2)))
+
+      ; socket connector 1 hole
+      (translate [4.4 4.7 (* (+ socket-height-adjust socket-thickness) -1)]
+        (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10)))
+      )
+
+      ; socket connector 2 hole
+      (translate [-2.6 5.75 (* (+ socket-height-adjust socket-thickness) -1)] ; -3.875 -2.215
+        (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10)))
+      )
+
+      ;half hole
+      (translate [0 (/ (+ keyswitch-width 3) -3) (- -1.05 socket-thickness) ]
+        (cube (+ keyswitch-height 3.6) (/ (+ keyswitch-width 3) 3) 3.1)
+      )
+    )
+  )
 )
 
 (def hot-socket-standart
@@ -307,14 +387,14 @@
 
 (def hot-socket
   (if low-profile
-    hot-socket-low-profile
+    (if (= hot-swap 1) hot-socket-standart-to-low-profile hot-socket-low-profile)
     hot-socket-standart
     )
-  )
+)
 
 (def nub-size
   (if use-top-nub 5 0)
-  )
+)
 
 (def single-plate-right
   (let [top-wall (->> (cube (+ keyswitch-width 3) 1.5 plate-thickness)
@@ -345,7 +425,7 @@
             (->> plate-half
                  (mirror [1 0 0])
                  (mirror [0 1 0]))
-            (if hot-swap (mirror [0 0 0] hot-socket))
+            (if (> hot-swap 0) (mirror [0 0 0] hot-socket))
             )
      (->>
       top-nub-pair
@@ -380,7 +460,7 @@
             (->> plate-half
                  (mirror [1 0 0])
                  (mirror [0 1 0]))
-            (if hot-swap (mirror [1 0 0] hot-socket))
+            (if (> hot-swap 0) (mirror [1 0 0] hot-socket))
             )
      (->>
       top-nub-pair
@@ -1127,7 +1207,7 @@
 (def left-offset
   (if niceNanoMode -16 -8)
   )
-(def controller-holder-y-offset -0.0)
+(def controller-holder-y-offset -0.4)
 (def usb-holder-hole-space
   (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
                 (usb-holder-hole external-controller-width external-controller-step external-controller-height)
@@ -1445,6 +1525,7 @@
 (spit "things/right-plate-print.scad" (write-scad plate-right))
 (spit "things/left-plate-print.scad" (write-scad (mirror [-1 0 0] plate-right)))
 
+(spit "things/hotswap-adapt-low-debug.scad" (write-scad hot-socket-standart-to-low-profile))
 (spit "things/hotswap-low-debug.scad" (write-scad hot-socket-low-profile))
 (spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
 
