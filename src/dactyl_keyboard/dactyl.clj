@@ -916,7 +916,6 @@
     (key-place 1 cornerrow web-post-bl)
     (thumb-tr-place thumb-post-tr)
     (key-place 1 cornerrow web-post-br)
-    (key-place 2 lastrow web-post-tl)
     (key-place 2 lastrow web-post-bl)
     (thumb-tr-place thumb-post-tr)
     (key-place 2 lastrow web-post-bl)
@@ -929,6 +928,11 @@
     (key-place 3 lastrow web-post-tr)
     (key-place 3 cornerrow web-post-br)
     (key-place 4 cornerrow web-post-bl))
+   (triangle-hulls    ; top two to the main keyboard, starting on the left
+    (key-place 1 cornerrow web-post-br)
+    (key-place 2 lastrow web-post-tl)
+    (key-place 2 lastrow web-post-bl)
+   )
    (triangle-hulls
     (key-place 1 cornerrow web-post-br)
     (key-place 2 lastrow web-post-tl)
