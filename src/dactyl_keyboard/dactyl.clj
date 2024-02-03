@@ -145,7 +145,7 @@
 
 (def socket-height-adjust 1.2)
 (def socket-thickness 1.0)
-(def socket-wall-height 3.2)
+(def socket-wall-height 3.8)
 (def hot-swap-diameter 3.3)
 (def hot-swap-vertical-offset -1)
 (def hot-swap-radius (/ hot-swap-diameter 2))
@@ -248,8 +248,8 @@
               (cube 4, 6.5, socket-wall-height)
               )
 
-   (translate [-7.0, 5.2, 0]
-              (cube 4, 5.0, socket-wall-height)
+   (translate [-7.0, 5.4, 0]
+              (cube 4, 6.0, socket-wall-height)
               )
    )
   )
@@ -309,14 +309,17 @@
 
         (translate [0, 0, -3.1]
           (difference
-            (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
-            (translate [0, 1.1, 0] gateron-hot-socket-low-profile)
+            (translate [0, 3.1, 0.1] (cube 17.0, 12, (+ socket-wall-height 0.2)))
+            (translate [0, 1.1, -0.8] gateron-hot-socket-low-profile)
           )
-          (translate [-1.7, 3.3, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 6))))
-          (translate [-2, 8.1, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 5.5))))
+          ; socket holder barrier
+          (translate [0, 0, -1.70]
+            (translate [-1.7, 3.3, 0] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 6))))
+            (translate [-2, 8.1, 0] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 5.5))))
 
-          (translate [5, 2.5, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 3.6))))
-          (translate [5.2, 7, -1.75] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 3.2))))
+            (translate [4.6, 2.5, 0] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 4.7))))
+            (translate [5.2, 7, 0] (rotate [0, (deg2rad 90),0](binding [*fn* 20] (cylinder 0.2 3.2))))
+          )
          )
       )
       ; hot-swap socket hole
@@ -337,6 +340,15 @@
       ;half hole
       (translate [0 (/ (+ keyswitch-width 3) -3) (- -1.05 socket-thickness) ]
         (cube (+ keyswitch-height 3.6) (/ (+ keyswitch-width 3) 3) 3.1)
+      )
+
+      ;corner cut
+
+      (translate [10, 9, -2.5]
+        (rotate (deg2rad 45) [0, 0, 1] (cube 5,5,5))
+      )
+      (translate [-10, 9, -2.5]
+        (rotate (deg2rad 45) [0, 0, 1] (cube 5,5,5))
       )
     )
   )
