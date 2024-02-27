@@ -214,7 +214,7 @@ module wristRestRight() {
     };
 }
 
-//wristRestRight();
+wristRestRight();
 connection1();
 connection2();
 //translate([0,0,height/2]) cube([200, 200, height], true);

@@ -24,14 +24,14 @@ usbOffset = 0.8;
 controllerWiringHoleWidth = 4;
 roundCornerHeight = 1;
 roundCornerRadius = 1;
-contactsWidth = 1;
+contactsWidth = 1.08;
 contactsWallWdth = 2;
 
 //bracing
 bracingWidth = 1.5;
 bracingLen = 1.9;
 
-bracingOuterSize = bracingWidth*2*2 + controllerWidth + roundCornerRadius;//31.366; //32.5
+bracingOuterSize = 25;//bracingWidth*2*2 + controllerWidth + roundCornerRadius;//31.366; //32.5
 echo(bracingOuterSize);
 
 //button
@@ -49,7 +49,7 @@ if (isExternalResetButtonEnabled) {
 batteryLen = 67.5; 
 batteryDiameter = 18.1;
 batteryBoxHeight = batteryDiameter/2 + controllerBottomHeight;
-
+isExternalResetButtonEnabled  = true;
 isTmp = false;
 //controllerLen = 8;
 
@@ -97,6 +97,20 @@ module controllerBox() {
         
         controllerHolderHelper();
         
+        if (isExternalResetButtonEnabled) {
+            //button holder
+            buttonBottomOffset = 0.5;
+            holderWidth = buttonWidth + 1;
+            depth = buttonDepth + 2;
+            leftOffset = controllerWidth / 2 + roundCornerRadius;
+            difference(){
+            translate([leftOffset - holderWidth /2, controllerWallWidth , controllerBoxHeight - controllerWallWidth - 0.6]){
+                       cube([holderWidth, depth, buttonAdditionalHeight + controllerWallWidth]);
+                    }
+                 switchHole();    
+            }
+        }
+        
         difference() {
             union(){
                 translate([0, roundCornerRadius, 0]){
@@ -109,9 +123,10 @@ module controllerBox() {
                //front wall
                translate([- (bracingOuterSize - controllerWidth - roundCornerRadius*2 - bracingWidth*3) , 0, 0]){
                     
-                    cube([bracingOuterSize - 2 * bracingWidth*2, controllerWallWidth * 2, controllerTopFaceHeight]);
+                    cube([bracingOuterSize - 2 * bracingWidth*2, controllerWallWidth , controllerTopFaceHeight]);
                     
                 }
+                
             }
             // Microcontroller hole
             translate([0, roundCornerRadius, controllerBottomHeight]) cube([controllerWidth,  controllerLen, boxHeight]);
@@ -125,8 +140,28 @@ module controllerBox() {
             
             usbConnectorLeftOffset = controllerWidth / 2 - usbConnectorWidth / 2;
             translate([usbConnectorLeftOffset, 0, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbHole();
+            
+            
+            if (isExternalResetButtonEnabled) {
+                switchHole();
+            }
         }
     }
+}
+
+module switchHole() {
+    buttonBottomOffset = 0.5;
+    //switcher button hole
+    leftOffset = controllerWidth / 2 + roundCornerRadius;
+    translate([leftOffset - (buttonWidth - buttonDiameter)/2, 0,  buttonDiameter/2 + controllerBoxHeight + buttonBottomOffset])
+                rotate([-90, 0, 0]) {
+                    cylinder(controllerWallWidth/2, buttonClickDiameter/2, buttonClickDiameter/2, $fn = 50);
+                    translate([0, 0, controllerWallWidth/2]) cylinder(controllerWallWidth/2, buttonDiameter/2, buttonDiameter/2, $fn = 50);
+    }
+    //switcher case hole
+    translate([leftOffset - buttonWidth/2 - controllerWallWidth, controllerWallWidth, controllerBoxHeight - controllerWallWidth + buttonBottomOffset]) {
+        cube([buttonWidth, buttonDepth, buttonHeight]);
+    }   
 }
 
 module bracingLeft() {
@@ -185,11 +220,11 @@ module batteryBox() {
                 
             translate([batteryDiameter/2, roundCornerRadius + (contactsWallWdth + contactsWidth), batteryDiameter/2]){
                 difference() {
-                    batteryCoverDiameter = batteryDiameter + controllerWallWidth+1;
+                    batteryCoverDiameter = batteryDiameter + controllerWallWidth+2;
                     rotate([-90,0,0]) cylinder(d=batteryCoverDiameter, h=batteryLen, $fn=100);
                     
                     
-                    rotate([-90,0,0]) cylinder(d=batteryDiameter + 0.5, h=batteryLen + 1, $fn=100);
+                    rotate([-90,0,0]) cylinder(d=batteryDiameter + 0.2, h=batteryLen + 1, $fn=100);
                     
                     translate([-batteryCoverDiameter/2, 0, -batteryCoverDiameter/2]){
                         cube([batteryCoverDiameter, batteryLen, batteryCoverDiameter/2]);
@@ -252,7 +287,8 @@ module batteryBox() {
 }
 
 controllerBox();
-translate([4,0,0]) {
+batteryBoxXOffset = -3;
+translate([batteryBoxXOffset,0,0]) {
 batteryBox();
 }
 
