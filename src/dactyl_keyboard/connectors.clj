@@ -75,141 +75,35 @@
 (def thumb-post-tl (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height  2) post-adj) 0] web-post))
 (def thumb-post-bl (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
 (def thumb-post-br (translate [(- (/ mount-width 2) post-adj)  (+ (/ mount-height -2) post-adj) 0] web-post))
-
-(def six-thumb-connectors
-  (union
-   (triangle-hulls    ; top two
-    (thumb-tl-place web-post-tr)
-    (thumb-tl-place web-post-br)
-    (thumb-tr-place thumb-post-tl)
-    (thumb-tr-place thumb-post-bl))
-   (triangle-hulls    ; bottom two
-    (thumb-br-place web-post-tr)
-    (thumb-br-place web-post-br)
-    (thumb-mr-place web-post-tl)
-    (thumb-mr-place web-post-bl))
-   (triangle-hulls    ; bottom two
-    (thumb-mr-place web-post-tr)
-    (thumb-mr-place web-post-br)
-    (thumb-6-place web-post-tl)
-    (thumb-6-place web-post-bl))
-   (triangle-hulls    ; between top row and bottom row
-    (thumb-br-place web-post-tl)
-    (thumb-bl-place web-post-bl)
-    (thumb-br-place web-post-tr)
-    (thumb-bl-place web-post-br)
-    (thumb-mr-place web-post-tl)
-    (thumb-tl-place web-post-bl)
-    (thumb-mr-place web-post-tr)
-    (thumb-tl-place web-post-br)
-
-    (thumb-6-place web-post-tl)
-    (thumb-tr-place web-post-bl)
-    (thumb-6-place web-post-tr)
-    (thumb-tr-place web-post-br)
-    )
-   (triangle-hulls    ; top two to the middle two, starting on the left
-    (thumb-tl-place web-post-tl)
-    (thumb-bl-place web-post-tr)
-    (thumb-tl-place web-post-bl)
-    (thumb-bl-place web-post-br)
-    (thumb-mr-place web-post-tr)
-    (thumb-tl-place web-post-bl)
-    (thumb-tl-place web-post-br)
-    (thumb-mr-place web-post-tr))
-   (triangle-hulls    ; top two to the middle two, starting on the left
-    (key-place 2 lastrow web-post-bl)
-    (thumb-6-place thumb-post-tr)
-    (key-place 2 lastrow web-post-br)
-    )
-   (triangle-hulls    ; top two to the main keyboard, starting on the left
-    (thumb-tl-place web-post-tl)
-    (key-place 0 cornerrow web-post-bl)
-    (thumb-tl-place web-post-tr)
-    (key-place 0 cornerrow web-post-br)
-    (thumb-tr-place thumb-post-tl)
-    (key-place 1 cornerrow web-post-bl)
-    (thumb-tr-place thumb-post-tr)
-    (key-place 1 cornerrow web-post-br)
-    (key-place 2 lastrow web-post-tl)
-    (key-place 2 lastrow web-post-bl)
-    (thumb-tr-place thumb-post-tr)
-    (key-place 2 lastrow web-post-bl)
-    (thumb-tr-place thumb-post-br)
-    (thumb-6-place thumb-post-tr)
-
-    (key-place 2 lastrow web-post-br)
-    (key-place 3 lastrow web-post-bl)
-    (key-place 2 lastrow web-post-tr)
-    (key-place 3 lastrow web-post-tl)
-    (key-place 3 cornerrow web-post-bl)
-    (key-place 3 lastrow web-post-tr)
-    (key-place 3 cornerrow web-post-br)
-    (key-place 4 cornerrow web-post-bl))
-   (triangle-hulls
-    (key-place 1 cornerrow web-post-br)
-    (key-place 2 lastrow web-post-tl)
-    (key-place 2 cornerrow web-post-bl)
-    (key-place 2 lastrow web-post-tr)
-    (key-place 2 cornerrow web-post-br)
-    (key-place 3 cornerrow web-post-bl))
-   (triangle-hulls
-    (key-place 3 lastrow web-post-tr)
-    (key-place 3 lastrow web-post-br)
-    (key-place 3 lastrow web-post-tr)
-    (key-place 4 cornerrow web-post-bl))
-   ))
-
+;tl -> m
 (def fifth-thumb-connectors
   (union
+
    (triangle-hulls    ; top two
-    (thumb-tl-place web-post-tr)
-    (thumb-tl-place web-post-br)
-    (thumb-tr-place thumb-post-tl)
-    (thumb-tr-place thumb-post-bl))
-   (triangle-hulls    ; bottom two
-    (thumb-br-place web-post-tr)
-    (thumb-br-place web-post-br)
-    (thumb-mr-place web-post-tl)
-    (thumb-mr-place web-post-bl))
-   (triangle-hulls
-    (thumb-mr-place web-post-tr)
-    (thumb-mr-place web-post-br)
-    (thumb-tr-place thumb-post-br))
-   (triangle-hulls    ; between top row and bottom row
-    (thumb-br-place web-post-tl)
-    (thumb-bl-place web-post-bl)
-    (thumb-br-place web-post-tr)
-    (thumb-bl-place web-post-br)
-    (thumb-mr-place web-post-tl)
-    (thumb-tl-place web-post-bl)
-    (thumb-mr-place web-post-tr)
-    (thumb-tl-place web-post-br)
-    (thumb-tr-place web-post-bl)
-    (thumb-mr-place web-post-tr)
-    (thumb-tr-place web-post-br))
+    (thumb-m-place web-post-tr)
+    (thumb-m-place web-post-br)
+    (thumb-r-place thumb-post-tl)
+    (thumb-r-place thumb-post-bl))
+
    (triangle-hulls    ; top two to the middle two, starting on the left
-    (thumb-tl-place web-post-tl)
-    (thumb-bl-place web-post-tr)
-    (thumb-tl-place web-post-bl)
-    (thumb-bl-place web-post-br)
-    (thumb-mr-place web-post-tr)
-    (thumb-tl-place web-post-bl)
-    (thumb-tl-place web-post-br)
-    (thumb-mr-place web-post-tr))
+    (thumb-m-place web-post-tl)
+    (thumb-l-place web-post-tr)
+    (thumb-m-place web-post-bl)
+    (thumb-l-place web-post-br)
+    )
    (triangle-hulls    ; top two to the main keyboard, starting on the left
-    (thumb-tl-place web-post-tl)
+    (thumb-m-place web-post-tl)
     (key-place 0 cornerrow web-post-bl)
-    (thumb-tl-place web-post-tr)
+    (thumb-m-place web-post-tr)
     (key-place 0 cornerrow web-post-br)
-    (thumb-tr-place thumb-post-tl)
+    (thumb-r-place thumb-post-tl)
     (key-place 1 cornerrow web-post-bl)
-    (thumb-tr-place thumb-post-tr)
+    (thumb-r-place thumb-post-tr)
     (key-place 1 cornerrow web-post-br)
     (key-place 2 lastrow web-post-bl)
-    (thumb-tr-place thumb-post-tr)
+    (thumb-r-place thumb-post-tr)
     (key-place 2 lastrow web-post-bl)
-    (thumb-tr-place thumb-post-br)
+    (thumb-r-place thumb-post-br)
     (key-place 2 lastrow web-post-br)
     (key-place 3 lastrow web-post-bl)
     (key-place 2 lastrow web-post-tr)
@@ -218,6 +112,7 @@
     (key-place 3 lastrow web-post-tr)
     (key-place 3 cornerrow web-post-br)
     (key-place 4 cornerrow web-post-bl))
+
    (triangle-hulls    ; top two to the main keyboard, starting on the left
     (key-place 1 cornerrow web-post-br)
     (key-place 2 lastrow web-post-tl)
@@ -237,10 +132,7 @@
     (key-place 4 cornerrow web-post-bl))))
 
 (def thumb-connectors
-  (if six-thumb-mode
-    six-thumb-connectors
     fifth-thumb-connectors
-    )
   )
 
 (def pinky-connectors

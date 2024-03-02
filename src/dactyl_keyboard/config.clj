@@ -14,7 +14,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (def nrows 4)
-(def ncols 6)
+(def ncols 5)
 
 (def column-curvature (deg2rad 20))                         ; 15                        ; curvature of the columns
 (def row-curvature (deg2rad 6))                             ; 5                   ; curvature of the rows
@@ -53,8 +53,8 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 2)
-(def low-profile true)
+(def hot-swap 0)
+(def low-profile false)
 (def plate-height 2)
 (def plate-border-height 1)
 

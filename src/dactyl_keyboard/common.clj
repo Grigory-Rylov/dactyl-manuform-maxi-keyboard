@@ -82,3 +82,10 @@
 
 (defn key-position [column row position]
   (apply-key-geometry (partial map +) rotate-around-x rotate-around-y column row position))
+
+(defn color-green [shape] (color [0 1 0 1] shape))
+(defn color-red [shape] (color [1 0 0 1] shape))
+(defn color-blue [shape] (color [0 0 1 1] shape))
+(defn color-yellow [shape] (color [1 1 0 1] shape))
+(defn color-white [shape] (color [1 1 1 1] shape))
+(defn color-gray [shape] (color [0.5 0.5 0.5 1] shape))

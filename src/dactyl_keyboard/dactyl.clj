@@ -23,9 +23,9 @@
 
 (def thumbcaps
   (union
-   (thumb-1x-layout (sa-cap 1))
-   (thumb-15x-layout (rotate (/ π 2) [0 0 1] (sa-cap 1)))))
-
+   (thumb-layout (sa-cap 1))
+   )
+  )
 
 
 (defn shape-insert [column row offset shape]
@@ -128,7 +128,7 @@
 ; keyboard's magnet hole
 (def magnet-place
   (union
-    (magnet-shape-insert 4, 2, [-10 -14.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
+    ;(magnet-shape-insert 4, 2, [-10 -14.5 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
     (magnet-shape-insert 3, 3, [0 -0.7 0] (magnet-hole (+ (/ magnet-diameter 2) 0.1) (/ magnet-inner-diameter 2) magnet-height))
    )
 )

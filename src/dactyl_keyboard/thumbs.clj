@@ -60,15 +60,32 @@
        (translate thumborigin)
        (translate [-51 -25 -11.5]))) ;        (translate [-51 -25 -12])))
 
+(defn thumb-place [rot move shape]
+  (->> shape
+       (rotate (deg2rad (nth rot 0)) [1 0 0])
+       (rotate (deg2rad (nth rot 1)) [0 1 0])
+       (rotate (deg2rad (nth rot 2)) [0 0 1])               ; original 10
+       (translate thumborigin)
+       (translate move)))
 
-(defn thumb-1x-layout [shape]
+; convexer
+(defn thumb-r-place [shape] (thumb-place [14 -40 10] [-15 -10 5] shape)) ; right
+(defn thumb-m-place [shape] (thumb-place [10 -35 39] [-33 -19 -6] shape)) ; middle
+(defn thumb-l-place [shape] (thumb-place [6 -30 49] [-46.0 -33.5 -19] shape)) ; left
+
+(defn thumb-layout [shape]
   (union
-   (thumb-mr-place shape)
-   (if six-thumb-mode (thumb-6-place shape) )
-   (thumb-br-place shape)
+   (thumb-r-place shape)
+   (thumb-m-place shape)
+   (thumb-l-place shape)
+   ))
+
+(defn thumb-layout-2-col [shape]
+  (union
+   (thumb-tr-place shape)
    (thumb-tl-place shape)
-   (thumb-bl-place shape)))
-
-(defn thumb-15x-layout [shape]
-  (union
-   (thumb-tr-place shape)))
+   (thumb-mr-place shape)
+   (if six-thumb-mode (thumb-6-place shape))
+   (thumb-br-place shape)
+   (thumb-bl-place shape)
+   ))

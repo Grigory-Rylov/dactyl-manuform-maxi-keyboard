@@ -37,15 +37,6 @@
 (def key-fills
   (key-places filled-plate))
 
-(defn thumb-layout [shape]
-  (union
-   (thumb-tr-place shape)
-   (thumb-tl-place shape)
-   (thumb-mr-place shape)
-   (if six-thumb-mode (thumb-6-place shape))
-   (thumb-br-place shape)
-   (thumb-bl-place shape)
-   ))
 
 (def thumb-fill (thumb-layout filled-plate))
 
@@ -124,16 +115,12 @@
 
 (def thumb-right
   (union
-   (thumb-1x-layout single-plate-right)
-   (thumb-15x-layout single-plate-right)
-   ; (thumb-15x-layout larger-plate)
+   (thumb-layout single-plate-right)
    ))
 
 (def thumb-left
   (union
-   (thumb-1x-layout single-plate-left)
-   (thumb-15x-layout single-plate-left)
-   ; (thumb-15x-layout larger-plate)
+   (thumb-layout single-plate-left)
    ))
 
 (def model-outline

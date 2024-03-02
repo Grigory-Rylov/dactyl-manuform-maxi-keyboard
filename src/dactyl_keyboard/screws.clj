@@ -33,25 +33,18 @@
 
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0         bottom-radius top-radius height [6 7 0]) ; bottom left
+   (screw-insert 0 0         bottom-radius top-radius height [6 7 0]); bottom left
    ; top left
-   (if six-thumb-mode
-     (screw-insert 0 lastrow   bottom-radius top-radius height [-4 1 0])
-     (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
-     )
+
+   (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
+
    ; top right
    (screw-insert lastcol lastrow  bottom-radius top-radius height [-3 14 0])
    ; bottom right
    (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
    ; top
-   (if six-thumb-mode
-     (screw-insert 0 lastrow         bottom-radius top-radius height [10 -44 0])
-     (screw-insert 0 lastrow         bottom-radius top-radius height [14 -42 0])
-     )
-   ; top middle
-   (if six-thumb-mode
-     (screw-insert 2 lastrow         bottom-radius top-radius height [-3 -5 0])
-     )
+   (screw-insert 0 (dec lastrow)         bottom-radius top-radius height [-4 -39 0])
+
    ; bottom middle
    (screw-insert 3 0         bottom-radius top-radius height [-7 -1.5 0])
    )
