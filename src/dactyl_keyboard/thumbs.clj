@@ -70,7 +70,7 @@
 
 ; convexer
 (defn thumb-r-place [shape] (thumb-place [14 -40 10] [-15 -10 5] shape)) ; right
-(defn thumb-m-place [shape] (thumb-place [10 -35 39] [-33 -19 -6] shape)) ; middle
+(defn thumb-m-place [shape] (thumb-place [10 -32 39] [-33 -19 -8] shape)) ; middle
 (defn thumb-l-place [shape] (thumb-place [6 -30 49] [-46.0 -33.5 -19] shape)) ; left
 
 (defn thumb-layout [shape]
@@ -78,14 +78,4 @@
    (thumb-r-place shape)
    (thumb-m-place shape)
    (thumb-l-place shape)
-   ))
-
-(defn thumb-layout-2-col [shape]
-  (union
-   (thumb-tr-place shape)
-   (thumb-tl-place shape)
-   (thumb-mr-place shape)
-   (if six-thumb-mode (thumb-6-place shape))
-   (thumb-br-place shape)
-   (thumb-bl-place shape)
    ))
