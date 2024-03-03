@@ -13,13 +13,13 @@
 ;; Shape parameters ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(def nrows 4)
+(def nrows 3)
 (def ncols 5)
 
 (def column-curvature (deg2rad 20))                         ; 15                        ; curvature of the columns
 (def row-curvature (deg2rad 6))                             ; 5                   ; curvature of the rows
 
-(def centerrow (- nrows 3))             ; controls front-back tilt
+(def centerrow (- nrows 2))             ; controls front-back tilt
 (def centercol 2)                       ; controls left-right tilt / tenting (higher number is more tenting)
 (def tenting-angle (deg2rad 15))            ; or, change this for more precise tenting control
 (def column-style
@@ -39,7 +39,7 @@
   )
 
 ; magnet holes for external wrist rest
-(def magnet-holes true)
+(def magnet-holes false)
 (def magnet-height 2)
 (def magnet-booster-width 1)
 (def magnet-diameter 10)
@@ -75,8 +75,8 @@
 ;; General variables ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(def lastrow (dec nrows))
-(def cornerrow (dec lastrow))
+(def lastrow  (dec nrows))
+(def cornerrow lastrow)
 (def lastcol (dec ncols))
 (def extra-cornerrow (if extra-row lastrow cornerrow))
 (def innercol-offset (if inner-column 1 0))
@@ -114,9 +114,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; General variables ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
-
-(def lastrow (dec nrows))
-(def cornerrow (dec lastrow))
 (def lastcol (dec ncols))
 
 ;;;;;;;;;;;;;;;;;

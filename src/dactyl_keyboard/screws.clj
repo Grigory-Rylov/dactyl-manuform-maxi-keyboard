@@ -34,19 +34,18 @@
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
   (union
    (screw-insert 0 0         bottom-radius top-radius height [6 7 0]); bottom left
-   ; top left
-
-   (screw-insert 0 lastrow   bottom-radius top-radius height [-2 5 0])
+   ; thumb
+   (color-green (screw-insert 0 lastrow   bottom-radius top-radius height [-4 -38 0]))
 
    ; top right
-   (screw-insert lastcol lastrow  bottom-radius top-radius height [-3 14 0])
+   (screw-insert lastcol lastrow  bottom-radius top-radius height [-2 -6 0])
    ; bottom right
    (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
    ; top
-   (screw-insert 0 (dec lastrow)         bottom-radius top-radius height [-4 -39 0])
+   (color-yellow (screw-insert 1  lastrow bottom-radius top-radius height [-4 -19 0]))
 
    ; bottom middle
-   (screw-insert 3 0         bottom-radius top-radius height [-7 -1.5 0])
+   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
    )
   )
 

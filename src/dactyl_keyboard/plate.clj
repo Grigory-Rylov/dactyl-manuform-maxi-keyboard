@@ -20,19 +20,18 @@
   (if use-top-nub 5 0)
   )
 
+
+(defn key-places [shape]
+  (apply union
+         (for [column columns row rows]
+           (->> shape
+                (key-place column row)))))
+
+
 (def filled-plate
   (->> (cube mount-height mount-width plate-thickness)
        (translate [0 0 (/ plate-thickness 2)])
        ))
-
-(defn key-places [shape]
-  (apply union
-         (for [column columns
-               row rows
-               :when (or (.contains [2 3] column)
-                         (not= row lastrow))]
-           (->> shape
-                (key-place column row)))))
 
 (def key-fills
   (key-places filled-plate))
