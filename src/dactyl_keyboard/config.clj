@@ -30,12 +30,12 @@
 (def inner-column false)                ; adds an extra inner column (two less rows than nrows)
 
 ;external case for controller and ports
-(def niceNanoMode true)
+(def niceNanoMode false)
 (def external-controller true)
 (def external-controller-height 10)
 (def external-controller-step 1.5)
 (def external-controller-width
-  (if niceNanoMode 25 31.666)
+  (if niceNanoMode 25 33)
   )
 
 ; magnet holes for external wrist rest

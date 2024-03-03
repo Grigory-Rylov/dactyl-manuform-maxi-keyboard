@@ -67,7 +67,7 @@
    ))
 
 (def left-offset
-  (if niceNanoMode -16 -8)
+  (if niceNanoMode -16 -10)
   )
 (def controller-holder-y-offset -0.4)
 (def usb-holder-hole-space
