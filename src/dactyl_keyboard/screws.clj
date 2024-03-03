@@ -38,11 +38,11 @@
    (color-green (screw-insert 0 lastrow   bottom-radius top-radius height [-4 -38 0]))
 
    ; top right
-   (screw-insert lastcol lastrow  bottom-radius top-radius height [-2 -6 0])
+   (color-blue (screw-insert lastcol lastrow  bottom-radius top-radius height [-2 -6 0]))
    ; bottom right
-   (screw-insert lastcol 0         bottom-radius top-radius height [-6 10 0])
+   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 7 0]))
    ; top
-   (color-yellow (screw-insert 1  lastrow bottom-radius top-radius height [-4 -19 0]))
+   (color-yellow (screw-insert 2  lastrow bottom-radius top-radius height [-6 -25 0]))
 
    ; bottom middle
    (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
