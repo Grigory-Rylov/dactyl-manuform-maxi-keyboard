@@ -93,38 +93,38 @@
    ; front wall
    (key-wall-brace 3 lastrow 0 -1 web-post-bl 2 lastrow 0 -1 web-post-br)
 
-   ;(key-wall-brace 2 lastrow 0 -1 web-post-br 2 lastrow 0 -1 web-post-bl)
-   ;(key-wall-brace 3 lastrow 0.5 -1 web-post-br 4 cornerrow 0.5 -1 web-post-bl)
-   (for [x (range 2 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br)) ; TODO fix extra wall
+   (for [x (range 3 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
    (for [x (range 3 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
 
    ;wall between key 1 and thumb
-;   (color-red (wall-brace thumb-r-place  0 0 thumb-post-tr (partial key-place 1 cornerrow) 0 0 web-post-br))
-   (color-blue (wall-brace (partial key-place 1 cornerrow) 0 0 web-post-br (partial key-place 2 cornerrow) 0 -1 web-post-bl))
+   (key-wall-brace 2 cornerrow 1 -1 web-post-bl 2 cornerrow 0 -1 web-post-br)
+
+   (wall-brace
+      (partial key-place 1 cornerrow) 1 0 web-post-br
+      (partial key-place 2 cornerrow) 1 -1 web-post-bl)
 
    ; thumb walls
-   (wall-brace thumb-r-place  0 -1 web-post-bl thumb-r-place  0.5 -1 thumb-post-br)
-   ;(color-red (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
+   (wall-brace
+      thumb-r-place  0 -1 web-post-bl
+      thumb-r-place  0.5 -1 thumb-post-br)
 
-   (color-yellow (wall-brace thumb-r-place  1 -1 thumb-post-tr (partial key-place 1 cornerrow) 0 0 web-post-br))
-   (color-green (wall-brace thumb-r-place  1 0 web-post-br thumb-r-place  1 -1 thumb-post-tr))
+   (wall-brace
+      thumb-r-place  1 -1 thumb-post-tr
+      (partial key-place 1 cornerrow) 1 0 web-post-br)
+   (wall-brace thumb-r-place  1 0 web-post-br thumb-r-place  1 -1 thumb-post-tr)
    (wall-brace thumb-m-place  0 -1 web-post-br thumb-m-place  0 -1 web-post-bl)
-
    (wall-brace thumb-l-place  0 -1 web-post-br thumb-l-place  0 -1 web-post-bl)
-
    (wall-brace thumb-l-place  0  1 web-post-tr thumb-l-place  0  1 web-post-tl)
-
    (wall-brace thumb-l-place -1  0 web-post-tl thumb-l-place -1  0 web-post-bl)
+
    ; thumb corners
    (wall-brace thumb-l-place -1  0 web-post-bl thumb-l-place  0 -1 web-post-bl)
    (wall-brace thumb-l-place -1  0 web-post-tl thumb-l-place  0  1 web-post-tl)
-    (wall-brace thumb-r-place 0.5  -1 web-post-br thumb-r-place  1  0 web-post-br)
+   (wall-brace thumb-r-place 0.5  -1 web-post-br thumb-r-place  1  0 web-post-br)
+
    ; thumb tweeners
-
    (wall-brace thumb-r-place  0 -1 web-post-bl thumb-m-place  0 -1 web-post-br)
-
    (wall-brace thumb-m-place  0 -1 web-post-bl thumb-l-place  0 -1 web-post-br)
-;   (color-red (wall-brace thumb-r-place  0 -1 thumb-post-br (partial key-place 2 lastrow)  0 -1 web-post-bl))
    ; clunky bit on the top left thumb connection  (normal connectors don't work well)
 
    (bottom-hull
