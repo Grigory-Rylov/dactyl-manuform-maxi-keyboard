@@ -53,7 +53,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 1)
+(def hot-swap 0)
 (def low-profile false)
 (def plate-height 2)
 (def plate-border-height 1)

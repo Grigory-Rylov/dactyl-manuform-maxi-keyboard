@@ -44,29 +44,53 @@
    (color-red (key-wall-brace 0 0 0 1 web-post-tl 0 0 0 1 web-post-tr))))
 
 (def controllerYOffset 1)
-(def controller-holder
-  (difference
-   (minkowski
-    (cube controllerWidth, controllerLen, (- external-controller-height roundCornerHeight))
-    (binding [*fn* 50] (cylinder roundCornerHeight, roundCornerRadius)))
 
-   (translate [0, 0, controllerBottomHeight]
-              (cube controllerWidth, (- controllerLen controllerYOffset), external-controller-height)))
-  )
+(def controller-holder-body
+  (minkowski
+   (cube controllerWidth, controllerLen, (- external-controller-height roundCornerHeight))
+   (binding [*fn* 50] (cylinder roundCornerHeight, roundCornerRadius))))
 
-(def controller-case
-  (union
-   (color-blue
-     (cube external-controller-width, (+ first_column_y_offset wall-thickness), external-controller-height))
-   (translate
-     [
-       (/ (- external-controller-width totalControllerBoxWidth) -2),
-       (- (/ (+ first_column_y_offset wall-thickness totalControllerBoxLen) 2) wall-thickness), 0] controller-holder)))
+;(def controller-case-wired
+;
+;  (translate
+;   [(/ (- external-controller-width totalControllerBoxWidth) 2),
+;    (- (/ totalControllerBoxLen 2) controller-holder-y-offset first_column_y_offset),
+;    0]
+;   controller-holder))
 
+;(def controller-case-wirless
+;  (union
+;   (color-blue
+;    (cube external-controller-width, (+ first_column_y_offset wall-thickness), external-controller-height))
+;   (translate
+;    [(/ (- external-controller-width totalControllerBoxWidth) -2),
+;     (- (/ (+ first_column_y_offset wall-thickness totalControllerBoxLen) 2) wall-thickness),
+;     0]
+;    controller-holder)))
+
+(def controller-body-y-offset (/ totalControllerBoxLen -2))
+(def controller-body-x-offset
+  (/ (- external-controller-width totalControllerBoxWidth) 2))
 (def external-controller-case
-  (union
-   (difference
-    (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
-                  controller-case)
-    front-walls)))
+  (difference
+   (union
+    (shape-insert 1, 0,
+                  [(+ left-offset controller-body-x-offset)
+                   controller-body-y-offset
+                   (/ external-controller-height 2)]
+                  controller-holder-body)
+
+    (intersection
+     (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
+                   (color-blue
+                    (cube external-controller-width, (+ first_column_y_offset wall-thickness), external-controller-height)))
+     front-walls))
+
+   (shape-insert 1, 0,
+                 [(+ left-offset controller-body-x-offset)
+                  controller-body-y-offset
+                  (/ external-controller-height 2)]
+
+                 (translate [0, 0, controllerBottomHeight]
+                            (cube controllerWidth, (- controllerLen controllerYOffset), external-controller-height)))))
 
