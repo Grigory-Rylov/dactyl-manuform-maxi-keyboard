@@ -64,7 +64,6 @@
            (for [y (range 0 (dec nrows))] (key-wall-brace lastcol y 1 0 br lastcol (inc y) 1 0 tr))
            (key-wall-brace lastcol cornerrow 0 -1 br lastcol cornerrow 1 0 br))))
 
-
 (def case-walls
   (union
    right-wall

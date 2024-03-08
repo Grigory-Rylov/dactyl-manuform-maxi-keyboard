@@ -53,7 +53,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 0)
+(def hot-swap 1)
 (def low-profile false)
 (def plate-height 2)
 (def plate-border-height 1)
@@ -63,6 +63,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;; Column offsets ;;
 ;;;;;;;;;;;;;;;;;;;;
+(def first_column_y_offset 2)
 (defn column-offset [column] (cond
                                (= column 2) [0 2.82 -4.5]
                                (= column 4) [0 -18 5.64]   ; pinky finger1

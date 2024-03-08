@@ -13,6 +13,8 @@
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.screws :refer :all]
             [dactyl-keyboard.magnet-holder :refer :all]
+            [dactyl-keyboard.connectors :refer :all]
+            [dactyl-keyboard.external-controller :refer :all]
             [dactyl-keyboard.plate :refer :all]))
 
 (def larger-plate
@@ -56,34 +58,11 @@
     5 0.15
     6 -5.07))
 
-; Cutout for controller/trrs jack holder https://github.com/rianadon/dactyl-configurator/blob/main/src/connectors.md
-(defn usb-holder-hole [width step height]
-  (union
-   ;(translate [0, (* +1 step), 0] (cube width, step, height))
-   (translate [0, (* -1 step), 0] (cube (- width (* step 2)), (* step  4), height ))
-   (translate [0, step, 0] (cube width, step, height))
-   (translate [0, (* step 2), 0] (cube width, (* step 2), height))
-   (translate [0, (* -1 step), 0] (cube width, step, height))
-   ))
-
-(def left-offset
-  (if niceNanoMode -16 -10)
-  )
-(def controller-holder-y-offset -0.4)
-(def usb-holder-hole-space
-  (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
-                (usb-holder-hole external-controller-width external-controller-step external-controller-height)
-                )
-  )
-
-
-
 (def pinky-walls
   (union
    (key-wall-brace lastcol cornerrow 0 -1 web-post-br lastcol cornerrow 0 -1 wide-post-br)
    (key-wall-brace lastcol 0 0 1 web-post-tr lastcol 0 0 1 wide-post-tr))
   )
-
 
 (def key-holes-right
   (apply union
@@ -198,5 +177,7 @@
 (spit "things/hotswap-adapt-low-debug.scad" (write-scad hot-socket-standart-to-low-profile))
 (spit "things/hotswap-low-debug.scad" (write-scad hot-socket-low-profile))
 (spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
+
+(spit "things/right-external-controller.scad" (write-scad external-controller-case))
 
 (defn -main [dum] 1)  ; dummy to make it easier to batch
