@@ -11,6 +11,10 @@
             [dactyl-keyboard.connectors :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
+(def bracingLen 1.9)
+(def bracingStep 1.5)
+(def bracingWidth (* bracingStep 2))
+(def controllerWallWidth 1)
 (def controllerWidth 21)
 (def controllerLen 55)
 (def controllerHeight 1.7)
@@ -23,7 +27,6 @@
   (if niceNanoMode -16 -10))
 
 (def controller-holder-y-offset -0.4)
-
 ; Cutout for controller/trrs jack holder https://github.com/rianadon/dactyl-configurator/blob/main/src/connectors.md
 (defn usb-holder-hole [width step height]
   (union
@@ -35,7 +38,7 @@
 
 (def usb-holder-hole-space
   (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
-                (usb-holder-hole external-controller-width external-controller-step external-controller-height)))
+                (usb-holder-hole external-controller-width bracingStep external-controller-height)))
 
 (def front-walls
   (union
@@ -68,9 +71,30 @@
 ;     0]
 ;    controller-holder)))
 
+;(def bracingRight)
+(def bracingLeft
+  (translate
+   [0, 0, 0] ; [(- controllerWallWidth (* bracingWidth 2)), (* controllerWallWidth -1), 0]
+
+   (difference
+    (cube bracingWidth, (* bracingStep 3), external-controller-height)
+    (translate [(/ bracingStep 2), (/ bracingStep 2), 0]
+               (cube bracingStep, bracingLen, external-controller-height)))))
+
+(def bracingRight
+  (translate
+   [0, 0, 0] ; [(- controllerWallWidth (* bracingWidth 2)), (* controllerWallWidth -1), 0]
+
+   (difference
+    (cube bracingWidth, (* bracingStep 3), external-controller-height)
+    (translate [(/ bracingStep -2), (/ bracingStep 2), 0]
+               (cube bracingStep, bracingLen, external-controller-height)))))
+
 (def controller-body-y-offset (/ totalControllerBoxLen -2))
 (def controller-body-x-offset
   (/ (- external-controller-width totalControllerBoxWidth) 2))
+
+
 (def external-controller-case
   (difference
    (union
@@ -83,8 +107,23 @@
     (intersection
      (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
                    (color-blue
-                    (cube external-controller-width, (+ first_column_y_offset wall-thickness), external-controller-height)))
-     front-walls))
+                    (cube (- external-controller-width (* bracingWidth 2)), (+ first_column_y_offset wall-thickness), external-controller-height)))
+     front-walls)
+
+
+    (shape-insert 1, 0, [
+                          (+ (/ ( - external-controller-width bracingWidth) 2) left-offset),
+                          -0.15,
+                          (/ external-controller-height 2)]
+                  (color-green bracingLeft))
+
+    (shape-insert 1, 0, [
+                          (+ (/ (- external-controller-width bracingWidth) -2) left-offset),
+                          (- (* first_column_y_offset -1) 0.12),
+                          (/ external-controller-height 2)]
+                  (color-blue bracingRight))
+
+    )
 
    (shape-insert 1, 0,
                  [(+ left-offset controller-body-x-offset)

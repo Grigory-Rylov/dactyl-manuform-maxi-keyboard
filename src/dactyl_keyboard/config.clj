@@ -33,7 +33,6 @@
 (def niceNanoMode false)
 (def external-controller true)
 (def external-controller-height 10)
-(def external-controller-step 1.5)
 (def external-controller-width
   (if niceNanoMode 25 33)
   )
