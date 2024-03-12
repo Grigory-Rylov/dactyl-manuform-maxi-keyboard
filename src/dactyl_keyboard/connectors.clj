@@ -6,58 +6,14 @@
             [scad-clj.model :refer :all]
             [unicode-math.core :refer :all]
             [dactyl-keyboard.common :refer :all]
+            [dactyl-keyboard.connectors-common :refer :all]
+            [dactyl-keyboard.3-thumbs-connectors :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Web Connectors ;;
 ;;;;;;;;;;;;;;;;;;;;
-
-(def web-thickness 2)
-(def post-size 0.1)
-(def web-post
-  (->> (cube post-size post-size web-thickness)
-       (translate
-         [0
-          0
-          (+ (/ web-thickness -2)
-             plate-thickness)])))
-
-(def post-adj (/ post-size 2))
-(def web-post-tr
-  (translate [(- (/ mount-width 2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-(def web-post-tl
-  (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-(def web-post-bl
-  (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
-(def web-post-br
-  (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
-
-; wide posts for 1.5u keys in the main cluster
-
-(if (true? pinky-15u)
-  (do
-    (def wide-post-tr
-      (translate
-        [(- (/ mount-width 1.2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-    (def wide-post-tl
-      (translate
-        [(+ (/ mount-width -1.2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-    (def wide-post-bl
-      (translate
-        [(+ (/ mount-width -1.2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
-    (def wide-post-br
-      (translate
-        [(- (/ mount-width 1.2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post)))
-  (do (def wide-post-tr web-post-tr)
-    (def wide-post-tl web-post-tl)
-    (def wide-post-bl web-post-bl)
-    (def wide-post-br web-post-br)))
-
-(defn triangle-hulls [& shapes]
-  (apply union
-         (map (partial apply hull)
-              (partition 3 1 shapes))))
 
 (def connectors
   (apply union
@@ -88,48 +44,6 @@
              (key-place column (inc row) web-post-tr)
              (key-place (inc column) row web-post-bl)
              (key-place (inc column) (inc row) web-post-tl))))))
-
-(def thumb-post-tr
-  (translate [(- (/ mount-width 2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-(def thumb-post-tl
-  (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
-(def thumb-post-bl
-  (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
-(def thumb-post-br
-  (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
-
-;tl -> m
-(def three-thumb-connectors
-  (union
-   (triangle-hulls    ; top two
-    (thumb-m-place web-post-tr)
-    (thumb-m-place web-post-br)
-    (thumb-r-place thumb-post-tl)
-    (thumb-r-place thumb-post-bl))
-
-   (triangle-hulls    ; top two to the middle two, starting on the left
-    (thumb-m-place web-post-tl)
-    (thumb-l-place web-post-tr)
-    (thumb-m-place web-post-bl)
-    (thumb-l-place web-post-br))
-
-   (triangle-hulls    ; top two to the main keyboard, starting on the left
-    (thumb-m-place web-post-tl)
-    (key-place 0 cornerrow web-post-bl)
-    (thumb-m-place web-post-tr)
-    (key-place 0 cornerrow web-post-br)
-    (thumb-r-place thumb-post-tl)
-    (key-place 1 cornerrow web-post-bl)
-    (thumb-r-place thumb-post-tr)
-    (key-place 1 cornerrow web-post-br)
-    (key-place 1 lastrow web-post-bl)
-    (thumb-r-place thumb-post-tr))
-
-   (triangle-hulls
-    (key-place 3 lastrow web-post-tr)
-    (key-place 3 lastrow web-post-br)
-    (key-place 3 lastrow web-post-tr)
-    (key-place 4 cornerrow web-post-bl))))
 
 (def thumb-connectors
   (case thumbs-count

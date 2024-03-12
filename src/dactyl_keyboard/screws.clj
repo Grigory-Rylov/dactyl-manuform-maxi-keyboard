@@ -7,7 +7,7 @@
             [unicode-math.core :refer :all]
             [dactyl-keyboard.common :refer :all]
             [dactyl-keyboard.config :refer :all]
-            [dactyl-keyboard.case :refer :all]))
+            [dactyl-keyboard.case-common :refer :all]))
 
 ;;;;;;;;;;;
 ;; SCREW ;;

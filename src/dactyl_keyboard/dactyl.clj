@@ -10,11 +10,13 @@
             [dactyl-keyboard.config :refer :all]
             [dactyl-keyboard.connectors :refer :all]
             [dactyl-keyboard.case :refer :all]
+            [dactyl-keyboard.case-common :refer :all]
             [dactyl-keyboard.keycaps :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.screws :refer :all]
             [dactyl-keyboard.magnet-holder :refer :all]
             [dactyl-keyboard.connectors :refer :all]
+            [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.external-controller :refer :all]
             [dactyl-keyboard.plate :refer :all]))
 

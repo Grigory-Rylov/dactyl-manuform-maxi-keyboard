@@ -6,9 +6,9 @@
             [scad-clj.model :refer :all]
             [unicode-math.core :refer :all]
             [dactyl-keyboard.common :refer :all]
-            [dactyl-keyboard.case :refer :all]
+            [dactyl-keyboard.case-common :refer :all]
             [dactyl-keyboard.magnet-holder :refer :all]
-            [dactyl-keyboard.connectors :refer :all]
+            [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
 (def bracingLen 1.9)
