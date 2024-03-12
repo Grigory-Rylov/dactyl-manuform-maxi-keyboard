@@ -12,3 +12,4 @@
 *.ai
 *.svg
 .idea
+/out
