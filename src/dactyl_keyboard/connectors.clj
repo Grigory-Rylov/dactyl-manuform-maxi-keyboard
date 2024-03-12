@@ -8,6 +8,8 @@
             [dactyl-keyboard.common :refer :all]
             [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.3-thumbs-connectors :refer :all]
+            [dactyl-keyboard.5-thumbs-connectors :refer :all]
+            [dactyl-keyboard.6-thumbs-connectors :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
@@ -48,8 +50,8 @@
 (def thumb-connectors
   (case thumbs-count
     3 three-thumb-connectors
-    5 three-thumb-connectors
-    6 three-thumb-connectors))
+    5 five-thumbs-connectors
+    6 six-thumbs-connectors))
 
 (def pinky-connectors
   (apply union

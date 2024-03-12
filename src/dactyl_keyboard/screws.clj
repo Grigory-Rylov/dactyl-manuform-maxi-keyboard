@@ -16,8 +16,8 @@
 (defn screw-insert-shape [bottom-radius top-radius height]
   (union
    (->>
-     (binding [*fn* 30]
-       (cylinder [bottom-radius top-radius] height)))
+    (binding [*fn* 30]
+      (cylinder [bottom-radius top-radius] height)))
    (translate [0 0 (/ height 2)] (->> (binding [*fn* 30] (sphere top-radius))))))
 
 (defn screw-insert [column row bottom-radius top-radius height offset]
@@ -40,19 +40,38 @@
    (screw-insert 0 0 bottom-radius top-radius height [6 7 0]) ; bottom left
    ; thumb
    (color-green
-     (screw-insert 0 lastrow bottom-radius top-radius height [-4 -38 0]))
+    (screw-insert 0 lastrow bottom-radius top-radius height [-4 -38 0]))
 
    ; top right
    (color-blue
-     (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
+    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
+
    ; bottom right
    (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 7 0]))
    ; top
    (color-yellow
-     (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0]))
+    (case thumbs-count
+      0  0
+      3  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
+      5  (screw-insert 0 lastrow bottom-radius top-radius height [14 -42 0])
+      6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0])))
 
    ; bottom middle
-   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))))
+   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
+
+   ; top left
+   (case thumbs-count
+     0  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
+     3  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
+     5  (screw-insert 0 lastrow bottom-radius top-radius height [-2 5 0])
+     6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0]))
+
+   ; top middle
+   (if (= thumbs-count 6)
+     (screw-insert 2 lastrow bottom-radius top-radius height [-3 -5 0]))
+
+   ; end union
+   ))
 
 ; Hole Depth Y: 4.4
 (def screw-insert-height 4)

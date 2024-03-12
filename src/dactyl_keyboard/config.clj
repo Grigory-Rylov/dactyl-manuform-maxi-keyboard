@@ -73,7 +73,7 @@
 (def plate-height 2)
 (def plate-border-height 1)
 
-(def thumbs-count 3)
+(def thumbs-count 6)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Column offsets ;;

@@ -8,11 +8,13 @@
             [dactyl-keyboard.common :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.3-thumbs-case :refer :all]
+            [dactyl-keyboard.5-thumbs-case :refer :all]
+            [dactyl-keyboard.6-thumbs-case :refer :all]
             [dactyl-keyboard.connectors :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
 (def case-walls
   (case thumbs-count
     3 three-thumbs-case-walls
-    5 three-thumbs-case-walls
-    6 three-thumbs-case-walls))
+    5 fifth-thumb-case-walls
+    6 six-thumb-case-walls))
