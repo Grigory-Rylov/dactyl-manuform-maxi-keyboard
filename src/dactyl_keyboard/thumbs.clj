@@ -94,16 +94,18 @@
 
 (defn five-thumbs-layout [shape]
   (union
-   (thumb-r-place shape)
-   (thumb-m-place shape)
-   (thumb-l-place shape)))
-
+   (thumb-mr-place shape)
+   (thumb-br-place shape)
+   (thumb-tl-place shape)
+   (thumb-bl-place shape)))
 
 (defn six-thumbs-layout [shape]
   (union
-   (thumb-r-place shape)
-   (thumb-m-place shape)
-   (thumb-l-place shape)))
+   (thumb-mr-place shape)
+   (thumb-6-place shape)
+   (thumb-br-place shape)
+   (thumb-tl-place shape)
+   (thumb-bl-place shape)))
 
 (defn thumb-layout [shape]
   (case thumbs-count
