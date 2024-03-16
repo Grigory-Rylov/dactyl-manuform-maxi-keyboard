@@ -49,7 +49,7 @@
 
 ;usb
 (def usbWidth 9)
-(def usbHeight 3)
+(def usbHeight 3.3)
 (def usbCornerRadius 1.2)
 
 ;usb cable
@@ -148,7 +148,7 @@
   (rotate [(deg2rad 90), 0, 0]
           (union
            (binding [*fn* 50] (cylinder (/ trrsDiameter 2), 10))
-           (translate [0, 0, (+ wall-thickness (/ trrsLen2 2))]
+           (translate [0, 0, (+ wall-thickness (/ trrsLen2 2) -1.5)]
                       (binding [*fn* 50] (cylinder (/ trrsOutterDiameter 2), trrsLen2))))))
 
 (def usbHole
