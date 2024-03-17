@@ -35,7 +35,7 @@
     (->> (screw-insert-shape bottom-radius top-radius height)
          (translate (map + offset [(first position) (second position) (/ height 2)])))))
 
-(defn screw-insert-all-shapes [bottom-radius top-radius height]
+(defn screw-insert-six-shapes [bottom-radius top-radius height]
   (union
    (screw-insert 0 0 bottom-radius top-radius height [6 7 0]) ; bottom left
    ; thumb
@@ -51,7 +51,7 @@
    ; top
    (color-yellow
     (case thumbs-count
-      0  0
+      0  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
       3  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
       5  (screw-insert 0 lastrow bottom-radius top-radius height [14 -42 0])
       6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0])))
@@ -71,6 +71,38 @@
      (screw-insert 2 lastrow bottom-radius top-radius height [-3 -5 0]))
 
    ; end union
+   ))
+
+(defn screw-insert-0-thumb [bottom-radius top-radius height]
+  (union
+   ; bottom left
+   (screw-insert 0 0 bottom-radius top-radius height [9 7 0])
+   ; thumb
+   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [15 -12 0]))
+
+   ; top right
+   (color-blue
+    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
+
+   ; bottom right
+   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 5 0]))
+   ; top
+   ;   (color-yellow
+   ;     (screw-insert 2 lastrow bottom-radius top-radius height [-6 2 0]))
+
+   ; bottom middle
+   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
+
+   ; top left
+   (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
+
+   ; end union
+   ))
+
+(defn screw-insert-all-shapes [bottom-radius top-radius height]
+  (if externalThumb
+    (screw-insert-0-thumb bottom-radius top-radius height)
+    (screw-insert-six-shapes bottom-radius top-radius height)
    ))
 
 ; Hole Depth Y: 4.4

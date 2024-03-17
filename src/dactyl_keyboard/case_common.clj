@@ -66,10 +66,23 @@
               (partial key-place x2 y2) dx2 dy2 post2))
 
 (def right-wall
-  (let [tr (if (true? pinky-15u) wide-post-tr web-post-tr)
-        br (if (true? pinky-15u) wide-post-br web-post-br)]
-    (union (key-wall-brace lastcol 0 0 1 tr lastcol 0 1 0 tr)
-           (for [y (range 0 nrows)] (key-wall-brace lastcol y 1 0 tr lastcol y 1 0 br))
+  (let [tr  web-post-tr
+        br  web-post-br]
+    (union
+       (key-wall-brace lastcol 0 0 1 web-post-tr lastcol 0 1 0 web-post-tr)
+      (for [y (range 0 nrows)] (key-wall-brace lastcol y 1 0 tr lastcol y 1 0 br))
+      (for [y (range 0 (dec nrows))]
+        (key-wall-brace lastcol y 1 0 br lastcol (inc y) 1 0 tr))
+
+        (key-wall-brace lastcol cornerrow 0 -1 web-post-br lastcol cornerrow 1 0 web-post-br))))
+
+(def offset-wall-x -1.0)
+(def left-wall
+  (let [tr  web-post-tl
+        br  web-post-bl]
+    (union (key-wall-brace 0 0 0 1 web-post-tl 0 0 offset-wall-x 0 web-post-tl)
+           (for [y (range 0 nrows)]
+             (key-wall-brace 0 y offset-wall-x 0 tr 0 y offset-wall-x 0 br))
            (for [y (range 0 (dec nrows))]
-             (key-wall-brace lastcol y 1 0 br lastcol (inc y) 1 0 tr))
-           (key-wall-brace lastcol cornerrow 0 -1 br lastcol cornerrow 1 0 br))))
+             (key-wall-brace 0 y offset-wall-x 0 br 0 (inc y) offset-wall-x 0 tr))
+           (key-wall-brace 0 cornerrow 0 -1 web-post-bl 0 cornerrow offset-wall-x 0 web-post-bl))))

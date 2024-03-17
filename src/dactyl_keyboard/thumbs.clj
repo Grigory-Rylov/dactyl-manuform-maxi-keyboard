@@ -66,6 +66,41 @@
        (translate [-51 -25 -11.5])))
 
 ;        (translate [-51 -25 -12])))
+(def thumb-offset-x 28)
+(def thumb-offset-y 13)
+(defn thumb-top-place [shape]
+  (->> shape
+       (rotate (deg2rad 10) [1 0 0])
+       (rotate (deg2rad -10) [0 1 0])
+       (rotate (deg2rad 45) [0 0 1]) ; original 10
+       (translate thumborigin)
+       (translate [thumb-offset-x thumb-offset-y -3])))
+
+(defn thumb-left-place [shape]
+  (->> shape
+       (rotate (deg2rad 10) [1 0 0])
+       (rotate (deg2rad -10) [0 1 0])
+       (rotate (deg2rad 45) [0 0 1])
+       (translate thumborigin)
+       (translate [(+ thumb-offset-x -14) (+ thumb-offset-y -14) -6.5])))
+
+
+(defn thumb-bottom-place [shape]
+  (->> shape
+       (rotate (deg2rad 10) [1 0 0])
+       (rotate (deg2rad -10) [0 1 0])
+       (rotate (deg2rad 45) [0 0 1])
+       (translate thumborigin)
+       (translate [(+ thumb-offset-x 0) (+ thumb-offset-y -28) -10])))
+
+(defn thumb-right-place [shape]
+  (->> shape
+       (rotate (deg2rad 10) [1 0 0])
+       (rotate (deg2rad -10) [0 1 0])
+       (rotate (deg2rad 45) [0 0 1])
+       (translate thumborigin)
+       (translate [(+ thumb-offset-x 14) (+ thumb-offset-y -14) -6.5])))
+
 
 (defn thumb-place [rot move shape]
   (->> shape
@@ -107,8 +142,16 @@
    (thumb-tl-place shape)
    (thumb-bl-place shape)))
 
+(defn external-4-thumbs-layout [shape]
+  (union
+   (color-red (thumb-right-place shape))
+   (color-yellow (thumb-left-place shape))
+   (color-green (thumb-bottom-place shape))
+   (color-blue (thumb-top-place shape))))
+
 (defn thumb-layout [shape]
   (case thumbs-count
+    0 (external-4-thumbs-layout shape)
     3 (three-thumbs-layout shape)
     5 (five-thumbs-layout shape)
     6 (six-thumbs-layout shape)))

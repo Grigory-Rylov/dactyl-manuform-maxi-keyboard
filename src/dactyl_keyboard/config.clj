@@ -16,21 +16,24 @@
 
 (def nrows 3)
 (def ncols 5)
+(def externalThumb true)
 
 (def column-curvature (deg2rad 20))
 
 ; 15                        ; curvature of the columns
-(def row-curvature (deg2rad 6))
+(def row-curvature (deg2rad 6)) ; 1
 
 ; 5                   ; curvature of the rows
 
-(def centerrow (- nrows 2))
+(def centerrow (if externalThumb
+                 (- nrows 2)
+                 (dec nrows )))
 
 ; controls front-back tilt
 (def centercol 2)
 
 ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (deg2rad 15))
+(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 15)))
 
 ; or, change this for more precise tenting control
 (def column-style
@@ -73,7 +76,7 @@
 (def plate-height 2)
 (def plate-border-height 1)
 
-(def thumbs-count 6)
+(def thumbs-count 3)
 
 ;;;;;;;;;;;;;;;;;;;;
 ;; Column offsets ;;
@@ -107,6 +110,7 @@
 
 (def thumb-offsets [6 -3 7])
 
+; высота
 (def keyboard-z-offset
   10 ;(if hot-swap 12 9)
   )

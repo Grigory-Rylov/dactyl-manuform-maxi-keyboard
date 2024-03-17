@@ -16,22 +16,28 @@
             [dactyl-keyboard.screws :refer :all]
             [dactyl-keyboard.magnet-holder :refer :all]
             [dactyl-keyboard.connectors :refer :all]
+            [dactyl-keyboard.0-thumbs-connectors :refer :all]
             [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.external-controller :refer :all]
+            [dactyl-keyboard.external-thumb-plate :refer :all]
             [dactyl-keyboard.plate :refer :all]))
 
 (def larger-plate
   (let [plate-height (- (/ (- sa-double-length mount-height) 3) 0.5)
         top-plate    (->> (cube mount-width plate-height web-thickness)
                           (translate
-                            [0
-                             (/ (+ plate-height mount-height) 2)
-                             (- plate-thickness (/ web-thickness 2))]))]
+                           [0
+                            (/ (+ plate-height mount-height) 2)
+                            (- plate-thickness (/ web-thickness 2))]))]
     (union top-plate (mirror [0 1 0] top-plate))))
 
 (def thumbcaps
   (union
    (thumb-layout (sa-cap 1))))
+
+(def external-thumbcaps
+  (union
+   (external-4-thumbs-layout (sa-cap 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;
 ;; CONTOLLER HOLES ;;
@@ -85,15 +91,15 @@
     pinky-connectors
     pinky-walls
     connectors
-    thumb-right
-    thumb-connectors
+    (if (= externalThumb false) thumb-right)
+    (if (= externalThumb false) thumb-connectors)
     (difference
-      (union case-walls
-             (if magnet-holes magnet-stiffness-booster)
-             screw-insert-outers)
-      usb-holder-hole-space
-      screw-insert-holes
-      (if magnet-holes magnet-place)))
+     (union case-walls
+            (if magnet-holes magnet-stiffness-booster)
+            screw-insert-outers)
+     usb-holder-hole-space
+     screw-insert-holes
+     (if magnet-holes magnet-place)))
    (translate [0 0 -20] (cube 350 350 40))))
 
 (def model-left-tmp
@@ -103,16 +109,34 @@
     pinky-connectors
     pinky-walls
     connectors
-    thumb-left
+    (if (> thumbs-count 0) thumb-left)
+    (if (> thumbs-count 0) thumb-connectors)
+    (difference
+     (union case-walls
+            (if magnet-holes magnet-stiffness-booster)
+            screw-insert-outers)
+     usb-holder-hole-space
+     screw-insert-holes
+     (if magnet-holes magnet-place)))
+   (translate [0 0 -20] (cube 350 350 40))))
+
+(def external-thumb-model-right
+  (difference
+   (union
+    external-thumb-case
+    ;pinky-connectors
+    ;pinky-walls
+    thumb-right
     thumb-connectors
     (difference
-      (union case-walls
-             (if magnet-holes magnet-stiffness-booster)
-             screw-insert-outers)
-      usb-holder-hole-space
-      screw-insert-holes
-      (if magnet-holes magnet-place)))
+     (union external-thumbs-case-walls
+            ;thumbs-screw-insert-outers
+            )
+
+     ;thumbs-screw-insert-holes
+     ))
    (translate [0 0 -20] (cube 350 350 40))))
+
 
 (spit "things/right.scad"
       (write-scad model-right))
@@ -135,11 +159,27 @@
          pinky-connectors
          pinky-walls
          connectors
-         thumb-right
-         thumb-connectors
+         (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
+         (if (> thumbs-count 0) thumb-connectors)
          (if magnet-holes magnet-connectors)
          case-walls
          thumbcaps
+         caps)
+
+        (translate [0 0 -20] (cube 350 350 40)))))
+
+(spit "things/right-external-thumb-test.scad"
+      (write-scad
+       (difference
+        (union
+         key-holes-right
+         pinky-connectors
+         pinky-walls
+         connectors
+         (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
+         external-4-thumbs-connectors
+         case-walls
+         external-thumbcaps
          caps)
 
         (translate [0 0 -20] (cube 350 350 40)))))
@@ -171,7 +211,28 @@
 (spit "things/hotswap-low-debug.scad" (write-scad hot-socket-low-profile))
 (spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
 
-(spit "things/right-external-controller.scad" (write-scad external-controller-case))
+
+(if externalThumb
+  (spit "things/right-external-controller.scad" (write-scad external-controller-case)))
+(if externalThumb
+  (spit "things/right-external-thumb-case.scad" (write-scad external-thumb-model-right)))
+(if externalThumb
+  (spit "things/right-external-thumb.scad"
+        (write-scad
+         (difference
+          (union
+           ;external-thumb-case
+           thumb-right
+           thumb-connectors
+           (difference
+            (union external-thumbs-case-walls
+                   ;thumbs-screw-insert-outers
+                   )
+
+            ;thumbs-screw-insert-holes
+            ))
+          (translate [0 0 -10] (cube 350 350 40))))))
+
 
 (defn -main [dum] 1)
 
