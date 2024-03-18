@@ -1,21 +1,22 @@
 // microcontroller dimension
 
 // rp2040 black
-//controllerWidth = 23;
-//controllerLen = 54.3;
-//controllerHeight = 1.5;
-
+controllerWidth = 23;
+controllerLen = 54.3;
+controllerHeight = 1.5;
+controllerHolderHeight = 12.9;
 // rp2040 purple
-controllerWidth = 21;
-controllerLen = 55;
-controllerHeight = 1.7;
+//controllerWidth = 21;
+//controllerLen = 55;
+//controllerHeight = 1.7;
+//controllerHolderHeight = 10;
 
 isExternalResetButtonEnabled = false;
 
 buttonAdditionalHeight = 4.5;
 controllerBoxHeight = 10.8;
 controllerWallWidth = 1;
-controllerBottomHeight = 1;
+controllerBottomHeight = 2.2;
 controllerHolderCylinderDiameter = 1.5;
 
 //usb hole
@@ -29,10 +30,10 @@ trrsDiameter = 6.2; // real size 5.8
 trrsLen1 = 4;
 trrsLen2 = 12;
 trrsContactsLen = 6.5;
-trrsOutterDiameter = 7.7;
+trrsOutterDiameter = 8;
 
 //
-controllerWiringHoleWidth = 4;
+controllerWiringHoleWidth = 6;
 roundCornerHeight = 1;
 roundCornerRadius = 1;
 
@@ -119,8 +120,8 @@ module usbHole() {
 }
 
 module controllerHolderHelper() {
-     offset = 10;
-     translate([0,0,controllerHeight + + controllerBottomHeight + controllerHolderCylinderDiameter/2]){
+     offset = 17;
+     translate([0,0,controllerHeight + controllerBottomHeight + controllerHolderCylinderDiameter/2]){
                  translate([0, offset, 0]) rotate([-90,0,00]) { cylinder(h = 3, d = controllerHolderCylinderDiameter, center = true, $fn=20);}
                  translate([0, controllerLen - offset, 0]) rotate([-90,0,00]) { cylinder(h = 3, d = controllerHolderCylinderDiameter, center = true, $fn=20);}
                  
@@ -131,7 +132,7 @@ module controllerHolderHelper() {
 }
 
 module controllerBox() {
-    translate([0, 3*bracingWidth, 0])
+    
     union() {
         // microcontroller holder
         if(!isTmp) {
@@ -140,30 +141,9 @@ module controllerBox() {
         
         difference() {
             union(){
-                minkowski() {
-                    cube([controllerWidth,  controllerLen, controllerBoxHeight -      roundCornerHeight]);
-                    cylinder(roundCornerHeight, roundCornerRadius, roundCornerRadius, $fn=50);
-                }
-               
-                //usb additional wall
-                leftOffset = -trrsOutterDiameter - controllerWallWidth - bracingWidth *2;
-                width = leftOffset + bracingOuterSize - bracingWidth *2;
-                translate([0,-controllerWallWidth - bracingWidth * 3, 0])
-                    cube([width, bracingWidth *3, controllerBoxHeight]);
-                
-                //top wall
-                translate([leftOffset, -bracingWidth *3 - controllerWallWidth, controllerBoxHeight])
-                    cube([bracingOuterSize, controllerWallWidth, (boxHeight- controllerBoxHeight)]);
-                
-                if (isExternalResetButtonEnabled) {
-                    //button holder
-                    holderWidth = buttonWidth + 1;
-                    translate([leftOffset + bracingOuterSize - bracingWidth * 2 - holderWidth, - bracingWidth * 3 + buttonDepth , controllerBoxHeight])
-                       cube([holderWidth, buttonDepth, buttonAdditionalHeight]);
-                }
-                
-                 //left
-                translate([-trrsOutterDiameter - controllerWallWidth - bracingWidth *2, -controllerWallWidth -3*bracingWidth, 0]) {
+                bracingLeft();
+                //bracing left
+                translate([-trrsOutterDiameter  - bracingWidth *2, -controllerWallWidth, 0]) {
                
                     //rigth
                     translate([bracingOuterSize - bracingWidth *2, 0, 0])
@@ -173,13 +153,39 @@ module controllerBox() {
                         cube([bracingWidth, bracingLen, boxHeight]);
                     }
                 }
+                translate([0,bracingWidth * 3,0]){
+                    minkowski() {
+                        cube([controllerWidth,  controllerLen, controllerBoxHeight -      roundCornerHeight]);
+                        cylinder(roundCornerHeight, roundCornerRadius, roundCornerRadius, $fn=50);
+                    }
+                }
+                
+               
+                //usb additional wall
+                leftOffset = -trrsOutterDiameter - controllerWallWidth - bracingWidth *2;
+                width = bracingOuterSize  - bracingWidth * 2 - bracingWidth *2;
+                color("green")
+                translate([-trrsOutterDiameter ,-controllerWallWidth, 0])
+                    cube([width, bracingWidth *3, controllerBoxHeight]);
+                
+                //top wall
+               
+                translate([leftOffset, -bracingWidth *3 - controllerWallWidth, controllerBoxHeight])
+                    cube([bracingOuterSize, controllerWallWidth, (boxHeight- controllerBoxHeight)]);
+                
+                if (isExternalResetButtonEnabled) {
+                    //button holder
+                    holderWidth = buttonWidth + 1;
+                    translate([leftOffset + bracingOuterSize - bracingWidth * 2 - holderWidth, - bracingWidth * 3 + buttonDepth , controllerBoxHeight])
+                       cube([holderWidth, buttonDepth, buttonAdditionalHeight]);
+                }
             }
             // Microcontroller hole
-            extraYOffset = 1;
-            translate([0, extraYOffset, controllerBottomHeight])
+            extraYOffset =  1;
+            translate([0, extraYOffset + bracingWidth * 3, controllerBottomHeight])
         cube([controllerWidth,  controllerLen - extraYOffset, boxHeight]);
             
-            holesFaceOffset = 2;
+            holesFaceOffset = 2 + bracingWidth * 3;
             // Right wiring hole
             translate([0, holesFaceOffset, -0.5 ]) cube([controllerWiringHoleWidth, controllerLen -holesFaceOffset, controllerBottomHeight + 0.5]);
             
@@ -188,13 +194,13 @@ module controllerBox() {
             
             //usb hole
             usbHoleLeftOffset = controllerWidth / 2 - usbHoleWidth / 2;
-            translate([usbHoleLeftOffset , -controllerWallWidth - 3*bracingWidth, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbCableHole();
+            translate([usbHoleLeftOffset , -controllerWallWidth  , usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbCableHole();
             
             usbConnectorLeftOffset = controllerWidth / 2 - usbConnectorWidth / 2;
-            translate([usbConnectorLeftOffset, 0, usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbHole();
+            translate([usbConnectorLeftOffset, bracingWidth * 3 , usbHoleTopOffset + controllerBottomHeight + controllerHeight]) usbHole();
             
             // controller small hole
-            translate([0, 0, controllerBottomHeight]) cube([controllerWidth, 1, controllerHeight])
+            translate([0, bracingWidth * 3, controllerBottomHeight]) cube([controllerWidth, 1, controllerHeight])
             
             if (isExternalResetButtonEnabled) {
                 buttonBottomOffset = 0.5;
@@ -210,6 +216,8 @@ module controllerBox() {
                     cube([buttonWidth, buttonDepth, buttonHeight]);
                 }   
             }
+            // trrs hole
+            trrsHole();
 
             if (isTmp) {
                 translate([-5, 1, controllerBottomHeight]) #cube([controllerWidth + 10, 20, 20]);
@@ -218,35 +226,27 @@ module controllerBox() {
     }
 }
 
-module trrsBox() {
-  
-    translate([-trrsOutterDiameter - 2 * controllerWallWidth , - controllerWallWidth, 0])
-    difference() {
-        trrsLen = trrsLen2 + trrsContactsLen + 4;
-        cube([trrsOutterDiameter + 2*controllerWallWidth, trrsLen + 2*controllerWallWidth, controllerBoxHeight]);
-
-        // trrs box hole
-        translate([controllerWallWidth, controllerWallWidth, controllerBottomHeight])
-    cube([trrsOutterDiameter,  trrsLen, controllerBoxHeight]);
-     
-        // trrs hole
+module trrsHole() {
+     // trrs hole
+    translate([-trrsOutterDiameter - 1 * controllerWallWidth, - controllerWallWidth , 0]){
+        
         translate([trrsOutterDiameter/2 + controllerWallWidth, 0, trrsOutterDiameter/2 + controllerBottomHeight])
-    rotate([-90,0,00]) {
-        translate([0, 0, -trrsLen1 + controllerWallWidth]) {
-            cylinder(trrsLen1, trrsDiameter/2, trrsDiameter/2, $fn=50);
-            }
-        } 
-         //back hole
         rotate([-90,0,00]) {
-            translate([trrsOutterDiameter/2 + controllerWallWidth, -trrsOutterDiameter/2 - controllerBoxHeight/2 ,trrsLen + controllerWallWidth])
-        cylinder(controllerWallWidth, trrsOutterDiameter/2, trrsOutterDiameter/2, $fn=50);
+        union() {
+            translate([0, 0, 0]) {
+                cylinder(10, trrsDiameter/2, trrsDiameter/2, $fn=30);
+            }
+            translate([0, 0, controllerWallWidth]) {
+                cylinder(20, trrsOutterDiameter / 2, trrsOutterDiameter / 2, $fn = 30);
+            }
         }
+    }
     }
 }
 
 module bracingLeft() {
     //left
-    translate([-trrsOutterDiameter - controllerWallWidth - bracingWidth *2, -controllerWallWidth , 0]) {
+    translate([-trrsOutterDiameter - bracingWidth *2, -controllerWallWidth , 0]) {
         difference() {
             cube([bracingWidth *2, bracingWidth*3, boxHeight]);
              translate([0, bracingWidth, 0])
@@ -259,5 +259,5 @@ controllerBox();
 if(!isTmp){
     trrsBox();
     //trrs();
-    bracingLeft();
+    
 }
