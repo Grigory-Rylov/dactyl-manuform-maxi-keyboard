@@ -16,18 +16,18 @@
 
 (def nrows 3)
 (def ncols 5)
-(def externalThumb true)
+(def externalThumb false)
 
 (def column-curvature (deg2rad 20))
 
-; 15                        ; curvature of the columns
-(def row-curvature (deg2rad 6)) ; 1
+(def row-curvature (deg2rad 1))
 
 ; 5                   ; curvature of the rows
 
 (def centerrow (if externalThumb
+                 (dec nrows )
                  (- nrows 2)
-                 (dec nrows )))
+                 ))
 
 ; controls front-back tilt
 (def centercol 2)
@@ -36,8 +36,7 @@
 (def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 15)))
 
 ; or, change this for more precise tenting control
-(def column-style
-  (if (> nrows 5) :orthographic :standard))
+(def column-style :standart)
 
 ; options include :standard, :orthographic, and :fixed
 ; (def column-style :fixed)
@@ -93,6 +92,19 @@
     (= column 0) [0 -7.8 3]
     ; index finger1
     (= column 1) [0 -5.8 3]
+    ; index finger2
+    :else        [0 -2 0]))
+
+(defn last-column-offset [row]
+  (cond
+    (= row 0) [0 2.82 -4.5]
+    (= row 1) [0 -18 5.64]
+    ; pinky finger1
+    (= row 2) [0 -20 5.64]
+    ; pinky finger2
+    (= row 3) [0 -7.8 3]
+    ; index finger1
+    (= row 4) [0 -5.8 3]
     ; index finger2
     :else        [0 -2 0]))
 

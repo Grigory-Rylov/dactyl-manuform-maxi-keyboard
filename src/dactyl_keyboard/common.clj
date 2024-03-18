@@ -23,8 +23,31 @@
                       cap-top-height))
 (def column-x-delta (+ -1 (- (* column-radius (Math/sin row-curvature)))))
 
-(defn offset-for-column [col]
-  (if (and (true? pinky-15u) (= col lastcol)) 5.5 0))
+(defn offset-for-column [column]
+  (cond
+    (= column 0) 0
+    (= column 1) 0
+    ; pinky finger1
+    (= column 2) 0
+    ; pinky finger2
+    (= column 3) 0
+    ; index finger1
+    (= column 4) 1
+    ; index finger2
+    :else       0))
+
+(defn angle-for-column-z [column]
+  (cond
+    (= column 0) (deg2rad 0)
+    (= column 1) (deg2rad 0)
+    ; pinky finger1
+    (= column 2) (deg2rad 0)
+    ; pinky finger2
+    (= column 3) (deg2rad -2)
+    ; index finger1
+    (= column 4) (deg2rad -5)
+    ; index finger2
+    :else       (deg2rad 0)))
 
 (defn apply-key-geometry [translate-fn rotate-x-fn rotate-y-fn column row shape]
   (let [column-angle (* row-curvature (- centercol column))
@@ -59,11 +82,60 @@
          (rotate-y-fn  tenting-angle)
          (translate-fn [0 0 keyboard-z-offset]))))
 
+
+(defn apply-key-geometry2 [translate-fn rotate-x-fn rotate-y-fn rotate-z-fn column row shape]
+  (let [column-angle (* row-curvature (- centercol column))
+
+        placed-shape (->> shape
+                          (translate-fn [(+ (offset-for-column column) 0) 0 (- row-radius)]) ; offsets for key
+                          (rotate-x-fn  (* column-curvature (- centerrow row)))
+                          (translate-fn [0 0 row-radius])
+                          (translate-fn [0 0 (- column-radius)])
+                          (rotate-y-fn  column-angle)
+                          (translate-fn [0 0 column-radius])
+                          (translate-fn (column-offset column))
+                          (rotate-z-fn (angle-for-column-z column))
+                          )
+
+        column-z-delta (* column-radius (- 1 (Math/cos column-angle)))
+        placed-shape-ortho (->> shape
+                                (translate-fn [0 0 (- row-radius)])
+                                (rotate-x-fn  (* column-curvature (- centerrow row)))
+                                (translate-fn [0 0 row-radius])
+                                (rotate-y-fn  column-angle)
+                                (translate-fn [(- (* (- column centercol) column-x-delta)) 0 column-z-delta])
+                                (translate-fn (column-offset column)))
+        placed-shape-fixed (->> shape
+                                (rotate-y-fn  (nth fixed-angles column))
+                                (translate-fn [(nth fixed-x column) 0 (nth fixed-z column)])
+                                (translate-fn [0 0 (- (+ row-radius (nth fixed-z column)))])
+                                (rotate-x-fn  (* column-curvature (- centerrow row)))
+                                (translate-fn [0 0 (+ row-radius (nth fixed-z column))])
+                                (rotate-y-fn  fixed-tenting)
+                                (translate-fn [0 (second (column-offset column)) 0]))]
+    (->> (case column-style
+           :orthographic placed-shape-ortho
+           :fixed        placed-shape-fixed
+           placed-shape)
+         (rotate-y-fn  tenting-angle)
+         (translate-fn [0 0 keyboard-z-offset]))))
+
 (defn key-place [column row shape]
-  (apply-key-geometry translate
+  (if (< column (dec ncols))
+    ;normal
+  (apply-key-geometry2 translate
                       (fn [angle obj] (rotate angle [1 0 0] obj))
                       (fn [angle obj] (rotate angle [0 1 0] obj))
+                       (fn [angle obj] (rotate angle [0 0 1] obj))
+                      column row shape)
+  ; not orto
+  (apply-key-geometry2 translate
+                      (fn [angle obj] (rotate angle [1 0 0] obj))
+                      (fn [angle obj] (rotate angle [0 1 0] obj))
+                      (fn [angle obj] (rotate angle [0 0 1] obj))
+
                       column row shape))
+)
 
 
 (defn rotate-around-x [angle position]

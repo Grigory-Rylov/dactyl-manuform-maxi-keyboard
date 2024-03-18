@@ -114,10 +114,10 @@
 (defn thumb-r-place [shape] (thumb-place [14 -40 10] [-15 -10 5] shape))
 
 ; right
-(defn thumb-m-place [shape] (thumb-place [10 -32 39] [-33 -19 -8] shape))
+(defn thumb-m-place [shape] (thumb-place [10 -32 34] [-32 -17 -8] shape))
 
 ; middle
-(defn thumb-l-place [shape] (thumb-place [6 -30 49] [-46.0 -33.5 -19] shape))
+(defn thumb-l-place [shape] (thumb-place [6 -30 40] [-46.0 -28.5 -19] shape))
 
 ; left
 

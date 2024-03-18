@@ -40,14 +40,13 @@
    (screw-insert 0 0 bottom-radius top-radius height [6 7 0]) ; bottom left
    ; thumb
    (color-green
-    (screw-insert 0 lastrow bottom-radius top-radius height [-4 -38 0]))
+    (screw-insert 0 lastrow bottom-radius top-radius height [-3 -33 0]))
 
    ; top right
-   (color-blue
-    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
+
 
    ; bottom right
-   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 7 0]))
+   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [0 1 0]))
    ; top
    (color-yellow
     (case thumbs-count
@@ -57,14 +56,15 @@
       6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0])))
 
    ; bottom middle
-   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
+   (color-red (screw-insert 2 0 bottom-radius top-radius height [-4.4 -2 0]))
 
    ; top left
+   (color-blue
    (case thumbs-count
      0  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
-     3  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
+     3  (screw-insert lastcol lastrow bottom-radius top-radius height [-5 -10 0])
      5  (screw-insert 0 lastrow bottom-radius top-radius height [-2 5 0])
-     6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0]))
+     6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0])))
 
    ; top middle
    (if (= thumbs-count 6)
