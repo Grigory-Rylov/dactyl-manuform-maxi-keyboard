@@ -33,7 +33,7 @@
 (def centercol 2)
 
 ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 15)))
+(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 20)))
 
 ; or, change this for more precise tenting control
 (def column-style :standart)
@@ -70,7 +70,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 0)
+(def hot-swap 1)
 (def low-profile false)
 (def plate-height 2)
 (def plate-border-height 1)
@@ -124,7 +124,7 @@
 
 ; высота
 (def keyboard-z-offset
-  10 ;(if hot-swap 12 9)
+  11 ;(if hot-swap 12 9)
   )
 
 ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
