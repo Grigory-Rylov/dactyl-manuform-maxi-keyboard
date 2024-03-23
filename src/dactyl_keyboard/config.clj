@@ -72,8 +72,8 @@
 ; 2 - gateron low profile
 (def hot-swap 1)
 (def low-profile false)
-(def plate-height 2)
-(def plate-border-height 1)
+(def plate-height 1)
+(def plate-border-height 2)
 
 (def thumbs-count 3)
 
@@ -124,7 +124,7 @@
 
 ; высота
 (def keyboard-z-offset
-  11 ;(if hot-swap 12 9)
+  14 ;(if hot-swap 12 9)
   )
 
 ; controls overall height; original=9 with centercol=3; use 16 for centercol=2

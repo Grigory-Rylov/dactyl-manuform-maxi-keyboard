@@ -17,12 +17,31 @@
    right-wall
    ; back wall
    (for [x (range 0 ncols)]
-     (if (not= x 1) (key-wall-brace x 0 0 1 web-post-tl x 0 0 1 web-post-tr)))
+     (if (and (not= x 1) (not= x 2))
+       (key-wall-brace x 0 0 1 web-post-tl x 0 0 1 web-post-tr)))
+
    (for [x (range 1 ncols)]
      (if (not= x 2) (key-wall-brace x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr)))
-   (key-wall-brace 2 0 0 1 web-post-tl 2 0 -0.2 1 web-post-tr)
-   (key-wall-brace 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr)
-   (key-wall-brace 1 0 0 1 web-post-tl 1 0 -0.2 1 web-post-tr)
+
+   ;back 1 , 2 cols
+   (color-yellow
+    (key-wall-brace 2 0 ; x1 y1
+                    -0.3 1 ; dx1 dy
+                    web-post-tl ; post1
+                    2 0 ; x2 y2
+                    0 1 ; dx2 dy2
+                    web-post-tr ; post2
+                    ))
+
+   (color-blue (key-wall-brace 2 0 -0.3 1 web-post-tl (dec 2) 0 -0.5 1 web-post-tr))
+
+   (color-green
+     (key-wall-brace 1 0 ; x1 y1
+                     0 1 ; dx1 dy1
+                     web-post-tl ; post1
+                     1 0 ; x2 y2
+                     -0.5 1 ; dx2 dy2
+                     web-post-tr))
 
    ; left wall
    (for [y (range 0 nrows)]
@@ -45,10 +64,27 @@
    ; front wall
    (key-wall-brace 3 lastrow 0 -1 web-post-bl 2 lastrow 0 -1 web-post-br)
 
-   (for [x (range 3 ncols)]
+   ; horizontal panels
+   (for [x (range 3 (- ncols 2))]
      (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
-   (for [x (range 3 ncols)]
+   ; connections between colums
+   (for [x (range 3 (dec ncols))]
      (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
+
+   ; last and last -1 columns
+   (color-yellow (key-wall-brace 4 cornerrow ;x1 y1
+                                 -0.5 -1 ;dx1 dy1
+                                 web-post-bl ; post1
+                                 4 cornerrow ;x2 y2
+                                 0 -1 ; dx1 dy1
+                                 web-post-br ; post2
+                                 ))
+
+   ; connections between colums
+   (color-blue (key-wall-brace 4 cornerrow -0.5 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+
+   (color-gray (key-wall-brace 3 cornerrow 0 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+
 
    ;wall between key 1 and thumb
    (key-wall-brace 2 cornerrow 1 -1 web-post-bl 2 cornerrow 0 -1 web-post-br)

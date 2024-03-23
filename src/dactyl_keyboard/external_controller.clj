@@ -44,7 +44,7 @@
 (def totalControllerBoxWidth (+ controllerWidth roundCornerRadius roundCornerRadius))
 (def controllerWiringHoleWidth 4)
 (def left-offset
-  (if niceNanoMode -16 -10))
+  (if niceNanoMode -16 -11.3))
 (def controllerCaseWidth (- external-controller-width 0.5))
 
 ;usb

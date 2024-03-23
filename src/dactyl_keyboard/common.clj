@@ -32,7 +32,7 @@
     ; pinky finger2
     (= column 3) 0
     ; index finger1
-    (= column 4) 1
+    (= column 4) 4
     ; index finger2
     :else       0))
 
@@ -45,7 +45,7 @@
     ; pinky finger2
     (= column 3) (deg2rad -2)
     ; index finger1
-    (= column 4) (deg2rad -5)
+    (= column 4) (deg2rad -10)
     ; index finger2
     :else       (deg2rad 0)))
 
