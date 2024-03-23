@@ -82,8 +82,7 @@
 
    ; top right
    (color-blue
-    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
-
+     (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
    ; bottom right
    (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 5 0]))
    ; top
