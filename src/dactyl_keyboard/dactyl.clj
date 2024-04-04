@@ -212,8 +212,7 @@
 (spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
 
 
-(if externalThumb
-  (spit "things/right-external-controller.scad" (write-scad external-controller-case)))
+(spit "things/right-external-controller.scad" (write-scad external-controller-case))
 (if externalThumb
   (spit "things/right-external-thumb-case.scad" (write-scad external-thumb-model-right)))
 (if externalThumb

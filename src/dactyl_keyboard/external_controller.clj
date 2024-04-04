@@ -17,7 +17,7 @@
 (def controllerWallWidth 1)
 
 (def niceNanocontrollerWidth 18)
-(def niceNanocontrollerLen 33.7)
+(def niceNanocontrollerLen 35)
 (def niceNanocontrollerHeight 1.7)
 
 ; purple
@@ -30,13 +30,15 @@
 (def rpBlackControllerLen 54.3)
 (def rpBlackControllerHeight 1.5)
 
+(def usbHoleTopOffset 0)
+
 (def controllerWidth
   (if niceNanoMode niceNanocontrollerWidth rpPurpleControllerWidth))
 (def controllerLen (if niceNanoMode niceNanocontrollerLen rpPurpleControllerLen))
 (def controllerHeight
   (if niceNanoMode niceNanocontrollerHeight rpBlackControllerHeight))
 
-(def controllerBottomHeight 1.8)
+(def controllerBottomHeight 1.0)
 (def roundCornerHeight 1)
 (def roundCornerRadius 1)
 (def totalControllerBoxHeight 6)
@@ -65,6 +67,11 @@
 (def trrsLen2 12)
 (def trrsContactsLen 6.5)
 (def trrsOutterDiameter 8)
+
+(def batteryLen 67.5)
+(def batteryDiameter 18.1)
+(def batteryBoxHeight (+ (/ batteryDiameter 2) controllerBottomHeight))
+(def isExternalResetButtonEnabled true)
 
 (def controller-holder-y-offset -0.4)
 
@@ -144,6 +151,9 @@
 (def controller-body-x-offset
   (/ (- controllerCaseWidth totalControllerBoxWidth) 2))
 
+(def controller-body-x-offset-wireless
+  (- (/ (- controllerCaseWidth totalControllerBoxWidth) 2) 2.7))
+
 (def trrsHole
   (rotate [(deg2rad 90), 0, 0]
           (union
@@ -161,10 +171,10 @@
   (minkowski
    (rotate [(deg2rad 90), 0, 0] (binding [*fn* 30] (cylinder usbCableCornerRadius, 1)))
    (cube (- usbCableWidth (* usbCableCornerRadius 2)), (+ wall-thickness first_column_y_offset), (- usbCableHeigth (* usbCableCornerRadius 2)))))
-(def holesFaceOffset 0)
+(def holesFaceOffset -0.5)
 
 (def controllerHolderCylinderDiameter 1.5)
-(def controllerHolderOffset 16)
+(def controllerHolderOffset 6)
 (def controllerHolderHelper
   (color-red
    (translate
@@ -282,15 +292,322 @@
    ;union end
    ))
 
+(def contactsWallWidth 2)
+(def contactsWidth 1.08)
+(def batteryCoverDiameter (+ batteryDiameter controllerWallWidth 2))
+
+(def batteryContactsHolder
+  (let [width  4
+        height batteryBoxHeight
+        depth  contactsWallWidth]
+    (translate [(/ (- batteryDiameter width) -2), 0, 0]
+               (union
+                (difference
+                 (cube width depth height)
+                 (translate [0, (/ contactsWidth 2), 0] (cube width contactsWidth height)))
+
+                (translate [(- batteryDiameter width), 0, 0]
+                           (difference
+                            (cube width, depth, height)
+                            (translate [0, (/ contactsWidth 2), 0] (cube width, contactsWidth, height))))))))
+
+(def outerContactsCover
+  (let [contactWidth 6
+        width        (+ contactWidth 2)
+        height       batteryBoxHeight
+        depth        2
+        holeDepth    1]
+    (difference
+     (cube width depth height)
+     (translate [0, (/ (- depth holeDepth) 2), 0] (cube contactWidth holeDepth height)))))
+
+(def battery-box
+  (let [totalBatteryBoxLen   (+ batteryLen (* (+ contactsWallWidth contactsWidth roundCornerRadius) 2))
+        batteryCoverDiameter (+ batteryDiameter controllerWallWidth 2)
+        topHoleLen           (- batteryLen 35)
+        isDebug              false
+        holesFaceOffset      (+ contactsWallWidth contactsWidth)
+        centerHoleWidth      8
+        batteryBoxWidth      (+ batteryDiameter (+ batteryLen (* (+ contactsWallWidth contactsWidth) 2)))
+        batteryBoxHoleLen    (+ batteryLen (* (+ contactsWallWidth contactsWidth) 2))
+        roundCornerRadius    1.7]
+
+    (translate [7, (+ (/ totalBatteryBoxLen -2) roundCornerRadius 0.1), 2]
+               (rotate [0, 0, (deg2rad 8)]
+                       (union
+                        ; top
+                        (translate
+                         [0,
+                          0,
+                          (/ batteryDiameter 4)]
+                         (difference
+                          (rotate [(deg2rad -90), 0, 0]
+                                  (binding [*fn* 60] (cylinder (/ batteryCoverDiameter 2), batteryLen)))
+
+                          (rotate [(deg2rad -90), 0, 0]
+                                  (binding [*fn* 60] (cylinder (+ (/ batteryDiameter 2) 0.2), (+ batteryLen 1))))
+
+                          (translate
+                           [0,
+                            0,
+                            (/ batteryCoverDiameter -4)]
+                           (cube batteryCoverDiameter, batteryLen, (/ batteryCoverDiameter 2)))
+
+                          ; top middle hole
+                          (translate [0, 7, (/ batteryCoverDiameter 4)]
+                                     (cube batteryCoverDiameter, topHoleLen, (/ batteryCoverDiameter 2)))
+
+                          ; top edge hole
+                          (translate [0, (/ batteryLen -2), (/ batteryCoverDiameter 4)]
+                                     (cube batteryCoverDiameter, 30, (/ batteryCoverDiameter 2)))
+
+                          ; end difference
+                          ))
+
+                        ;battery
+                        (if isDebug
+                          (translate
+                           [0,
+                            (+ roundCornerRadius contactsWallWidth contactsWidth),
+                            (+ (/ batteryDiameter 2) controllerBottomHeight)]
+                           (color-red
+                            (rotate [(deg2rad -90), 0, 0] (cylinder (/ batteryDiameter 2), batteryLen)))))
+
+                        ; box
+                        ; contacts 1
+                        (translate [0, (/ (- batteryBoxHoleLen contactsWallWidth) 2), 0] batteryContactsHolder)
+
+                        ; contacts 2
+                        (translate
+                         [0,
+                          (/ (- batteryBoxHoleLen contactsWallWidth) -2)
+                          0]
+                         (mirror [0, 1, 0] batteryContactsHolder))
+
+                        (difference
+                         ;battery box
+                         (union
+
+                          (minkowski
+                           (cube batteryDiameter (+ batteryLen (* (+ contactsWallWidth contactsWidth) 2))
+                                 (- batteryBoxHeight roundCornerHeight))
+                           (binding [*fn* 60] (cylinder roundCornerHeight roundCornerRadius))
+                           ; end minkowski
+                           )
+                          ; end union
+                          )
+
+                         ; battery hole
+                         (translate [0, 0, controllerBottomHeight]
+                                    (cube batteryDiameter (+ batteryLen (* (+ contactsWallWidth contactsWidth) 2)) batteryBoxHeight))
+                         ; wide hole
+                         (translate [0, 0, (/ (- batteryBoxHeight roundCornerHeight) -2)]
+                                    (cube batteryDiameter batteryLen (+ controllerBottomHeight 1)))
+
+                         ; center hole
+                         (translate [0, 0, (/ (- batteryBoxHeight roundCornerHeight) -2)]
+                                    (cube centerHoleWidth (+ batteryLen (* holesFaceOffset 2)) (+ controllerBottomHeight 1)))
+                         ; end union
+                         )
+
+                        (color-red
+                         (translate
+                          [0,
+                           (/ (+ totalBatteryBoxLen 2) -2),
+                           0]
+                          outerContactsCover))
+
+                        ; end union
+                        )
+                       ;end rotate
+                       ))))
+
+(def isDebug false)
+(def batteryBoxXOffset -3)
+(def batteryBoxYOffset (- (/ batteryLen -2) controllerLen))
+
+(def buttonBottomOffset 0.5)
+(def buttonHoleLeftOffset (+ (/ controllerWidth 2) roundCornerRadius))
+(def buttonDiameter 3)
+(def buttonClickDiameter 1.6)
+(def buttonHeight 5.2)
+(def buttonWidth 6)
+(def buttonDepth 1.5)
+
+(def switchHole
+  ;switcher button hole
+  (union
+   (rotate [(deg2rad -90), 0, 0]
+           (union
+            ; click hole
+            (translate [0, 0, (/ 10 2)] (binding [*fn* 50] (cylinder (/ buttonClickDiameter 2) 10)))
+            (translate [0, 0, (/ (+ buttonDepth) 2)]
+                       (binding [*fn* 50] (cylinder (/ buttonDiameter 2) (/ controllerWallWidth 2))))
+            ;union
+            ))
+   ;switcher case hole
+   (translate
+    [0, 0, 0.5]
+    (cube buttonWidth buttonDepth (+ buttonHeight 0.5)))
+   ; union
+   ))
+
+
+(def external-case-body
+  (let [topOffset   (/ external-controller-height -2)
+        holderWidth (+ buttonWidth 1)]
+
+    (union
+
+     ; controller body
+     (translate
+      [controller-body-x-offset-wireless
+       controller-body-y-offset
+       (+ totalControllerBoxHeight topOffset)]
+      controller-holder-body)
+
+     ; bracing left
+     (translate
+      [(/ (- controllerCaseWidth bracingWidth) 2),
+       -0.15,
+       (/ totalControllerBoxHeight 2)]
+      (color-green bracingLeft))
+
+     ; bracing right
+     (translate
+      [(/ (- controllerCaseWidth bracingWidth) -2),
+       (- (* first_column_y_offset -1) 0.12),
+       (/ totalControllerBoxHeight 2)]
+      (color-blue bracingRight))
+     ; end union
+     )))
+
+(def external-case-holes
+  (let [zOffset -2]
+    (union
+     ; button
+     (translate
+      [controller-body-x-offset-wireless,
+       (- (/ buttonDepth -2) controllerWallWidth),
+       (+ (/ usbHeight 2) controllerBottomHeight buttonHeight zOffset -0.5)]
+      switchHole)
+     ; usb hole
+     (translate
+      [controller-body-x-offset-wireless,
+       0,
+       (+ (/ usbHeight 2) controllerBottomHeight zOffset)]
+      usbHole)
+
+     ;usb cable hole
+     (translate
+      [controller-body-x-offset-wireless,
+       3.5,
+       (+ (/ usbHeight 2) controllerBottomHeight zOffset)]
+      usbCableHole)
+
+     ; wiring hole
+     (translate
+      [controller-body-x-offset-wireless,
+       (- (/ controllerLen -2) controllerWallWidth),
+       (- controllerBottomHeight 0.5)]
+
+      ; Right wiring hole
+      (translate
+       [(- (+ controllerWallWidth roundCornerRadius) (/ controllerWidth 2)),
+        holesFaceOffset,
+        0]
+       (cube controllerWiringHoleWidth, (- controllerLen roundCornerRadius 1), (+ controllerBottomHeight 10)))
+
+      ; Left wiring hole
+      (translate
+       [(- (/ controllerWidth 2) controllerWallWidth roundCornerRadius),
+        holesFaceOffset,
+        0]
+       (cube controllerWiringHoleWidth, (- controllerLen roundCornerRadius 1), (+ controllerBottomHeight 10)))
+      ;switchHole hole
+      ;
+      )
+
+     ; controller hole
+     (translate
+      [controller-body-x-offset-wireless,
+       controller-body-y-offset,
+       (+ (/ (+ totalControllerBoxHeight 2) 2) zOffset 1)]
+
+      (translate [0, 0, controllerBottomHeight]
+                 (cube controllerWidth, (- controllerLen controllerYOffset), (+ totalControllerBoxHeight 4))))
+     ; end union
+     )))
+
+(def external-case-body-wireless
+  (union
+   ; wall
+   (intersection
+    (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ totalControllerBoxHeight 2)]
+                  (color-blue
+                   (cube (- controllerCaseWidth (* bracingWidth 2)), (+ first_column_y_offset wall-thickness), external-controller-height)))
+    front-walls)
+
+   ; body
+
+   (shape-insert 1, 0,
+                 [left-offset, 0, 0]
+                 external-case-body)
+
+   (shape-insert 1, 0,
+                 [(+ batteryBoxXOffset left-offset),
+                  (- 0 totalControllerBoxLen controller-holder-y-offset (* controllerWallWidth 2)),
+                  0]
+                 ; battery box
+                 battery-box)))
+
+
 (def external-controller-case-wireless
+  (let [topOffset   (/ external-controller-height -2)
+        holderWidth (+ buttonWidth 1)
+        zOffset     -2]
+    (union
+     (difference
+      external-case-body-wireless
+      (shape-insert 1, 0, [left-offset, 0, 0] external-case-holes)
+      ; end difference
+      )
+
+     ;switch case
+     (shape-insert 1, 0, [left-offset, 0, 0]
+                   (difference
+                    (translate
+                     [(- controller-body-x-offset-wireless 1),
+                      (- (/ buttonDepth -2) controllerWallWidth),
+                      (+ (/ usbHeight 2) controllerBottomHeight buttonHeight zOffset -0.8)]
+                     (color-yellow
+                      (cube holderWidth, (+ buttonDepth 2), (+ 4.5 controllerWallWidth))))
+
+
+                    ; button
+                    (translate
+                     [controller-body-x-offset-wireless,
+                      (- (/ buttonDepth -2) controllerWallWidth),
+                      (+ (/ usbHeight 2) controllerBottomHeight buttonHeight zOffset -0.5)]
+                     switchHole)))
+
+     (shape-insert 1, 0,
+                   [(+ left-offset controller-body-x-offset-wireless (/ controllerWidth -2))
+                    (+ controller-body-y-offset (/ controllerLen -2))
+                    zOffset]
+                   controllerHolderHelper)
+     ;end union
+     )))
+
+(def external-controller-case-wireless1
   (union
    (difference
     (union
 
      (shape-insert 1, 0,
-                   [(+ left-offset controller-body-x-offset)
+                   [(+ left-offset controller-body-x-offset-wireless)
                     controller-body-y-offset
-                    roundCornerHeight]
+                    (/ totalControllerBoxHeight 2)]
 
                    controller-holder-body)
 
@@ -363,10 +680,39 @@
     )
 
    (shape-insert 1, 0,
-                 [(+ left-offset controller-body-x-offset (/ controllerWidth -2))
+                 [(+ left-offset controller-body-x-offset-wireless (/ controllerWidth -2))
                   (+ controller-body-y-offset (/ controllerLen -2))
                   0]
                  controllerHolderHelper)
+   (shape-insert 1, 0,
+                 [(+ left-offset controller-body-x-offset-wireless) ; x
+                  0
+                  ; y
+                  0
+                  ;( + roundCornerHeight usbHeight controllerBottomHeight 2)
+                  ]
+                 ; z
+                 (color-yellow
+                  (translate [0, 0, 0] switchHole)))
+
+   (shape-insert 1, 0,
+                 [(+ (/ (- controllerCaseWidth bracingWidth) -2) left-offset),
+                  (- (* first_column_y_offset -1) 0.12),
+                  (/ totalControllerBoxHeight 2)]
+                 ; battery
+                 (if isDebug
+                   (translate
+                    [(/ batteryDiameter 2),
+                     (+ roundCornerRadius contactsWallWidth contactsWidth batteryBoxYOffset),
+                     (+ (/ batteryDiameter 2) controllerBottomHeight)]
+                    (color-red
+                     (rotate [(deg2rad -90), 0, 0] (cylinder (/ batteryDiameter 2) batteryLen))))))
+
+   ; battery box
+   ;(translate [batteryBoxXOffset, 0, 0] battery-box)
+
+   ; battery debug
+
 
    ;union end
    ))

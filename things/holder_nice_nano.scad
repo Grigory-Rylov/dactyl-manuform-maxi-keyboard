@@ -25,7 +25,7 @@ controllerWiringHoleWidth = 4;
 roundCornerHeight = 1;
 roundCornerRadius = 1;
 contactsWidth = 1.08;
-contactsWallWdth = 2;
+contactsWallWidth = 2;
 
 //bracing
 bracingWidth = 1.5;
@@ -216,9 +216,7 @@ module batteryBox() {
     translate([0, controllerLen + roundCornerRadius, 0]) {     
         union() {
             // top
-           
-                
-            translate([batteryDiameter/2, roundCornerRadius + (contactsWallWdth + contactsWidth), batteryDiameter/2]){
+            translate([batteryDiameter/2, roundCornerRadius + (contactsWallWidth + contactsWidth), batteryDiameter/2]){
                 difference() {
                     batteryCoverDiameter = batteryDiameter + controllerWallWidth+2;
                     rotate([-90,0,0]) cylinder(d=batteryCoverDiameter, h=batteryLen, $fn=100);
@@ -244,13 +242,13 @@ module batteryBox() {
             }
 
             // contacts 2
-            translate([0, batteryLen + 2 * (contactsWallWdth + contactsWidth) + roundCornerRadius, 0]){
+            translate([0, batteryLen + 2 * (contactsWallWidth + contactsWidth) + roundCornerRadius, 0]){
                 mirror([0,1,0]) batteryContactsHolder();
             }
             
             //battery
             if (isTmp){
-                translate([batteryDiameter/2, roundCornerRadius + (contactsWallWdth + contactsWidth), batteryDiameter/2 + controllerBottomHeight]){
+                translate([batteryDiameter/2, roundCornerRadius + (contactsWallWidth + contactsWidth), batteryDiameter/2 + controllerBottomHeight]){
                     color("red") {
                         rotate([-90,0,0]) cylinder(d=batteryDiameter, h=batteryLen);
                     }
@@ -261,7 +259,7 @@ module batteryBox() {
                 union(){
                     translate([0, roundCornerRadius, 0]){
                         minkowski() {
-                            cube([batteryDiameter,  batteryLen + 2 * (contactsWallWdth + contactsWidth), batteryBoxHeight - roundCornerHeight]);
+                            cube([batteryDiameter,  batteryLen + 2 * (contactsWallWidth + contactsWidth), batteryBoxHeight - roundCornerHeight]);
                                 cylinder(roundCornerHeight, roundCornerRadius, roundCornerRadius, $fn=50);
                             }
                         }
@@ -270,10 +268,10 @@ module batteryBox() {
                 // battery hole
                
                 translate([0, roundCornerRadius, controllerBottomHeight]) {
-                    cube([batteryDiameter,  batteryLen + 2 * (contactsWallWdth + contactsWidth), batteryBoxHeight]);
+                    cube([batteryDiameter,  batteryLen + 2 * (contactsWallWidth + contactsWidth), batteryBoxHeight]);
                 }
                 
-                holesFaceOffset = contactsWallWdth + contactsWidth;
+                holesFaceOffset = contactsWallWidth + contactsWidth;
                  // wide hole
                 translate([0, roundCornerRadius + holesFaceOffset, -0.5 ]) cube([batteryDiameter, batteryLen , controllerBottomHeight + 0.5]);
                 
