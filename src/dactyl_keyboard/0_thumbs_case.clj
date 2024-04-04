@@ -43,26 +43,26 @@
   (union
    ; thumb walls
    (wall-brace thumb-bottom-place 0 (* external-thumb-offset -1) web-post-bl thumb-bottom-place 0 (* external-thumb-offset -1) thumb-post-br)
-   (wall-brace thumb-right-place 0 (* external-thumb-offset -1) web-post-bl thumb-right-place 0 (* external-thumb-offset -1) thumb-post-br)
-   (wall-brace thumb-right-place external-thumb-offset 0 web-post-br thumb-right-place external-thumb-offset 0 thumb-post-tr)
+   (wall-brace thumb-middle-place 0 (* external-thumb-offset -1) web-post-bl thumb-middle-place 0 (* external-thumb-offset -1) thumb-post-br)
+   (wall-brace thumb-middle-place external-thumb-offset 0 web-post-br thumb-middle-place external-thumb-offset 0 thumb-post-tr)
    (wall-brace thumb-top-place external-thumb-offset 0 web-post-br thumb-top-place external-thumb-offset 0 thumb-post-tr)
    (wall-brace thumb-top-place 0 external-thumb-offset web-post-tr thumb-top-place 0 external-thumb-offset thumb-post-tl)
-   (wall-brace thumb-left-place 0 external-thumb-offset web-post-tr thumb-left-place 0 external-thumb-offset thumb-post-tl)
-   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-tl thumb-left-place (* external-thumb-offset -1) 0 thumb-post-bl)
+;   (wall-brace thumb-left-place 0 external-thumb-offset web-post-tr thumb-left-place 0 external-thumb-offset thumb-post-tl)
+;   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-tl thumb-left-place (* external-thumb-offset -1) 0 thumb-post-bl)
    (wall-brace thumb-bottom-place (* external-thumb-offset -1) 0 web-post-tl thumb-bottom-place (* external-thumb-offset -1) 0 thumb-post-bl)
 
    ; thumb corners
    (wall-brace thumb-bottom-place (* external-thumb-offset -1) 0 web-post-bl thumb-bottom-place 0 (* external-thumb-offset -1) web-post-bl)
 
-   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-tl thumb-left-place 0 external-thumb-offset web-post-tl)
-   (wall-brace thumb-right-place external-thumb-offset 0 web-post-br thumb-right-place 0 (* external-thumb-offset -1) web-post-br)
+;   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-tl thumb-left-place 0 external-thumb-offset web-post-tl)
+   (wall-brace thumb-middle-place external-thumb-offset 0 web-post-br thumb-middle-place 0 (* external-thumb-offset -1) web-post-br)
 
    (wall-brace thumb-top-place external-thumb-offset 0 web-post-tr thumb-top-place 0 external-thumb-offset web-post-tr)
 
    ; thumb tweeners
-   (wall-brace thumb-top-place 0 external-thumb-offset web-post-tl thumb-left-place 0 external-thumb-offset web-post-tr)
-   (wall-brace thumb-right-place 0 (* external-thumb-offset -1) web-post-bl thumb-bottom-place 0 (* external-thumb-offset -1) web-post-br)
-   (wall-brace thumb-top-place external-thumb-offset 0 web-post-br thumb-right-place external-thumb-offset 0 web-post-tr)
-   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-bl thumb-bottom-place (* external-thumb-offset -1) 0 web-post-tl)
+;   (wall-brace thumb-top-place 0 external-thumb-offset web-post-tl thumb-left-place 0 external-thumb-offset web-post-tr)
+   (wall-brace thumb-middle-place 0 (* external-thumb-offset -1) web-post-bl thumb-bottom-place 0 (* external-thumb-offset -1) web-post-br)
+   (wall-brace thumb-top-place external-thumb-offset 0 web-post-br thumb-middle-place external-thumb-offset 0 web-post-tr)
+;   (wall-brace thumb-left-place (* external-thumb-offset -1) 0 web-post-bl thumb-bottom-place (* external-thumb-offset -1) 0 web-post-tl)
 
    ))

@@ -13,32 +13,32 @@
 
 (def external-4-thumbs-connectors
   (union
-   (triangle-hulls    ; top left
-    (thumb-top-place web-post-tl)
-    (thumb-top-place web-post-bl)
-    (thumb-left-place thumb-post-tr)
-    (thumb-left-place thumb-post-br)
-    )
+;   (triangle-hulls    ; top left
+;    (thumb-top-place web-post-tl)
+;    (thumb-top-place web-post-bl)
+;    (thumb-left-place thumb-post-tr)
+;    (thumb-left-place thumb-post-br)
+;    )
    (triangle-hulls    ; bottom right
     (thumb-bottom-place web-post-tr)
     (thumb-bottom-place web-post-br)
-    (thumb-right-place thumb-post-tl)
-    (thumb-right-place thumb-post-bl)
+    (thumb-middle-place thumb-post-tl)
+    (thumb-middle-place thumb-post-bl)
     )
-   (triangle-hulls ;left bottom
-    (thumb-bottom-place web-post-tl)
-    (thumb-bottom-place web-post-tr)
-    (thumb-left-place thumb-post-bl)
-    (thumb-left-place thumb-post-br))
+;   (triangle-hulls ;left bottom
+;    (thumb-bottom-place web-post-tl)
+;    (thumb-bottom-place web-post-tr)
+;    (thumb-left-place thumb-post-bl)
+;    (thumb-left-place thumb-post-br))
    (triangle-hulls ; top right
     (thumb-top-place web-post-bl)
     (thumb-top-place web-post-br)
-    (thumb-right-place thumb-post-tl)
-    (thumb-right-place thumb-post-tr))
-   (triangle-hulls ; center
-    (thumb-top-place web-post-bl)
-    (thumb-left-place web-post-br)
-    (thumb-right-place thumb-post-tl)
-    (thumb-bottom-place thumb-post-tr)
-    )
+    (thumb-middle-place thumb-post-tl)
+    (thumb-middle-place thumb-post-tr))
+;   (triangle-hulls ; center
+;    (thumb-top-place web-post-bl)
+;    (thumb-left-place web-post-br)
+;    (thumb-middle-place thumb-post-tl)
+;    (thumb-bottom-place thumb-post-tr)
+;    )
    ))
