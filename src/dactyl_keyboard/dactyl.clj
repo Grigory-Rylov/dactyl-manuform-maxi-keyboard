@@ -105,8 +105,20 @@
 
 (def controller-hole
   (if external-controller
-    external-controller-holder-hole-space internal-controller-hole)
-    )
+    external-controller-holder-hole-space
+    internal-controller-hole))
+
+(def offsetX 90)
+
+(def logo
+  ; logo
+  (translate [-56, -57.5, 80]
+             (rotate [(deg2rad 90), 0, 0]
+                     (color-yellow
+                      (import
+                       "osik_logo.stl"))))
+
+  )
 
 (def model-right
   (difference
@@ -115,6 +127,10 @@
     ;pinky-connectors
     ;pinky-walls
     connectors
+    logo
+    (color-green(translate [-86 -2 5] (cube 6 4 6)))
+    (color-green(translate [-86 -56 5] (cube 6 4 6)))
+    ;(color-green controller-hole)
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors)
     (difference
@@ -123,7 +139,36 @@
             screw-insert-outers)
      controller-hole
      screw-insert-holes
-     (if magnet-holes magnet-place))
+     (if magnet-holes magnet-place)))
+   (color-green (translate [(- -50 offsetX), 0, 0] (cube 100 200 200)))
+   (translate [0 0 -20] (cube 350 350 40))))
+
+(def model-left
+  (mirror [1, 0, 0]
+          (difference
+           (union
+            key-holes-right
+            ;pinky-connectors
+            ;pinky-walls
+            connectors
+            (if (= externalThumb false) thumb-right)
+            (if (= externalThumb false) thumb-connectors)
+            (difference
+             (union case-walls
+                    (if magnet-holes magnet-stiffness-booster)
+                    screw-insert-outers)
+             screw-insert-holes
+             (if magnet-holes magnet-place)))
+           (translate [0 0 -20] (cube 350 350 40)))))
+
+
+(def model-mono
+  (difference
+   (union
+    (translate [offsetX, 0, 0] model-right)
+
+    ;(translate [(* offsetX -1), 0, 0]  model-left)
+    ;union
     )
    (translate [0 0 -20] (cube 350 350 40))))
 
@@ -165,6 +210,10 @@
 
 (spit "things/right.scad"
       (write-scad model-right))
+
+
+(spit "things/mono_3x5_3.scad"
+      (write-scad model-mono))
 
 (spit "things/left.scad"
       (write-scad (mirror [-1 0 0] model-left-tmp)))

@@ -9,15 +9,17 @@
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
-(def web-thickness 2)
-(def post-size 0.1)
+(def web-thickness 1)
+(def post-size 0.1) ; 0.1
 (def web-post
-  (->> (cube post-size post-size web-thickness)
+  (->>
+   (binding [*fn* wall-fn] (sphere web-thickness))
+   ;(cube post-size post-size web-thickness)
        (translate
         [0
          0
-         (+ (/ web-thickness -2)
-            plate-thickness)])))
+         (+ (/ web-thickness -2) plate-thickness)
+         ])))
 
 (def post-adj (/ post-size 2))
 (def web-post-tr

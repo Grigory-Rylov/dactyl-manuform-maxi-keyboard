@@ -34,14 +34,26 @@
        [left-wall-x-offset 0 left-wall-z-offset]))
 
 (defn left-key-place [row direction shape]
-  (translate (left-key-position row direction) shape))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (translate (left-key-position row direction) shape)))
 
 (defn wall-locate1 [dx dy] [(* dx wall-thickness) (* dy wall-thickness) -1])
+(defn wall-locate-mid [dx dy dz] [(* dx wall-thickness) (* dy wall-thickness) (* dz wall-thickness)])
+
 (defn wall-locate2 [dx dy]
   [(* dx wall-xy-offset) (* dy wall-xy-offset) wall-z-offset])
 (defn wall-locate3 [dx dy]
-  [(* dx (+ wall-xy-offset wall-thickness))
-   (* dy (+ wall-xy-offset wall-thickness))
+  [(* dx (+ wall-xy-offset wall-thickness0))
+   (* dy (+ wall-xy-offset wall-thickness0))
+   wall-z-offset])
+
+(defn wall-locate22 [dx dy] [0 0 0])
+
+(defn wall-rotation [dx dy] [0 0 (deg2rad board-z-angle)])
+
+(defn wall-locate32 [dx dy]
+  [(* dx (+ 10 wall-thickness0))
+   (* dy (+ 10 wall-thickness0))
    wall-z-offset])
 
 (defn wall-brace [place1 dx1 dy1 post1 place2 dx2 dy2 post2]
@@ -60,6 +72,33 @@
     (place1 (translate (wall-locate3 dx1 dy1) post1))
     (place2 (translate (wall-locate2 dx2 dy2) post2))
     (place2 (translate (wall-locate3 dx2 dy2) post2)))))
+
+(defn wall-brace-top [place1 dx1 dy1 post1 place2 dx2 dy2 post2]
+  (union
+   (hull
+    (place1 post1)
+    (place1 (translate (wall-locate1 dx1 dy1) post1))
+    (place1 (translate (wall-locate2 dx1 dy1) post1))
+    (place1 (translate (wall-locate3 dx1 dy1) post1))
+    (place2 post2)
+    (place2 (translate (wall-locate1 dx2 dy2) post2))
+    (place2 (translate (wall-locate2 dx2 dy2) post2))
+    (place2 (translate (wall-locate3 dx2 dy2) post2)))
+
+   (color-red
+    (hull
+     (hull
+      (place1 (translate (wall-locate2 dx1 dy1) post1))
+      (place1 (translate (wall-locate3 dx1 dy1) post1))
+      (place2 (translate (wall-locate2 dx2 dy2) post2))
+      (place2 (translate (wall-locate3 dx2 dy2) post2)))
+
+     (rotate [0,0, (deg2rad 2)] (translate [-62, 0, 0]
+                (hull
+                 (place1 (translate (wall-locate2 0 0) post1))
+                 (place1 (translate (wall-locate3 0 0) post1))
+                 (place2 (translate (wall-locate2 0 0) post2))
+                 (place2 (translate (wall-locate3 0 0) post2)))))))))
 
 (defn key-wall-brace [x1 y1 dx1 dy1 post1 x2 y2 dx2 dy2 post2]
   (wall-brace (partial key-place x1 y1) dx1 dy1 post1

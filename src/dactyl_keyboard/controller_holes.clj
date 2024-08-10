@@ -30,12 +30,12 @@
         holes-lenght      16]
     (union
      (cube 20 5 6.7)
-     (translate [(/ holes-lenght 2), cylinder-depth, 0]
-                (rotate [(deg2rad 90), 0, 0]
-                        (binding [*fn* 50] (cylinder (/ cylinder-diameter 2) cylinder-depth))))
-     (translate [(/ holes-lenght -2), cylinder-depth, 0]
-                (rotate [(deg2rad 90), 0, 0]
-                        (binding [*fn* 50] (cylinder (/ cylinder-diameter 2) cylinder-depth))))
+     ;(translate [(/ holes-lenght 2), cylinder-depth, 0]
+     ;           (rotate [(deg2rad 90), 0, 0]
+     ;                   (binding [*fn* 50] (cylinder (/ cylinder-diameter 2) cylinder-depth))))
+     ;(translate [(/ holes-lenght -2), cylinder-depth, 0]
+     ;           (rotate [(deg2rad 90), 0, 0]
+     ;                   (binding [*fn* 50] (cylinder (/ cylinder-diameter 2) cylinder-depth))))
 
      ;end union
      )))
@@ -54,28 +54,35 @@
     ;end union
     ))
 
+(def reset-switch-hole
+  (let [width  6.1
+        height 3.5
+        buttonWidth 3
+        buttonHeight 1.5
+        ]
+    (union
+     (translate [0, 1.5, 0] (cube (+ width 0.3), 4, (+ height 0.3)))
+     (cube (+ buttonWidth 0.4), 10, (+ buttonHeight 0.4)))
+
+    ))
+
 (def internal-controller-hole
   (let [z-offset     (+ controller-plate-height -0.2)
         usb-z-offset (+ (/ usbHeight 2) controllerBottomHeight controllerHeight)]
-    (union
-     (shape-insert 1, 0,
-                   [-1, -1, z-offset]
-                   (rotate [0, 0, (deg2rad column-1-z-angle)]
+    (translate [-70, 0, 0]
+               (union
+                (union
+                 (translate [-15, -4.5, 20] reset-switch-hole)
+                 (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (cylinder 3, 10)))
+                 (translate [0, -5.0, usb-z-offset] usb-connector-body)
+                 ; cable hole
+                 (translate
+                  [0, 3, usb-z-offset]
+                  usbCableHole)
 
-                           (union
-                            (translate [0, -5.0, usb-z-offset] usb-connector-body)
-                            ; cable hole
-                            (translate
-                             [0, 3, usb-z-offset]
-                             usbCableHole)
-
-                            ; usb connector hole
-                            (translate
-                             [0, 0, usb-z-offset]
-                             usbHole))))
-     (shape-insert 0, 0,
-                   [18, 12, (/ 13.5 2)]
-                   (rotate [0, 0, (deg2rad column-0-z-angle)]
-                           roundSwitcherHole))
-     ; end union
-     )))
+                 ; usb connector hole
+                 (translate
+                  [0, 0, usb-z-offset]
+                  usbHole))
+                ; end union
+                ))))

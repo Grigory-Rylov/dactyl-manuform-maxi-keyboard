@@ -24,6 +24,8 @@
 
 (def row-curvature (deg2rad 7))
 
+(def board-z-angle 22.5)
+
 ; 5                   ; curvature of the rows
 
 (def centerrow (if externalThumb
@@ -143,10 +145,12 @@
 (def wall-z-offset -5)
 
 ; original=-15 length of the first downward-sloping part of the wall (negative)
-(def wall-xy-offset 5)
+(def wall-xy-offset 10)
 
 ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
 (def wall-thickness 3)
+(def wall-thickness0 1)
+(def wall-fn 20)
 
 ; wall thickness parameter; originally 5
 

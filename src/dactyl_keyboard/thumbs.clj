@@ -68,6 +68,7 @@
 ;        (translate [-51 -25 -12])))
 (def thumb-offset-x 28)
 (def thumb-offset-y 13)
+
 (defn thumb-top-place [shape]
   (->> shape
        (rotate (deg2rad 0) [1 0 0])
@@ -102,13 +103,16 @@
        (translate move)))
 
 ; convexer
-(defn thumb-r-place [shape] (thumb-place [14 -40 10] [-15 -10 5] shape))
+(defn thumb-r-place [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [-15 -10 5] shape)))
 
 ; right
-(defn thumb-m-place [shape] (thumb-place [10 -32 34] [-32 -17 -8] shape))
+(defn thumb-m-place [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [10 -36 22] [-32 -14 -7] shape)))
 
 ; middle
-(defn thumb-l-place [shape] (thumb-place [6 -30 40] [-46.0 -28.5 -19] shape))
+(defn thumb-l-place [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [6 -30 28] [-47.0 -20.5 -19] shape)))
 
 ; left
 

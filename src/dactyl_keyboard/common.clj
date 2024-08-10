@@ -61,6 +61,7 @@
 
 (def column-0-z-angle 4)
 (def column-1-z-angle 2)
+
 (defn angle-for-column-z [column]
   (cond
     (= column 0) (deg2rad column-0-z-angle)
@@ -154,19 +155,20 @@
      (translate-fn [0 0 keyboard-z-offset]))))
 
 (defn key-place [column row shape]
-  (if cols-angle
-    ; not orto
-    (apply-key-geometry2 translate
-                         (fn [angle obj] (rotate angle [1 0 0] obj))
-                         (fn [angle obj] (rotate angle [0 1 0] obj))
-                         (fn [angle obj] (rotate angle [0 0 1] obj))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (if cols-angle
+            ; not orto
+            (apply-key-geometry2 translate
+                                 (fn [angle obj] (rotate angle [1 0 0] obj))
+                                 (fn [angle obj] (rotate angle [0 1 0] obj))
+                                 (fn [angle obj] (rotate angle [0 0 1] obj))
 
-                         column row shape)
-    ; else orto
-    (apply-key-geometry translate
-                        (fn [angle obj] (rotate angle [1 0 0] obj))
-                        (fn [angle obj] (rotate angle [0 1 0] obj))
-                        column row shape)))
+                                 column row shape)
+            ; else orto
+            (apply-key-geometry translate
+                                (fn [angle obj] (rotate angle [1 0 0] obj))
+                                (fn [angle obj] (rotate angle [0 1 0] obj))
+                                column row shape))))
 
 
 (defn rotate-around-x [angle position]

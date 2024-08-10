@@ -76,13 +76,18 @@
 
 (defn screw-insert-three-thumb-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0 bottom-radius top-radius height [6.5 3 0]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-24 -22 controller-plate-height]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-24 -67 controller-plate-height]) ; bottom left controller-plate-height
+
+   (rotate [0, 0, (deg2rad board-z-angle)](union
+   ;left back
+   (screw-insert 0 0 bottom-radius top-radius height [12 9.5 0]) ; bottom left controller-plate-height
 
    ; thumb
-   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-8 -12 0]))
+   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-7 -1 0]))
 
    ; bottom right
-   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [2 0 0]))
+   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [0 0 0]))
    ; top
    (color-yellow
      (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
@@ -92,10 +97,10 @@
 
    ; front right
    (color-blue
-     (screw-insert lastcol lastrow bottom-radius top-radius height [-4 11 0]))
+     (screw-insert lastcol lastrow bottom-radius top-radius height [-5 11 0]))
 
    ; end union
-   ))
+   ))))
 
 (defn screw-insert-0-thumb [bottom-radius top-radius height]
   (union

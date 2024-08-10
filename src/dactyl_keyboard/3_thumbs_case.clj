@@ -43,10 +43,24 @@
                     -0.5 1 ; dx2 dy2
                     web-post-tr))
 
+   (bottom-hull
+    (translate (wall-locate-mid -3 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5)))
+    (translate (wall-locate-mid -20 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5))))
+
+   (bottom-hull
+    (translate (wall-locate-mid -3 -1.3 -0.7) (left-key-place 2 -1 (sphere 1.5)))
+    (translate (wall-locate-mid -20 -1.0 -0.7) (left-key-place 2 -1 (sphere 1.5))))
+
    ; left key wall
    (for [y (range 0 nrows)]
      (union
-      (wall-brace (partial left-key-place y 1) -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
+      (wall-brace-top (partial left-key-place y 1)
+                      -1 0
+                      web-post
+                      (partial left-key-place y -1)
+                      -1 0
+                      web-post)
+
       (hull (key-place 0 y web-post-tl)
             (key-place 0 y web-post-bl)
             (left-key-place y 1 web-post)
@@ -55,14 +69,16 @@
    ;; left keyplace mid
    (for [y (range 0 (dec nrows))]
      (union
-      (wall-brace (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post)
+      (wall-brace-top (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post)
       (hull (key-place 0 (inc y) web-post-tl)
             (key-place 0 y web-post-bl)
             (left-key-place (inc y) 1 web-post)
             (left-key-place y -1 web-post))))
    ; left back corner
-   (color-red (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial left-key-place 0 1) 0 0.5 web-post))
-   (color-blue (wall-brace (partial left-key-place 0 1) 0 0.5 web-post (partial left-key-place 0 1) -1 0 web-post))
+   (color-red
+    (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial left-key-place 0 1) 0 0.5 web-post))
+   (color-blue
+    (wall-brace (partial left-key-place 0 1) 0 0.5 web-post (partial left-key-place 0 1) -1 0 web-post))
 
    ; front wall
 
@@ -76,21 +92,21 @@
 
    ; last and last -1 columns
    (color-yellow
-     (key-wall-brace 4 cornerrow ;x1 y1
-                     -0.5 -1 ;dx1 dy1
-                     web-post-bl ; post1
-                     4 cornerrow ;x2 y2
-                     0 -1 ; dx1 dy1
-                     web-post-br ; post2
-                     ))
+    (key-wall-brace 4 cornerrow ;x1 y1
+                    -0.5 -1 ;dx1 dy1
+                    web-post-bl ; post1
+                    4 cornerrow ;x2 y2
+                    0 -1 ; dx1 dy1
+                    web-post-br ; post2
+                    ))
 
    ;;front
    ; connections between colums
    (color-blue
-     (key-wall-brace 4 cornerrow -0.5 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+    (key-wall-brace 4 cornerrow -0.5 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
 
    (color-gray
-     (key-wall-brace 3 cornerrow 0 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+    (key-wall-brace 3 cornerrow 0 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
 
 
    ;wall between key 1 and thumb
