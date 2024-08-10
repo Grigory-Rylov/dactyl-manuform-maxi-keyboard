@@ -116,7 +116,7 @@
     ;pinky-walls
     connectors
     (if (= externalThumb false) thumb-right)
-    ;(if (= externalThumb false) thumb-connectors)
+    (if (= externalThumb false) thumb-connectors)
     (difference
      (union case-walls
             (if magnet-holes magnet-stiffness-booster)
