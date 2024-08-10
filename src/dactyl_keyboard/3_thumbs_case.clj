@@ -36,14 +36,14 @@
    (color-blue (key-wall-brace 2 0 -0.3 1 web-post-tl (dec 2) 0 -0.5 1 web-post-tr))
 
    (color-green
-     (key-wall-brace 1 0 ; x1 y1
-                     0 1 ; dx1 dy1
-                     web-post-tl ; post1
-                     1 0 ; x2 y2
-                     -0.5 1 ; dx2 dy2
-                     web-post-tr))
+    (key-wall-brace 1 0 ; x1 y1
+                    0 1 ; dx1 dy1
+                    web-post-tl ; post1
+                    1 0 ; x2 y2
+                    -0.5 1 ; dx2 dy2
+                    web-post-tr))
 
-   ; left wall
+   ; left key wall
    (for [y (range 0 nrows)]
      (union
       (wall-brace (partial left-key-place y 1) -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
@@ -52,6 +52,7 @@
             (left-key-place y 1 web-post)
             (left-key-place y -1 web-post))))
 
+   ;; left keyplace mid
    (for [y (range 0 (dec nrows))]
      (union
       (wall-brace (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post)
@@ -59,36 +60,43 @@
             (key-place 0 y web-post-bl)
             (left-key-place (inc y) 1 web-post)
             (left-key-place y -1 web-post))))
-   (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial left-key-place 0 1) 0 1 web-post)
-   (wall-brace (partial left-key-place 0 1) 0 1 web-post (partial left-key-place 0 1) -1 0 web-post)
-   ; front wall
-   (key-wall-brace 3 lastrow 0 -1 web-post-bl 2 lastrow 0 -1 web-post-br)
+   ; left back corner
+   (color-red (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial left-key-place 0 1) 0 0.5 web-post))
+   (color-blue (wall-brace (partial left-key-place 0 1) 0 0.5 web-post (partial left-key-place 0 1) -1 0 web-post))
 
-   ; horizontal panels
+   ; front wall
+
+   ;??? horizontal panels
    (for [x (range 3 (- ncols 2))]
      (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
-   ; connections between colums
+
+   ;front connections between colums
    (for [x (range 3 (dec ncols))]
      (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
 
    ; last and last -1 columns
-   (color-yellow (key-wall-brace 4 cornerrow ;x1 y1
-                                 -0.5 -1 ;dx1 dy1
-                                 web-post-bl ; post1
-                                 4 cornerrow ;x2 y2
-                                 0 -1 ; dx1 dy1
-                                 web-post-br ; post2
-                                 ))
+   (color-yellow
+     (key-wall-brace 4 cornerrow ;x1 y1
+                     -0.5 -1 ;dx1 dy1
+                     web-post-bl ; post1
+                     4 cornerrow ;x2 y2
+                     0 -1 ; dx1 dy1
+                     web-post-br ; post2
+                     ))
 
+   ;;front
    ; connections between colums
-   (color-blue (key-wall-brace 4 cornerrow -0.5 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+   (color-blue
+     (key-wall-brace 4 cornerrow -0.5 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
 
-   (color-gray (key-wall-brace 3 cornerrow 0 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
+   (color-gray
+     (key-wall-brace 3 cornerrow 0 -1 web-post-bl 3 cornerrow -0.5 -1 web-post-br))
 
 
    ;wall between key 1 and thumb
    (key-wall-brace 2 cornerrow 1 -1 web-post-bl 2 cornerrow 0 -1 web-post-br)
 
+   ;wall near thumb cluster
    (wall-brace
     (partial key-place 1 cornerrow) 1 0 web-post-br
     (partial key-place 2 cornerrow) 1 -1 web-post-bl)
@@ -117,6 +125,7 @@
    (wall-brace thumb-m-place 0 -1 web-post-bl thumb-l-place 0 -1 web-post-br)
    ; clunky bit on the top left thumb connection  (normal connectors don't work well)
 
+   ;; left wall
    (bottom-hull
     (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
     (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))

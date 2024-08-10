@@ -37,13 +37,13 @@
 
 (defn screw-insert-six-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0 bottom-radius top-radius height [6 7 0]) ; bottom left
+   (screw-insert 0 0 bottom-radius top-radius height [6.5 3 controller-plate-height]) ; bottom left
    ; thumb
    (color-green
-    (screw-insert 0 lastrow bottom-radius top-radius height [-3 -33 0]))
+    (screw-insert 0 lastrow bottom-radius top-radius height [-6 -25 0]))
 
    ; top right
-
+   (color-gray (screw-insert lastcol lastrow bottom-radius top-radius height [-12 3 0]))
 
    ; bottom right
    (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-1.1 0 0]))
@@ -52,18 +52,18 @@
     (case thumbs-count
       0  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
       3  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
-      5  (screw-insert 0 lastrow bottom-radius top-radius height [14 -42 0])
+      5  (screw-insert 1 lastrow bottom-radius top-radius height [-4 -18 0])
       6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0])))
 
    ; bottom middle
-   (color-red (screw-insert 2 0 bottom-radius top-radius height [-6 -2 0]))
+   (color-red (screw-insert 2 0 bottom-radius top-radius height [-4 -3 0]))
 
    ; top left
    (color-blue
    (case thumbs-count
      0  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
      3  (screw-insert lastcol lastrow bottom-radius top-radius height [-9 -14 0])
-     5  (screw-insert 0 lastrow bottom-radius top-radius height [-2 5 0])
+     5  (screw-insert 0 3 bottom-radius top-radius height [-1 20 controller-plate-height])
      6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0])))
 
    ; top middle

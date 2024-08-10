@@ -123,6 +123,7 @@
    (thumb-mr-place shape)
    (thumb-br-place shape)
    (thumb-tl-place shape)
+   (thumb-tr-place shape)
    (thumb-bl-place shape)))
 
 (defn six-thumbs-layout [shape]

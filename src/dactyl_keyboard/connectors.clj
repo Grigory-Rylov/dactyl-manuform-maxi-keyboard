@@ -23,7 +23,7 @@
          (concat
           ;; Row connections
           (for [column (range 0 (dec ncols))
-                row    (range 0 nrows)]
+                row    (range 0 (if extra-middle-row lastrow nrows))]
             (triangle-hulls
              (key-place (inc column) row web-post-tl)
              (key-place column row web-post-tr)

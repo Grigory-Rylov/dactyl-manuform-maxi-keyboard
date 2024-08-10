@@ -77,14 +77,23 @@
 
 ; Cutout for controller/trrs jack holder https://github.com/rianadon/dactyl-configurator/blob/main/src/connectors.md
 (defn usb-holder-hole [width step height]
-  (union
-   ;(translate [0, (* +1 step), 0] (cube width, step, height))
-   (translate [0, (* -1 step), 0] (cube (- width (* step 2)), (* step 4), height))
-   (translate [0, step, 0] (cube width, step, height))
-   (translate [0, (* step 2), 0] (cube width, (* step 2), height))
-   (translate [0, (* -1 step), 0] (cube width, step, height))))
+  (let [right-y-offset 3
+        bracing-width  (* step 2)]
+    (union
+     ;(translate [0, (* +1 step), 0] (cube width, step, height))
+     ; left
 
-(def usb-holder-hole-space
+     ;right
+
+     ;middle
+     (translate [0, (* -1 step), 0] (cube (- width (* step 2)), (* step 4), height))
+     (translate [0, step, 0] (cube width, step, height))
+     (translate [0, (* step 2), 0] (cube width, (* step 2), height))
+     (translate [0, (* -1 step), 0] (cube width, step, height))
+     ; union
+     )))
+
+(def external-controller-holder-hole-space
   (shape-insert 1, 0, [left-offset controller-holder-y-offset (/ external-controller-height 2)]
                 (usb-holder-hole external-controller-width bracingStep external-controller-height)))
 
@@ -160,6 +169,11 @@
            (binding [*fn* 50] (cylinder (/ trrsDiameter 2), 10))
            (translate [0, 0, (+ wall-thickness (/ trrsLen2 2) -1.5)]
                       (binding [*fn* 50] (cylinder (/ trrsOutterDiameter 2), trrsLen2))))))
+
+(def roundSwitcherHole
+  (rotate [(deg2rad 90), 0, 0]
+          (binding [*fn* 50] (cylinder (/ 6 2), 10))))
+
 
 (def usbHole
   (minkowski

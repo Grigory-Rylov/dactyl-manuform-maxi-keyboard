@@ -16,24 +16,26 @@
 
 (def nrows 3)
 (def ncols 5)
+(def extra-middle-row false)
+
 (def externalThumb false)
 
-(def column-curvature (deg2rad 20))
+(def column-curvature (deg2rad 17))
 
-(def row-curvature (deg2rad 1))
+(def row-curvature (deg2rad 7))
 
 ; 5                   ; curvature of the rows
 
 (def centerrow (if externalThumb
                  (dec nrows )
-                 (- nrows 2)
+                 (if extra-middle-row (- nrows 3) (- nrows 2))
                  ))
 
 ; controls front-back tilt
 (def centercol 2)
 
 ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 20)))
+(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 14)))
 
 ; or, change this for more precise tenting control
 (def column-style :standart)
@@ -50,8 +52,9 @@
 
 ;external case for controller and ports
 (def niceNanoMode false)
-(def external-controller true)
-(def external-controller-height 10)
+(def controller-plate-height 1.5)
+(def external-controller false)
+(def external-controller-height 14)
 (def external-controller-width
   (if niceNanoMode 25 33))
 
@@ -70,8 +73,9 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 1)
+(def hot-swap 0)
 (def low-profile false)
+(def cols-angle true)
 (def plate-height 1)
 (def plate-border-height 2)
 
@@ -114,8 +118,8 @@
 ;; General variables ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(def lastrow (dec nrows))
-(def cornerrow lastrow)
+(def lastrow (if extra-middle-row (dec nrows) nrows))
+(def cornerrow (if extra-middle-row (dec lastrow) (dec nrows)))
 (def lastcol (dec ncols))
 (def extra-cornerrow (if extra-row lastrow cornerrow))
 (def innercol-offset (if inner-column 1 0))
@@ -124,7 +128,7 @@
 
 ; высота
 (def keyboard-z-offset
-  14 ;(if hot-swap 12 9)
+  12 ;(if hot-swap 12 9)
   )
 
 ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
@@ -152,6 +156,7 @@
 ;; Fixed-z overrides the z portion of the column ofsets above.
 ;; NOTE: THIS DOESN'T WORK QUITE LIKE I'D HOPED.
 (def fixed-angles [(deg2rad 10) (deg2rad 10) 0 0 0 (deg2rad -15) (deg2rad -15)])
+(def fixed-angles-y [(deg2rad 0) 0 0 0 0 0 0])
 (def fixed-x [-41.5 -22.5 0 20.3 41.4 65.5 89.6])
 
 ; relative to the middle finger
