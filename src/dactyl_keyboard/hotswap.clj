@@ -116,15 +116,15 @@
 
               ; hot-swap socket hole
               ; keyboard center hole
-              (translate [0, 0, -2.6] (binding [*fn* 100] (cylinder 2.5 3.2)))
+              (translate [0, 0, -2.6] (binding [*fn* 50] (cylinder 2.5 3.2)))
 
               ; socket connector 1 hole
               (translate [4.4 4.7 (* (+ socket-height-adjust socket-thickness) -1)]
-                         (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10))))
+                         (binding [*fn* 50] (cylinder hot-swap-radius (+ socket-thickness 10))))
 
               ; socket connector 2 hole
               (translate [-2.6 5.75 (* (+ socket-height-adjust socket-thickness) -1)] ; -3.875 -2.215
-                         (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10))))
+                         (binding [*fn* 50] (cylinder hot-swap-radius (+ socket-thickness 10))))
 
               ;half hole
               (translate [0 (/ (+ keyswitch-width 3) -3) (- -1.05 socket-thickness)]
@@ -158,15 +158,15 @@
               ; hot-swap socket hole
 
               ; keyboard center hole
-              (translate [0, 0, -2.6] (binding [*fn* 100] (cylinder 2.5 3.2)))
+              (translate [0, 0, -2.6] (binding [*fn* 50] (cylinder 2.5 3.2)))
 
               ; socket connector 1 hole
               (translate [4.4 4.7 (* (+ socket-height-adjust socket-thickness) -1)]
-                         (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10))))
+                         (binding [*fn* 50] (cylinder hot-swap-radius (+ socket-thickness 10))))
 
               ; socket connector 2 hole
               (translate [-2.6 5.75 (* (+ socket-height-adjust socket-thickness) -1)] ; -3.875 -2.215
-                         (binding [*fn* 200] (cylinder hot-swap-radius (+ socket-thickness 10))))
+                         (binding [*fn* 50] (cylinder hot-swap-radius (+ socket-thickness 10))))
 
               ;half hole
               (translate [0 (/ (+ keyswitch-width 3) -3) (- -1.05 socket-thickness)]
@@ -209,20 +209,24 @@
                                                  (rotate [0, (deg2rad 90), 0] (binding [*fn* 20] (cylinder 0.3 6.0)))))
                                      (color-yellow
                                       (translate [1.3, 6.9, 0]
-                                                 (rotate [0, (deg2rad 90), 0] (binding [*fn* 20] (cylinder 0.3 8.2))))))))
+                                                 (rotate [0, (deg2rad 90), 0] (binding [*fn* 20] (cylinder 0.3 8.2)))))))
+               ; end union
+               )
+
+
 
               ; hot-swap socket hole
               (translate [0.075 4.815 (- -2.75 socket-height-adjust)]
                          (union
                           (translate [2.475 0.325 0]
-                                     (binding [*fn* 200] (cylinder hot-swap-radius 20)))
+                                     (binding [*fn* 50] (cylinder hot-swap-radius 20)))
                           (translate [-3.875 -2.215 0]
-                                     (binding [*fn* 200] (cylinder hot-swap-radius 20)))))
+                                     (binding [*fn* 50] (cylinder hot-swap-radius 20)))))
               ; keyboard center hole
-              (translate [0, 0, -3] (binding [*fn* 100] (cylinder 2.3 3.2)))
+              (translate [0, 0, -3] (binding [*fn* 50] (cylinder 2.3 3.2)))
               ; 5ft - socket holes
-              (translate [-5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
-              (translate [5.08 0 -3] (binding [*fn* 100] (cylinder 1.1 3.2)))
+              (translate [-5.08 0 -3] (binding [*fn* 50] (cylinder 1.1 3.2)))
+              (translate [5.08 0 -3] (binding [*fn* 50] (cylinder 1.1 3.2)))
 
               ;half hole
               (translate [0 (/ (+ keyswitch-width 3) -3) (- -2.05 socket-height-adjust)]
@@ -235,7 +239,9 @@
               (translate [-10, 9, -2.5]
                          (rotate (deg2rad 45) [0, 0, 1] (cube 5, 5, 8)))
               ;(binding [*fn* 50] (cylinder 2 2))
-              )))
+              )
+             ; end difference
+             ))
 
 (def hot-socket
   (if low-profile

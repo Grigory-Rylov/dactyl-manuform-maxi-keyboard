@@ -61,7 +61,7 @@
   (if niceNanoMode 25 33))
 
 ; magnet holes for external wrist rest
-(def magnet-holes false)
+(def magnet-holes true)
 (def magnet-height 2)
 (def magnet-booster-width 1)
 (def magnet-diameter 10)
@@ -75,7 +75,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def hot-swap 0)
+(def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
 (def plate-height 1)

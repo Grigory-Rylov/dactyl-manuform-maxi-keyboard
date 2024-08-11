@@ -74,6 +74,9 @@
                  (mirror [1 0 0])
                  (mirror [0 1 0]))
             (if (> hot-swap 0) (mirror [0 0 0] hot-socket)))
+     ; keyswitch holder hole
+     (color-yellow(translate [0,0,(+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
+
      (->>
       top-nub-pair
       (rotate (/ π 2) [0 0 1])))))

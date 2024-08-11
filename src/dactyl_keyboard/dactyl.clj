@@ -122,6 +122,7 @@
   (union
    (color-green (translate [-86 -2 5] (cube 6 4 6)))
    (color-green (translate [-86 -53 5] (cube 6 4 6)))))
+
 (def model-right
   (difference
    (union

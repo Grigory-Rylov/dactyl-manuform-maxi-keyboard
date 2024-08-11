@@ -87,7 +87,7 @@
    (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-7 -1 0]))
 
    ; bottom right
-   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [0 0 0]))
+   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [1 0 0]))
    ; top
    (color-yellow
      (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
