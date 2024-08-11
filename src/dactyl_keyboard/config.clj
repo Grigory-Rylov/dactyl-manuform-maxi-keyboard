@@ -37,7 +37,7 @@
 (def centercol 2)
 
 ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 14)))
+(def tenting-angle (if externalThumb (deg2rad 0) (deg2rad 25)))
 
 ; or, change this for more precise tenting control
 (def column-style :standart)
@@ -130,7 +130,7 @@
 
 ; высота
 (def keyboard-z-offset
-  12 ;(if hot-swap 12 9)
+  16 ;(if hot-swap 12 9)
   )
 
 ; controls overall height; original=9 with centercol=3; use 16 for centercol=2

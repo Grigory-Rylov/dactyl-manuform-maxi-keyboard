@@ -45,11 +45,11 @@
 
    (bottom-hull
     (translate (wall-locate-mid -3 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5)))
-    (translate (wall-locate-mid -20 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5))))
+    (translate (wall-locate-mid -24 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5))))
 
    (bottom-hull
     (translate (wall-locate-mid -3 -1.3 -0.7) (left-key-place 2 -1 (sphere 1.5)))
-    (translate (wall-locate-mid -20 -1.0 -0.7) (left-key-place 2 -1 (sphere 1.5))))
+    (translate (wall-locate-mid -24 -1.0 -0.7) (left-key-place 2 -1 (sphere 1.5))))
 
    ; left key wall
    (for [y (range 0 nrows)]

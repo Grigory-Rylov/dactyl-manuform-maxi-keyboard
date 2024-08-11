@@ -76,8 +76,8 @@
 
 (defn screw-insert-three-thumb-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0 bottom-radius top-radius height [-24 -22 controller-plate-height]) ; bottom left controller-plate-height
-   (screw-insert 0 0 bottom-radius top-radius height [-24 -67 controller-plate-height]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-30 -20 controller-plate-height]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-30 -65 controller-plate-height]) ; bottom left controller-plate-height
 
    (rotate [0, 0, (deg2rad board-z-angle)](union
    ;left back

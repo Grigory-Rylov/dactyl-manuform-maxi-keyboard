@@ -93,7 +93,7 @@
       (place2 (translate (wall-locate2 dx2 dy2) post2))
       (place2 (translate (wall-locate3 dx2 dy2) post2)))
 
-     (rotate [0,0, (deg2rad 2)] (translate [-62, 0, 0]
+     (rotate [0,0, (deg2rad 2)] (translate [-66, 0, 0]
                 (hull
                  (place1 (translate (wall-locate2 0 0) post1))
                  (place1 (translate (wall-locate3 0 0) post1))

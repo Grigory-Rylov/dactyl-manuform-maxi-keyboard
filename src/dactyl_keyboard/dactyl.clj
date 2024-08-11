@@ -112,14 +112,16 @@
 
 (def logo
   ; logo
-  (translate [-56, -57.5, 80]
+  (translate [-56, -55.3, 80]
              (rotate [(deg2rad 90), 0, 0]
                      (color-yellow
                       (import
-                       "osik_logo.stl"))))
+                       "osik_logo.stl")))))
 
-  )
-
+(def screw-holders-mid
+  (union
+   (color-green (translate [-86 -2 5] (cube 6 4 6)))
+   (color-green (translate [-86 -53 5] (cube 6 4 6)))))
 (def model-right
   (difference
    (union
@@ -128,8 +130,7 @@
     ;pinky-walls
     connectors
     logo
-    (color-green(translate [-86 -2 5] (cube 6 4 6)))
-    (color-green(translate [-86 -56 5] (cube 6 4 6)))
+    screw-holders-mid
     ;(color-green controller-hole)
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors)

@@ -56,7 +56,7 @@
     (= column 3) 0.5
     ; pinky
     (= column 4) 3
-    (= column 5) 4
+    (= column 5) 6
     :else        0))
 
 (def column-0-z-angle 4)

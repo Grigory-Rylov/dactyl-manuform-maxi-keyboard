@@ -55,16 +55,13 @@
     ))
 
 (def reset-switch-hole
-  (let [width  6.1
-        height 3.5
-        buttonWidth 3
-        buttonHeight 1.5
-        ]
+  (let [width        6.1
+        height       3.5
+        buttonWidth  3
+        buttonHeight 1.5]
     (union
      (translate [0, 1.5, 0] (cube (+ width 0.3), 4, (+ height 0.3)))
-     (cube (+ buttonWidth 0.4), 10, (+ buttonHeight 0.4)))
-
-    ))
+     (cube (+ buttonWidth 0.4), 10, (+ buttonHeight 0.4)))))
 
 (def internal-controller-hole
   (let [z-offset     (+ controller-plate-height -0.2)
@@ -72,8 +69,8 @@
     (translate [-70, 0, 0]
                (union
                 (union
-                 (translate [-15, -4.5, 20] reset-switch-hole)
-                 (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (cylinder 3, 10)))
+                 (translate [-15, -2.2, 20] reset-switch-hole)
+                 (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (binding [*fn* 20] (cylinder 3, 10))))
                  (translate [0, -5.0, usb-z-offset] usb-connector-body)
                  ; cable hole
                  (translate
