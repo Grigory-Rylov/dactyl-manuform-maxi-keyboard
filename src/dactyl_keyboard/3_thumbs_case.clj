@@ -11,6 +11,7 @@
             [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
+(def mid-wall-top-offset -1.5)
 
 (def three-thumbs-case-walls
   (union
@@ -42,14 +43,16 @@
                     1 0 ; x2 y2
                     -0.5 1 ; dx2 dy2
                     web-post-tr))
-
+   ;mid
+   ;front
    (bottom-hull
-    (translate (wall-locate-mid -3 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5)))
-    (translate (wall-locate-mid -24 -1.3 -0.65) (left-key-place 0 1 (sphere 1.5))))
+    (translate (wall-locate-mid -3 -1.3 -0.85) (left-key-place 0 1 (binding [*fn* wall-fn](sphere 2))))
+    (translate (wall-locate-mid -24 -1.3 -0.85) (left-key-place 0 1 (binding [*fn* wall-fn](sphere 2)))))
 
+   ;back
    (bottom-hull
-    (translate (wall-locate-mid -3 -1.3 -0.7) (left-key-place 2 -1 (sphere 1.5)))
-    (translate (wall-locate-mid -24 -1.0 -0.7) (left-key-place 2 -1 (sphere 1.5))))
+    (translate (wall-locate-mid -3 -1.3 -0.9) (left-key-place 2 -1 (binding [*fn* wall-fn](sphere 2))))
+    (translate (wall-locate-mid -24 -1.0 -0.9) (left-key-place 2 -1 (binding [*fn* wall-fn](sphere 2)))))
 
    ; left key wall
    (for [y (range 0 nrows)]

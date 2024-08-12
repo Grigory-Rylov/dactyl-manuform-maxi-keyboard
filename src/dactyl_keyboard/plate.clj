@@ -43,23 +43,23 @@
 (def single-plate-right
   (let [top-wall     (->> (cube (+ keyswitch-width 3) 1.5 plate-thickness)
                           (translate
-                            [0
-                             (+ (/ 1.5 2) (/ keyswitch-height 2))
-                             (/ plate-thickness 2)]))
+                           [0
+                            (+ (/ 1.5 2) (/ keyswitch-height 2))
+                            (/ plate-thickness 2)]))
         left-wall    (->> (cube 1.5 (+ keyswitch-height 3) plate-thickness)
                           (translate
-                            [(+ (/ 1.5 2) (/ keyswitch-width 2))
-                             0
-                             (/ plate-thickness 2)]))
+                           [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                            0
+                            (/ plate-thickness 2)]))
         side-nub     (->> (binding [*fn* 30] (cylinder 1 2.75))
                           (rotate (/ π 2) [1 0 0])
                           (translate [(+ (/ keyswitch-width 2)) 0 1])
                           (hull
-                            (->> (cube 1.5 2.75 side-nub-thickness)
-                                 (translate
-                                   [(+ (/ 1.5 2) (/ keyswitch-width 2))
-                                    0
-                                    (/ side-nub-thickness 2)])))
+                           (->> (cube 1.5 2.75 side-nub-thickness)
+                                (translate
+                                 [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                                  0
+                                  (/ side-nub-thickness 2)])))
                           (translate [0 0 (- plate-thickness side-nub-thickness)]))
         plate-half   (union top-wall left-wall (if create-side-nubs? (with-fn 100 side-nub)))
         top-nub      (->> (cube nub-size nub-size retention-tab-hole-thickness)
@@ -75,7 +75,7 @@
                  (mirror [0 1 0]))
             (if (> hot-swap 0) (mirror [0 0 0] hot-socket)))
      ; keyswitch holder hole
-     (color-yellow(translate [0,0,(+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
+     (color-yellow (translate [0, 0, (+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
 
      (->>
       top-nub-pair
@@ -84,23 +84,23 @@
 (def single-plate-left
   (let [top-wall     (->> (cube (+ keyswitch-width 3) 1.5 plate-thickness)
                           (translate
-                            [0
-                             (+ (/ 1.5 2) (/ keyswitch-height 2))
-                             (/ plate-thickness 2)]))
+                           [0
+                            (+ (/ 1.5 2) (/ keyswitch-height 2))
+                            (/ plate-thickness 2)]))
         left-wall    (->> (cube 1.5 (+ keyswitch-height 3) plate-thickness)
                           (translate
-                            [(+ (/ 1.5 2) (/ keyswitch-width 2))
-                             0
-                             (/ plate-thickness 2)]))
+                           [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                            0
+                            (/ plate-thickness 2)]))
         side-nub     (->> (binding [*fn* 30] (cylinder 1 2.75))
                           (rotate (/ π 2) [1 0 0])
                           (translate [(+ (/ keyswitch-width 2)) 0 1])
                           (hull
-                            (->> (cube 1.5 2.75 side-nub-thickness)
-                                 (translate
-                                   [(+ (/ 1.5 2) (/ keyswitch-width 2))
-                                    0
-                                    (/ side-nub-thickness 2)])))
+                           (->> (cube 1.5 2.75 side-nub-thickness)
+                                (translate
+                                 [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                                  0
+                                  (/ side-nub-thickness 2)])))
                           (translate [0 0 (- plate-thickness side-nub-thickness)]))
         plate-half   (union top-wall left-wall (if create-side-nubs? (with-fn 100 side-nub)))
         top-nub      (->> (cube nub-size nub-size retention-tab-hole-thickness)
@@ -115,6 +115,9 @@
                  (mirror [1 0 0])
                  (mirror [0 1 0]))
             (if (> hot-swap 0) (mirror [1 0 0] hot-socket)))
+     ; keyswitch holder hole
+     (color-yellow (translate [0, 0, (+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
+
      (->>
       top-nub-pair
       (rotate (/ π 2) [0 0 1])))))
@@ -165,14 +168,21 @@
                 (extrude-linear {:height plate-border-height :twist 0 :convexity 0} case-walls-outline)))
 
    (if (> plate-border-height 0)
-     (translate [0 0 (+ plate-height (/ plate-border-height 2))]
-                (extrude-linear {:height plate-border-height :twist 0 :convexity 0} bottom-plate-screw-holder-outline)))
+     (color-red
+       (translate [0 0 (+ plate-height (/ plate-border-height 2))]
+                  (extrude-linear {:height plate-border-height :twist 0 :convexity 0} bottom-plate-screw-holder-outline))))
 
    ; end union
-   )
-  )
+   ))
+
 (def plate-right
   (difference
    bottom-plate
-   screw-insert-screw-holes))
+   screw-insert-screw-holes
+   (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+   ; end difference
+   ))
+
+(def plate-left
+  (mirror [1, 0, 0] plate-right))
 

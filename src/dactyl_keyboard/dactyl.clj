@@ -108,8 +108,6 @@
     external-controller-holder-hole-space
     internal-controller-hole))
 
-(def offsetX 90)
-
 (def logo
   ; logo
   (translate [-56, -55.3, 80]
@@ -142,18 +140,19 @@
      controller-hole
      screw-insert-holes
      (if magnet-holes magnet-place)))
-   (color-green (translate [(- -50 offsetX), 0, 0] (cube 100 200 200)))
+   (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
    (translate [0 0 -20] (cube 350 350 40))))
 
 (def model-left
   (mirror [1, 0, 0]
           (difference
            (union
-            key-holes-right
-            ;pinky-connectors
+            key-holes-left
+            ;pinky-connectors1
             ;pinky-walls
             connectors
-            (if (= externalThumb false) thumb-right)
+            screw-holders-mid
+            (if (= externalThumb false) thumb-left)
             (if (= externalThumb false) thumb-connectors)
             (difference
              (union case-walls
@@ -161,17 +160,18 @@
                     screw-insert-outers)
              screw-insert-holes
              (if magnet-holes magnet-place)))
+           (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+
            (translate [0 0 -20] (cube 350 350 40)))))
 
-
-(def model-mono
+(def model-mono-right
   (difference
-   (union
-    (translate [offsetX, 0, 0] model-right)
+   (translate [mono_body_offsetX, 0, 0] model-right)
+   (translate [0 0 -20] (cube 350 350 40))))
 
-    ;(translate [(* offsetX -1), 0, 0]  model-left)
-    ;union
-    )
+(def model-mono-left
+  (difference
+   (translate [(* mono_body_offsetX -1), 0, 0] model-left)
    (translate [0 0 -20] (cube 350 350 40))))
 
 (def model-left-tmp
@@ -211,14 +211,10 @@
 
 
 (spit "things/right.scad"
-      (write-scad model-right))
-
-
-(spit "things/mono_3x5_3.scad"
-      (write-scad model-mono))
+      (write-scad model-mono-right))
 
 (spit "things/left.scad"
-      (write-scad (mirror [-1 0 0] model-left-tmp)))
+      (write-scad model-mono-left))
 
 (def caps
   (if extra-middle-row
@@ -304,10 +300,14 @@
 ;;;;;;;;;;;;;;;;;;;;;
 ;; plate generation;;
 ;;;;;;;;;;;;;;;;;;;;;
-
+(def mono-plate
+  (union
+   (translate [mono_body_offsetX, 0, 0] plate-right)
+   (translate [(* -1 mono_body_offsetX), 0, 0] plate-left)))
 
 (spit "things/right-plate-print.scad" (write-scad plate-right))
 (spit "things/left-plate-print.scad" (write-scad (mirror [-1 0 0] plate-right)))
+(spit "things/mono-plate-print.scad" (write-scad mono-plate))
 
 (spit "things/hotswap-adapt-low-debug.scad"
       (write-scad hot-socket-standart-to-low-profile))

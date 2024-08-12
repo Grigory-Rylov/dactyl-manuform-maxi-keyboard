@@ -183,10 +183,10 @@
 ;; Switch Hole ;;
 ;;;;;;;;;;;;;;;;;
 
-(def keyswitch-height 14.2)
+(def keyswitch-height 14)
 
 ;; Was 14.1, then 14.25
-(def keyswitch-width 14.2)
+(def keyswitch-width 14)
 
 (def sa-profile-key-height 12.7)
 
@@ -202,3 +202,5 @@
 (def retention-tab-hole-thickness (- plate-thickness retention-tab-thickness))
 (def mount-width (+ keyswitch-width 3))
 (def mount-height (+ keyswitch-height 3))
+
+(def mono_body_offsetX 90)

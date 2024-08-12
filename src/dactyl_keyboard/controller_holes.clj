@@ -69,12 +69,12 @@
     (translate [-70, 0, 0]
                (union
                 (union
-                 (translate [-15, -2.2, 20] reset-switch-hole)
+                 (translate [-15, -1.2, 20] reset-switch-hole)
                  (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (binding [*fn* 20] (cylinder 3, 10))))
                  (translate [0, -5.0, usb-z-offset] usb-connector-body)
                  ; cable hole
                  (translate
-                  [0, 3, usb-z-offset]
+                  [0, 4.5, usb-z-offset]
                   usbCableHole)
 
                  ; usb connector hole

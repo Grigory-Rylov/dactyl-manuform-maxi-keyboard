@@ -74,17 +74,17 @@
    ; end union
    ))
 
-(defn screw-insert-three-thumb-shapes [bottom-radius top-radius height]
+(defn screw-insert-three-thumb-shapes [bottom-radius top-radius height should-reset-z]
   (union
-   (screw-insert 0 0 bottom-radius top-radius height [-30 -20 controller-plate-height]) ; bottom left controller-plate-height
-   (screw-insert 0 0 bottom-radius top-radius height [-30 -65 controller-plate-height]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-30 -20 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
+   (screw-insert 0 0 bottom-radius top-radius height [-30 -64 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
 
    (rotate [0, 0, (deg2rad board-z-angle)](union
    ;left back
    (screw-insert 0 0 bottom-radius top-radius height [12 9.5 0]) ; bottom left controller-plate-height
 
    ; thumb
-   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-7 -1 0]))
+   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
 
    ; bottom right
    (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [1 0 0]))
@@ -127,12 +127,12 @@
    ; end union
    ))
 
-(defn screw-insert-all-shapes [bottom-radius top-radius height]
+(defn screw-insert-all-shapes [bottom-radius top-radius height should-reset-z]
   (if externalThumb
     (screw-insert-0-thumb bottom-radius top-radius height)
     (case thumbs-count
       0 (screw-insert-six-shapes bottom-radius top-radius height)
-      3 (screw-insert-three-thumb-shapes bottom-radius top-radius height)
+      3 (screw-insert-three-thumb-shapes bottom-radius top-radius height should-reset-z)
       5 (screw-insert-six-shapes bottom-radius top-radius height)
       6 (screw-insert-six-shapes bottom-radius top-radius height))))
 
@@ -143,16 +143,17 @@
 (def screw-insert-bottom-radius (/ 4.4 2))
 (def screw-insert-top-radius (/ 4.4 2))
 (def screw-insert-holes
-  (screw-insert-all-shapes screw-insert-bottom-radius screw-insert-top-radius screw-insert-height))
+  (screw-insert-all-shapes screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false))
 
 ; Wall Thickness W:\t1.65
 (def screw-insert-outers
-  (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5)))
+  (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false))
 
 (def screw-head-height 1.65)
 (def plate-total-height (+ plate-border-height plate-height))
 (def screw-insert-screw-holes
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
-              (screw-insert-all-shapes 1.7 1.7 (- plate-total-height screw-head-height)))
-   (translate [0, 0, -0.1] (screw-insert-all-shapes 2.75 1.7 (+ screw-head-height 0.2)))))
+              (screw-insert-all-shapes 1.7 1.7 (- plate-total-height screw-head-height) true))
+
+   (translate [0, 0, -0.1] (screw-insert-all-shapes 2.75 1.7 (+ screw-head-height 0.2) true))))
