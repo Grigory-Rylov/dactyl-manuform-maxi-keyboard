@@ -78,8 +78,8 @@
 (def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
-(def plate-height 1)
-(def plate-border-height 2)
+(def plate-height 2)
+(def plate-border-height 0)
 
 (def thumbs-count 3)
 

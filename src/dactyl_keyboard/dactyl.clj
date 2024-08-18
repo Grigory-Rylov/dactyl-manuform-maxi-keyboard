@@ -305,9 +305,46 @@
    (translate [mono_body_offsetX, 0, 0] plate-right)
    (translate [(* -1 mono_body_offsetX), 0, 0] plate-left)))
 
-(spit "things/right-plate-print.scad" (write-scad plate-right))
-(spit "things/left-plate-print.scad" (write-scad (mirror [-1 0 0] plate-right)))
-(spit "things/mono-plate-print.scad" (write-scad mono-plate))
+(def mono-plate-mid-offset 110)
+(def mono-plate-mid-offset-side 0.2)
+(def mono-plate-mid-angle 22.5)
+
+(def mono-plate-mid
+  (difference
+   mono-plate
+   (rotate [0, 0, (deg2rad (* mono-plate-mid-angle -1))]
+           (translate [(* mono-plate-mid-offset -1), -50, 0] (cube 120, 200, 10)))
+   (rotate [0, 0, (deg2rad mono-plate-mid-angle)]
+           (translate [mono-plate-mid-offset, -50, 0] (cube 120, 200, 10)))))
+
+(def mono-plate-left
+  (difference
+   (translate [(* -1 mono_body_offsetX), 0, 0] plate-left)
+   (rotate [0, 0, (deg2rad (* mono-plate-mid-angle -1))]
+           (translate [(* mono-plate-mid-offset-side -1), -50, 0] (cube 100, 200, 10)))
+   ;end diff
+   ))
+
+(def mono-plate-right
+  (difference
+   (translate [mono_body_offsetX, 0, 0] plate-right)
+   (rotate [0, 0, (deg2rad mono-plate-mid-angle )]
+           (translate [mono-plate-mid-offset-side , -50, 0] (cube 100, 200, 10)))
+   ;end diff
+   ))
+
+
+;(spit "things/right-plate-print.scad" (write-scad plate-right))
+;(spit "things/left-plate-print.scad" (write-scad (mirror [-1 0 0] plate-right)))
+(spit "things/mono-plate-print.scad" (write-scad ( union
+                                                   mono-plate-mid
+                                                   (color-yellow mono-plate-left)
+                                                   (color-blue mono-plate-right)
+                                                   )))
+(spit "things/mono-plate-print-left.scad" (write-scad mono-plate-left))
+(spit "things/mono-plate-print-right.scad" (write-scad mono-plate-right))
+(spit "things/mono-plate-mid-print.scad" (write-scad mono-plate-mid))
+(spit "things/mono-plate.scad" (write-scad mono-plate))
 
 (spit "things/hotswap-adapt-low-debug.scad"
       (write-scad hot-socket-standart-to-low-profile))
