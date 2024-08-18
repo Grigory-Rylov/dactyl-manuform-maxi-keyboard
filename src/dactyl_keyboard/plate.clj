@@ -157,16 +157,19 @@
 (def bottom-height-half (/ plate-height 2))
 
 (def bottom-plate-screw-holder-outline
-  (cut screw-insert-outers))
+  (cut screw-insert-outers-for-plate))
 
 (def bottom-plate
   (union
+   ; body projection
    (translate [0 0 bottom-height-half]
               (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline))
+   ; borders
    (if (> plate-border-height 0)
      (translate [0 0 (+ plate-height (/ plate-border-height 2))]
                 (extrude-linear {:height plate-border-height :twist 0 :convexity 0} case-walls-outline)))
 
+   ; screw borders
    (if (> plate-border-height 0)
      (color-red
        (translate [0 0 (+ plate-height (/ plate-border-height 2))]
@@ -178,7 +181,7 @@
 (def plate-right
   (difference
    bottom-plate
-   screw-insert-screw-holes
+   screw-insert-screw-holes-for-plate
    (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
    ; end difference
    ))
