@@ -45,15 +45,18 @@
                     web-post-tr))
    ;mid
    ;front
+   (if mono-mode
    (bottom-hull
     (translate (wall-locate-mid -3 -1.3 -0.85) (left-key-place 0 1 (binding [*fn* wall-fn](sphere 2))))
     (translate (wall-locate-mid -24 -1.3 -0.85) (left-key-place 0 1 (binding [*fn* wall-fn](sphere 2)))))
+     )
 
    ;back
+   (if mono-mode
    (bottom-hull
     (translate (wall-locate-mid -3 -1.3 -0.9) (left-key-place 2 -1 (binding [*fn* wall-fn](sphere 2))))
     (translate (wall-locate-mid -24 -1.0 -0.9) (left-key-place 2 -1 (binding [*fn* wall-fn](sphere 2)))))
-
+     )
    ; left key wall
    (for [y (range 0 nrows)]
      (union

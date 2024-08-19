@@ -75,6 +75,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
+(def mono-mode true)
 (def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
