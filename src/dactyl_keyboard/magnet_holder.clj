@@ -59,11 +59,11 @@
           (cube side side height)))
 
 ; keyboard's magnet hole
-(def connectionLeftOffset1 -6.5)
-(def connectionLeftOffset2 -16)
+(def connectionLeftOffset1 -4.5)
+(def connectionLeftOffset2 0)
 
 (def connectionYOffset1 18.7)
-(def connectionYOffset2 4.3)
+(def connectionYOffset2 19.4)
 
 (def magnet-place
   (let [col1 3

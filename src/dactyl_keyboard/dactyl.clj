@@ -108,13 +108,23 @@
     external-controller-holder-hole-space
     internal-controller-hole))
 
-(def logo
+(def logo-right
   ; logo
-  (translate [-56, -55.3, 80]
-             (rotate [(deg2rad 90), 0, 0]
-                     (color-yellow
-                      (import
-                       "osik_logo.stl")))))
+  (if mono-mode
+    ; mono logo
+    (translate [-56, -55.3, 80]
+               (rotate [(deg2rad 90), 0, 0]
+                       (color-yellow
+                        (import
+                         "osik_logo.stl"))))
+    ;split logo
+    (translate [22.2, -61.5, 80]
+               (rotate [(deg2rad 90), 0, (deg2rad 32)]
+                       (color-yellow
+                        (import
+                         "osik_logo.stl"))))
+    )
+  )
 
 (def screw-holders-mid
   (union
@@ -128,8 +138,8 @@
     ;pinky-connectors
     ;pinky-walls
     connectors
-    logo
-    screw-holders-mid
+    logo-right
+    (if mono-mode screw-holders-mid)
     ;(color-green controller-hole)
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors)

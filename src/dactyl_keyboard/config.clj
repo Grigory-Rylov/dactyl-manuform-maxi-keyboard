@@ -15,7 +15,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (def nrows 3)
-(def ncols 5)
+(def ncols 6)
 (def extra-middle-row false)
 
 (def externalThumb false)
@@ -75,7 +75,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def mono-mode true)
+(def mono-mode false)
 (def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
