@@ -66,10 +66,10 @@
 (def internal-controller-hole
   (let [z-offset     (+ controller-plate-height -0.2)
         usb-z-offset (+ (/ usbHeight 2) controllerBottomHeight controllerHeight)]
-    (translate [-70, 0, 0]
+    (translate [-66, 0, 0]
                (union
                 (union
-                 (translate [-15, -1.2, 20] reset-switch-hole)
+                 (translate [0, -1.2, 32] reset-switch-hole)
                  (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (binding [*fn* 20] (cylinder 3, 10))))
                  (translate [0, -5.0, usb-z-offset] usb-connector-body)
                  ; cable hole

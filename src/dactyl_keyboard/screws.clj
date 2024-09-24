@@ -79,14 +79,17 @@
    (if mono-mode
      (union
       (screw-insert 0 0 bottom-radius top-radius height [-30 -20 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
-      (screw-insert 0 0 bottom-radius top-radius height [-30 -64 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
+      (screw-insert 0 0 bottom-radius top-radius height [-10 -64 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
       ))
 
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
             ;left back
-            (screw-insert 0 0 bottom-radius top-radius height [12 9.5 0]) ; bottom left controller-plate-height
+            (if mono-mode
+              (screw-insert 0 0 bottom-radius top-radius height [10 6 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
 
+              (screw-insert 0 0 bottom-radius top-radius height [12 9.5 0]) ; bottom left controller-plate-height
+              )
             ; thumb
             (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
 

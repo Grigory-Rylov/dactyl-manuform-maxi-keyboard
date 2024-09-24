@@ -75,7 +75,7 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def mono-mode false)
+(def mono-mode true)
 (def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
@@ -204,4 +204,4 @@
 (def mount-width (+ keyswitch-width 3))
 (def mount-height (+ keyswitch-height 3))
 
-(def mono_body_offsetX 90)
+(def mono_body_offsetX 75)

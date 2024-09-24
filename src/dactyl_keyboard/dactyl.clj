@@ -126,10 +126,15 @@
     )
   )
 
-(def screw-holders-mid
+(def screw-holders-mid-left
   (union
-   (color-green (translate [-86 -2 5] (cube 6 4 6)))
-   (color-green (translate [-86 -53 5] (cube 6 4 6)))))
+   (color-green (translate [-65.5 -2 5] (cube 6 4 6)))
+   (color-green (translate [-65.5 -53 5] (cube 6 4 6)))))
+
+(def screw-holders-mid-right
+  (union
+   (color-yellow (translate [-52 4 5] (rotate [0,0,(deg2rad 45)] (cube 6 4 6))))
+   (color-green (translate [-65.5 -53 5] (cube 6 4 6)))))
 
 (def model-right
   (difference
@@ -139,7 +144,7 @@
     ;pinky-walls
     connectors
     logo-right
-    (if mono-mode screw-holders-mid)
+    (if mono-mode screw-holders-mid-right)
     ;(color-green controller-hole)
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors)
@@ -161,7 +166,7 @@
             ;pinky-connectors1
             ;pinky-walls
             connectors
-            screw-holders-mid
+            screw-holders-mid-left
             (if (= externalThumb false) thumb-left)
             (if (= externalThumb false) thumb-connectors)
             (difference
