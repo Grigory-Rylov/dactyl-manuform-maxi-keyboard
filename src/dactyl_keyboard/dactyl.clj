@@ -122,19 +122,43 @@
                (rotate [(deg2rad 90), 0, (deg2rad 32)]
                        (color-yellow
                         (import
-                         "osik_logo.stl"))))
-    )
-  )
+                         "osik_logo.stl"))))))
 
 (def screw-holders-mid-left
   (union
-   (color-green (translate [-65.5 -2 5] (cube 6 4 6)))
-   (color-green (translate [-65.5 -53 5] (cube 6 4 6)))))
+   (color-green (translate [-65.6 -1.8 5] (cube 6 4 6)))
+   (color-green (translate [-65.6 -53 5] (cube 6 4 6)))))
 
 (def screw-holders-mid-right
   (union
-   (color-yellow (translate [-52 4 5] (rotate [0,0,(deg2rad 45)] (cube 6 4 6))))
+   (color-yellow (translate [-52 4 5] (rotate [0, 0, (deg2rad 45)] (cube 6 4 6))))
    (color-green (translate [-65.5 -53 5] (cube 6 4 6)))))
+
+(def case-holder
+  (union
+   (color-blue (translate [2 0 2] (cube 4 4 2)))
+   (color-green (cube 8 4 2)))
+  ;end union
+  )
+
+(def case-holders-left
+  (let[
+        front_y_offset -52.5
+        back_y_offset -2.1
+        top_z_offset 40.35
+        ]
+  (union
+   (translate [-75 front_y_offset 5] (rotate [(deg2rad 90), 0, 0] case-holder))
+   (translate [-75 front_y_offset 36] (rotate [(deg2rad 90), 0, 0] case-holder))
+
+   (translate [-75 back_y_offset 5] (rotate [(deg2rad -90), 0, 0] case-holder))
+   (translate [-75 back_y_offset 36] (rotate [(deg2rad -90), 0, 0] case-holder))
+
+   (translate [-75 -35 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
+   (translate [-75 -20 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
+
+   ;end union
+   )))
 
 (def model-right
   (difference
@@ -151,33 +175,44 @@
     (difference
      (union case-walls
             (if magnet-holes magnet-stiffness-booster)
-            screw-insert-outers)
+            screw-insert-outers-right)
      controller-hole
-     screw-insert-holes
+     screw-insert-holes-right
      (if magnet-holes magnet-place)))
    (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
    (translate [0 0 -20] (cube 350 350 40))))
 
 (def model-left
   (mirror [1, 0, 0]
-          (difference
-           (union
-            key-holes-left
-            ;pinky-connectors1
-            ;pinky-walls
-            connectors
-            screw-holders-mid-left
-            (if (= externalThumb false) thumb-left)
-            (if (= externalThumb false) thumb-connectors)
-            (difference
-             (union case-walls
-                    (if magnet-holes magnet-stiffness-booster)
-                    screw-insert-outers)
-             screw-insert-holes
-             (if magnet-holes magnet-place)))
-           (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+          (union
+           (difference
+            (union
+             key-holes-left
+             ;pinky-connectors1
+             ;pinky-walls
+             connectors
+             screw-holders-mid-left
 
-           (translate [0 0 -20] (cube 350 350 40)))))
+             (if (= externalThumb false) thumb-left)
+             (if (= externalThumb false) thumb-connectors)
+
+
+             (difference
+              (union case-walls
+                     (if magnet-holes magnet-stiffness-booster)
+                     screw-insert-outers-left)
+              screw-insert-holes-left
+              (if magnet-holes magnet-place)))
+
+            ;side cut
+            (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+
+            (translate [0 0 -20] (cube 350 350 40))
+            ;end difference
+            )
+           case-holders-left
+           ;end union
+           )))
 
 (def model-mono-right
   (difference
@@ -201,9 +236,9 @@
     (difference
      (union case-walls
             (if magnet-holes magnet-stiffness-booster)
-            screw-insert-outers)
+            screw-insert-outers-left)
      controller-hole
-     screw-insert-holes
+     screw-insert-holes-left
      (if magnet-holes magnet-place)))
    (translate [0 0 -20] (cube 350 350 40))))
 
@@ -267,9 +302,9 @@
          (difference
           (union case-walls (binding [*fn* 50])
                  (if magnet-holes magnet-stiffness-booster)
-                 screw-insert-outers)
+                 screw-insert-outers-right)
           controller-hole
-          screw-insert-holes
+          screw-insert-holes-right
           (if magnet-holes magnet-place))
 
          thumbcaps

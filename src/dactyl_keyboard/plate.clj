@@ -148,18 +148,28 @@
 (def case-walls-outline
   (cut case-walls))
 
-(def wall-shape
+(def wall-shape-right
   (cut
    (translate [0 0 -0.1]
               (union case-walls
-                     screw-insert-outers))))
+                     screw-insert-outers-right))))
+
+(def wall-shape-left
+  (cut
+   (translate [0 0 -0.1]
+              (union case-walls
+                     screw-insert-outers-left))))
+
 
 (def bottom-height-half (/ plate-height 2))
 
-(def bottom-plate-screw-holder-outline
-  (cut screw-insert-outers-for-plate))
+(def bottom-plate-screw-holder-outline-right
+  (cut screw-insert-outers-for-plate-right))
 
-(def bottom-plate
+(def bottom-plate-screw-holder-outline-left
+  (cut screw-insert-outers-for-plate-left))
+
+(def bottom-plate-right
   (union
    ; body projection
    (translate [0 0 bottom-height-half]
@@ -172,20 +182,45 @@
    ; screw borders
    (if (> plate-border-height 0)
      (color-red
-       (translate [0 0 (+ plate-height (/ plate-border-height 2))]
-                  (extrude-linear {:height plate-border-height :twist 0 :convexity 0} bottom-plate-screw-holder-outline))))
+      (translate [0 0 (+ plate-height (/ plate-border-height 2))]
+                 (extrude-linear {:height plate-border-height :twist 0 :convexity 0} bottom-plate-screw-holder-outline-right))))
+
+   ; end union
+   ))
+
+(def bottom-plate-left
+  (union
+   ; body projection
+   (translate [0 0 bottom-height-half]
+              (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline))
+   ; borders
+   (if (> plate-border-height 0)
+     (translate [0 0 (+ plate-height (/ plate-border-height 2))]
+                (extrude-linear {:height plate-border-height :twist 0 :convexity 0} case-walls-outline)))
+
+   ; screw borders
+   (if (> plate-border-height 0)
+     (color-red
+      (translate [0 0 (+ plate-height (/ plate-border-height 2))]
+                 (extrude-linear {:height plate-border-height :twist 0 :convexity 0} bottom-plate-screw-holder-outline-left))))
 
    ; end union
    ))
 
 (def plate-right
   (difference
-   bottom-plate
-   screw-insert-screw-holes-for-plate
+   bottom-plate-right
+   screw-insert-screw-holes-for-plate-right
    (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
    ; end difference
    ))
 
 (def plate-left
-  (mirror [1, 0, 0] plate-right))
+  (mirror [1, 0, 0]
+          (difference
+           bottom-plate-left
+           screw-insert-screw-holes-for-plate-left
+           (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+           ; end difference
+           )))
 
