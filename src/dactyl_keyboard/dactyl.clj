@@ -124,6 +124,23 @@
                         (import
                          "osik_logo.stl"))))))
 
+(def logo-left
+  ; logo
+  (if mono-mode
+    ; mono logo
+    (translate [-60, -55.3, 80]
+               (rotate [(deg2rad 90), 0, 0]
+                       (color-yellow
+                        (mirror [1,0,0](import
+                         "osik_logo.stl")))))
+    ;split logo
+    (translate [22.2, -61.5, 80]
+               (rotate [(deg2rad 90), 0, (deg2rad 32)]
+                       (color-yellow
+                        (import
+                         "osik_logo.stl"))))))
+
+
 (def screw-holders-mid-left
   (union
    (color-green (translate [-65.6 -1.8 5] (cube 6 4 6)))
@@ -136,29 +153,27 @@
 
 (def case-holder
   (union
-   (color-blue (translate [2 0 2] (cube 4 4 2)))
-   (color-green (cube 8 4 2)))
+   (color-blue (translate [2 0 2] (cube 4 2 2)))
+   (color-green (cube 8 2 2)))
   ;end union
   )
 
 (def case-holders-left
-  (let[
-        front_y_offset -52.5
-        back_y_offset -2.1
-        top_z_offset 40.35
-        ]
-  (union
-   (translate [-75 front_y_offset 5] (rotate [(deg2rad 90), 0, 0] case-holder))
-   (translate [-75 front_y_offset 36] (rotate [(deg2rad 90), 0, 0] case-holder))
+  (let [front_y_offset -52.5
+        back_y_offset  -2.1
+        top_z_offset   40.35]
+    (union
+     (translate [-75 front_y_offset 5] (rotate [(deg2rad 90), 0, 0] case-holder))
+     (translate [-75 front_y_offset 36] (rotate [(deg2rad 90), 0, 0] case-holder))
 
-   (translate [-75 back_y_offset 5] (rotate [(deg2rad -90), 0, 0] case-holder))
-   (translate [-75 back_y_offset 36] (rotate [(deg2rad -90), 0, 0] case-holder))
+     (translate [-75 back_y_offset 15] (rotate [(deg2rad -90), 0, 0] case-holder))
+     (translate [-75 back_y_offset 36] (rotate [(deg2rad -90), 0, 0] case-holder))
 
-   (translate [-75 -35 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
-   (translate [-75 -20 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
+     (translate [-75 -35 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
+     (translate [-75 -20 top_z_offset] (rotate [(deg2rad 0), 0, 0] case-holder))
 
-   ;end union
-   )))
+     ;end union
+     )))
 
 (def model-right
   (difference
@@ -191,6 +206,7 @@
              ;pinky-connectors1
              ;pinky-walls
              connectors
+             logo-left
              screw-holders-mid-left
 
              (if (= externalThumb false) thumb-left)
