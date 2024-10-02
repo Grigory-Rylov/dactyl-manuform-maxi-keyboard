@@ -24,7 +24,7 @@
 
 (def row-curvature (deg2rad 7))
 
-(def board-z-angle 22.5)
+(def board-z-angle 0)
 
 ; 5                   ; curvature of the rows
 
@@ -75,12 +75,13 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
-(def mono-mode true)
+(def mono-mode false)
 (def hot-swap 1)
 (def low-profile false)
 (def cols-angle true)
 (def plate-height 2)
 (def plate-border-height 0)
+(def trackball-mode true)
 
 (def thumbs-count 3)
 
@@ -205,3 +206,13 @@
 (def mount-height (+ keyswitch-height 3))
 
 (def mono_body_offsetX 75)
+
+; trackball
+(def trackball-ball-diameter 43)
+(def trackball-bearing-diameter 2)
+(def trackball-mount-distance 27)
+(def trackball-mount-diameter 6)
+
+(def trackball-ball-radius (/ trackball-ball-diameter 2))
+(def trackball-bearing-radius (/ trackball-bearing-diameter 2))
+(def trackball-mount-radius (/ trackball-mount-diameter 2))

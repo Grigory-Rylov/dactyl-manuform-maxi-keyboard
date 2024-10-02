@@ -21,6 +21,7 @@
             [dactyl-keyboard.external-controller :refer :all]
             [dactyl-keyboard.controller-holes :refer :all]
             [dactyl-keyboard.external-thumb-plate :refer :all]
+            [dactyl-keyboard.trackball :refer :all]
             [dactyl-keyboard.plate :refer :all]))
 
 (def larger-plate
@@ -118,8 +119,8 @@
                         (import
                          "osik_logo.stl"))))
     ;split logo
-    (translate [22.2, -61.5, 80]
-               (rotate [(deg2rad 90), 0, (deg2rad 32)]
+    (translate [-3, -65.5, 80]
+               (rotate [(deg2rad 90), 0, (deg2rad 9)]
                        (color-yellow
                         (import
                          "osik_logo.stl"))))))
@@ -131,8 +132,9 @@
     (translate [-60, -55.3, 80]
                (rotate [(deg2rad 90), 0, 0]
                        (color-yellow
-                        (mirror [1,0,0](import
-                         "osik_logo.stl")))))
+                        (mirror [1, 0, 0]
+                                (import
+                                 "osik_logo.stl")))))
     ;split logo
     (translate [22.2, -61.5, 80]
                (rotate [(deg2rad 90), 0, (deg2rad 32)]
@@ -176,26 +178,42 @@
      )))
 
 (def model-right
-  (difference
-   (union
-    key-holes-right
-    ;pinky-connectors
-    ;pinky-walls
-    connectors
-    logo-right
-    (if mono-mode screw-holders-mid-right)
-    ;(color-green controller-hole)
-    (if (= externalThumb false) thumb-right)
-    (if (= externalThumb false) thumb-connectors)
+  (let [tracball-offset-x -68
+        tracball-offset-y -30
+        tracball-offset-z 53]
     (difference
-     (union case-walls
-            (if magnet-holes magnet-stiffness-booster)
-            screw-insert-outers-right)
-     controller-hole
-     screw-insert-holes-right
-     (if magnet-holes magnet-place)))
-   (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
-   (translate [0 0 -20] (cube 350 350 40))))
+     (union
+      key-holes-right
+      ;pinky-connectors
+      ;pinky-walls
+      connectors
+      logo-right
+      (if mono-mode screw-holders-mid-right)
+      ;(color-green controller-hole)
+      (if (= externalThumb false) thumb-right)
+      (if (= externalThumb false) thumb-connectors)
+      (if trackball-mode
+
+        (translate [tracball-offset-x, tracball-offset-y, tracball-offset-z]
+                   (union
+                    (color-red trackball-case)
+                    trackball-walls)))
+
+      (difference
+       (union
+        (difference case-walls
+                    (if trackball-mode
+                      (translate [tracball-offset-x, tracball-offset-y, tracball-offset-z]
+                                 (color-red trackball-hole))))
+        (if magnet-holes magnet-stiffness-booster)
+        screw-insert-outers-right)
+       controller-hole
+       screw-insert-holes-right
+
+       (if magnet-holes magnet-place)))
+     (if mono-mode
+       (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
+     (translate [0 0 -20] (cube 350 350 40)))))
 
 (def model-left
   (mirror [1, 0, 0]
@@ -276,8 +294,12 @@
    (translate [0 0 -20] (cube 350 350 40))))
 
 
-(spit "things/right.scad"
-      (write-scad model-mono-right))
+(if mono-mode
+  (spit "things/right.scad"
+        (write-scad model-mono-right))
+  (spit "things/right.scad"
+        (write-scad model-right)))
+
 
 (spit "things/left.scad"
       (write-scad model-mono-left))
@@ -451,6 +473,8 @@
             ))
           (translate [0 0 -10] (cube 350 350 40))))))
 
+(spit "things/trackball_case.scad"
+      (write-scad trackball-case))
 
 (defn -main [dum] 1)
 
