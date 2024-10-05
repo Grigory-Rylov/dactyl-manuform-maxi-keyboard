@@ -63,7 +63,7 @@
      (translate [0, 1.5, 0] (cube (+ width 0.3), 4, (+ height 0.3)))
      (cube (+ buttonWidth 0.4), 10, (+ buttonHeight 0.4)))))
 
-(def internal-controller-hole
+(def internal-controller-hole-wireless
   (let [z-offset     (+ controller-plate-height -0.2)
         usb-z-offset (+ (/ usbHeight 2) controllerBottomHeight controllerHeight)]
     (translate [-56, 6, 0]
@@ -83,3 +83,28 @@
                   usbHole))
                 ; end union
                 )))))
+
+
+(def internal-controller-hole
+  (let [z-offset     (+ controller-plate-height -0.2)
+        usb-z-offset (+ (/ usbHeight 2) controllerBottomHeight controllerHeight)]
+    (translate [-56, 6, 0]
+               (rotate [0,0, (deg2rad 85)](union
+                                           (union
+                                            (translate [0, -2.5, 32] reset-switch-hole)
+                                            (translate [0, 0, 20] (rotate [(deg2rad 90), 0, 0] (union
+                                                                                                 (binding [*fn* 20] (cylinder 3, 10))
+                                                                                                 (binding [*fn* 20] (cylinder 3.9, 2))
+                                                                                                )))
+                                            (translate [0, -5.0, usb-z-offset] usb-connector-body)
+                                            ; cable hole
+                                            (translate
+                                             [0, 4.5, usb-z-offset]
+                                             usbCableHole)
+
+                                            ; usb connector hole
+                                            (translate
+                                             [0, 0, usb-z-offset]
+                                             usbHole))
+                                           ; end union
+                                           )))))

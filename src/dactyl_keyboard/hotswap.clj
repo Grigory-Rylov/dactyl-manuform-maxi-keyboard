@@ -196,7 +196,12 @@
                            (translate [0, 2.8, 0] (cube 17.8, 11.5, socket-wall-height))
                            gateron-hot-socket)
 
-
+                          ; socket holder
+                          (if hot-swap-holders
+                            (translate [0, 0, -1.3]
+                                       (union
+                                        (color-green (translate [0.3, 2.3, -1.4] (cube 2, 1, 1.5)))
+                                        (color-yellow (translate [0.3, 7, -1.4] (cube 2, 1, 1.5))))))
                           ; socket holder barrier
 
                           (translate [0, 0, -1.3]
@@ -212,7 +217,6 @@
                                                  (rotate [0, (deg2rad 90), 0] (binding [*fn* 20] (cylinder 0.3 8.2)))))))
                ; end union
                )
-
 
 
               ; hot-swap socket hole

@@ -88,7 +88,7 @@
             (if mono-mode
               (screw-insert 0 0 bottom-radius top-radius height [10 6 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
 
-              (color-blue (screw-insert 0 0 bottom-radius top-radius height [7 7.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
+              (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
               )
             ; thumb
             (if trackball-mode
@@ -97,7 +97,7 @@
               )
 
             (if (= external-controller false)
-              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-4 42 (if should-reset-z 0 controller-plate-height)]))
+              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
               )
 
             ; bottom right
@@ -127,12 +127,16 @@
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
             ;left back
-            (screw-insert 0 0 bottom-radius top-radius height [12 9.5 0]) ; bottom left controller-plate-height
+            (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
+
             ; thumb
             (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
+            (if (= external-controller false)
+              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
+              )
 
-            ; bottom right
-            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [1 0 0]))
+            ; back right
+            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))
             ; top
             (color-yellow
              (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
@@ -142,7 +146,7 @@
 
             ; front right
             (color-blue
-             (screw-insert lastcol lastrow bottom-radius top-radius height [-5 11 0]))
+             (screw-insert lastcol lastrow bottom-radius top-radius height [-5 6 0]))
 
             ; end union
             ))))

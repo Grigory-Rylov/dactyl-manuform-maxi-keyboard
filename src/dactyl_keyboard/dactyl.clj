@@ -136,11 +136,12 @@
                                 (import
                                  "osik_logo.stl")))))
     ;split logo
-    (translate [22.2, -61.5, 80]
-               (rotate [(deg2rad 90), 0, (deg2rad 32)]
+    (translate [-12.5, -66.5, 80]
+               (rotate [(deg2rad 90), 0, (deg2rad 9)]
                        (color-yellow
-                        (import
-                         "osik_logo.stl"))))))
+                        (mirror [1, 0, 0]
+                                (import
+                                 "osik_logo.stl")))))))
 
 
 (def screw-holders-mid-left
@@ -152,6 +153,16 @@
   (union
    (color-yellow (translate [-52 4 5] (rotate [0, 0, (deg2rad 45)] (cube 6 4 6))))
    (color-green (translate [-65.5 -53 5] (cube 6 4 6)))))
+
+(def screw-holders-right
+  (union
+   (color-green (translate [-55 -8 5] (cube 6 4 6)))
+   (color-yellow (translate [-52 21 5] (cube 6 4 6)))))
+
+(def screw-holders-left
+  (union
+   (color-green (translate [-55 -8 5] (cube 6 4 6)))
+   (color-yellow (translate [-52 21 5] (cube 6 4 6)))))
 
 (def case-holder
   (union
@@ -180,7 +191,7 @@
 (def model-right
   (let [tracball-offset-x -68
         tracball-offset-y -30
-        tracball-offset-z 53]
+        tracball-offset-z 56]
     (difference
      (union
       key-holes-right
@@ -188,7 +199,10 @@
       ;pinky-walls
       connectors
       logo-right
-      (if mono-mode screw-holders-mid-right)
+      (if mono-mode
+        screw-holders-mid-right
+        (if (= external-controller false) screw-holders-right))
+
       ;(color-green controller-hole)
       (if (= externalThumb false) thumb-right)
       (if (= externalThumb false) thumb-connectors)
@@ -196,14 +210,21 @@
 
         (translate [tracball-offset-x, tracball-offset-y, tracball-offset-z]
                    (union
-                    (color-red trackball-case)
-                    trackball-walls)))
+                    (translate [0, 0, -16] (color-red trackball-case))
+                    (difference
+                     trackball-walls
+                      (color-yellow (translate [-15, -12, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
+                      (color-green (translate [-12, 16, -9] (binding [*fn* trackball-fn] (cylinder 20 20))))
+                      (color-blue (translate [-14, 16, 0] (scale [1, 1, 0.55](binding [*fn* trackball-fn] (sphere 36)))))
+                     )))
+        ; end
+        )
 
       (difference
        (union
         (difference case-walls
                     (if trackball-mode
-                      (translate [tracball-offset-x, tracball-offset-y, tracball-offset-z]
+                      (translate [tracball-offset-x, tracball-offset-y, (+ 10 tracball-offset-z)]
                                  (color-red trackball-hole))))
         (if magnet-holes magnet-stiffness-booster)
         screw-insert-outers-right)
@@ -225,26 +246,29 @@
              ;pinky-walls
              connectors
              logo-left
-             screw-holders-mid-left
+             (if mono-mode
+               screw-holders-mid-left
+               (if (= external-controller false) screw-holders-left))
 
              (if (= externalThumb false) thumb-left)
              (if (= externalThumb false) thumb-connectors)
-
 
              (difference
               (union case-walls
                      (if magnet-holes magnet-stiffness-booster)
                      screw-insert-outers-left)
               screw-insert-holes-left
+              controller-hole
               (if magnet-holes magnet-place)))
 
             ;side cut
-            (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+            (if mono-mode
+              (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
 
             (translate [0 0 -20] (cube 350 350 40))
             ;end difference
             )
-           case-holders-left
+           (if mono-mode case-holders-left)
            ;end union
            )))
 
@@ -450,7 +474,6 @@
       (write-scad hot-socket-standart-to-low-profile))
 (spit "things/hotswap-low-debug.scad" (write-scad hot-socket-low-profile))
 (spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
-
 
 (spit "things/right-external-controller.scad" (write-scad external-controller-case))
 

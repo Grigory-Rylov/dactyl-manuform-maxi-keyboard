@@ -77,6 +77,8 @@
 ; 2 - gateron low profile
 (def mono-mode false)
 (def hot-swap 1)
+(def hot-swap-holders true)
+
 (def low-profile false)
 (def cols-angle true)
 (def plate-height 2)
@@ -216,3 +218,4 @@
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
+(def trackball-fn 100)

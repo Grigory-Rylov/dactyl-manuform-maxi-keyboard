@@ -78,12 +78,12 @@
         height      20]
     (difference
      (union
-      (translate [(/ distance 2) 0, -15] (binding [*fn* 20] (cylinder radius height)))
-      (translate [(/ distance -2) 0, -15] (binding [*fn* 20] (cylinder radius height)))
+      (translate [0, (/ distance 2), -15] (binding [*fn* 20] (cylinder radius height)))
+      (translate [0, (/ distance -2), -15] (binding [*fn* 20] (cylinder radius height)))
       ; end union
       )
-     (translate [(/ distance 2) 0, -25] (binding [*fn* 20] (cylinder hole-radius height)))
-     (translate [(/ distance -2) 0, -25] (binding [*fn* 20] (cylinder hole-radius height)))
+     (translate [0, (/ distance 2), -25] (binding [*fn* 20] (cylinder hole-radius height)))
+     (translate [0, (/ distance -2), -25] (binding [*fn* 20] (cylinder hole-radius height)))
      ; end difference
      )))
 
@@ -93,24 +93,24 @@
         ball_hole_radius     (+ ball_radius bearing_radius)
         ball_place_wall      2
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
-        bearing_place_radius (+ ball_radius bearing_radius)
-        trackball-fn         50]
+        bearing_place_radius (+ ball_radius bearing_radius)]
 
     (difference
      ; outer sphere
      (union
       (binding [*fn* trackball-fn] (sphere ball_place_radius))
       ;(translate [0, 0, -23] lense-holder)
-      controller-holder)
+      controller-holder
+      )
      ; inner hole
      (binding [*fn* trackball-fn] (sphere ball_hole_radius))
      ; top hole
      (translate [0, 0, (/ ball_place_radius 2)]
                 (cube (* ball_place_radius 2) (* ball_place_radius 2) ball_place_radius))
 
-     (translate [0, 0, -23] sensor-hole)
-     (translate [-22.8, 0, 0] lock-hole)
-     (translate [22.8, 0, 0] (rotate [0, 0, (deg2rad 180)] lock-hole))
+     (translate [0, 0, -23] (rotate [0, 0, (deg2rad 90)] sensor-hole))
+     ;(translate [0, -22.8, 0] lock-hole)
+     ;(translate [0, 22.8, 0] (rotate [0, 0, (deg2rad 180)] lock-hole))
 
 
      ;bearing place
@@ -132,7 +132,6 @@
         ball_place_wall      2
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
-        trackball-fn         50
         height      20
         holder-diameter (+ trackball-mount-distance trackball-mount-diameter 4)]
     (union
@@ -150,15 +149,14 @@
         ball_place_wall      2
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
-        trackball-fn         50
-        height      55
+        height      57
         wall 2
         height-offset 4
         holder-diameter (+ trackball-mount-distance trackball-mount-diameter 4)]
     (difference
      (translate [0 0, (-(/ height -2) height-offset)] (binding [*fn* trackball-fn] (cylinder ball_place_radius height)))
      (translate [0 0, (/ height -2) ] (binding [*fn* trackball-fn] (cylinder (- ball_place_radius wall)  height)))
-     (translate [24 3.9, -35] (cube 28 33.5 50))
+     (translate [24 3.9, -44] (cube 28 33.5 50))
      ;end union
      )))
 
@@ -169,8 +167,7 @@
         ball_place_wall      2
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
-        trackball-fn         50
-        height      55
+        height      75
         wall 2
         holder-diameter (+ trackball-mount-distance trackball-mount-diameter 4)]
     (union
