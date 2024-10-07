@@ -210,16 +210,23 @@
         (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
                    (union
                     (translate [0, 0, -16] (color-red trackball-case))
-                    (difference
+                    (difference ; dif
                      trackball-walls
-                     (color-yellow
-                      (translate [-15, -12, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
-                     (color-green
-                      (translate [-12, 16, -9]
-                                 (binding [*fn* trackball-fn]
-                                   (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
-                     (color-blue
-                      (translate [-14, 16, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 36))))))))
+                     (difference ; dif
+                      (union
+                       (color-yellow
+                        (translate [-13, -12, 3] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
+                       ;(color-green
+                       ; (translate [-12, 16, -6]
+                       ;            (binding [*fn* trackball-fn]
+                       ;              (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
+                       (color-blue
+                        (translate [-14, 16, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 36)))))
+                       ; end union
+                       )
+                      (translate [0, 0, -20] (rotate [0,0, (deg2rad 0)](color-red (cube 80 80 10))))
+                      ; end hole dif
+                      ))))
         ; end
         )
 

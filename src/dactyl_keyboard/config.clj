@@ -76,7 +76,7 @@
 ; 1 - gateron standart
 ; 2 - gateron low profile
 (def mono-mode false)
-(def hot-swap 1)
+(def hot-swap 0)
 (def hot-swap-holders true)
 
 (def low-profile false)
@@ -222,7 +222,7 @@
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
-(def trackball-fn 100)
+(def trackball-fn 20)
 (def trackball-offset-x -68)
 (def trackball-offset-y -30)
 (def tracball-offset-z 56)
