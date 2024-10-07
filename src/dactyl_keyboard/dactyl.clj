@@ -189,9 +189,8 @@
      )))
 
 (def model-right
-  (let [tracball-offset-x -68
-        tracball-offset-y -30
-        tracball-offset-z 56]
+  (let [tracball-hole-cylinder-rad    20
+        tracball-hole-cylinder-height 20]
     (difference
      (union
       key-holes-right
@@ -208,15 +207,19 @@
       (if (= externalThumb false) thumb-connectors)
       (if trackball-mode
 
-        (translate [tracball-offset-x, tracball-offset-y, tracball-offset-z]
+        (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
                    (union
                     (translate [0, 0, -16] (color-red trackball-case))
                     (difference
                      trackball-walls
-                      (color-yellow (translate [-15, -12, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
-                      (color-green (translate [-12, 16, -9] (binding [*fn* trackball-fn] (cylinder 20 20))))
-                      (color-blue (translate [-14, 16, 0] (scale [1, 1, 0.55](binding [*fn* trackball-fn] (sphere 36)))))
-                     )))
+                     (color-yellow
+                      (translate [-15, -12, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
+                     (color-green
+                      (translate [-12, 16, -9]
+                                 (binding [*fn* trackball-fn]
+                                   (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
+                     (color-blue
+                      (translate [-14, 16, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 36))))))))
         ; end
         )
 
@@ -224,7 +227,7 @@
        (union
         (difference case-walls
                     (if trackball-mode
-                      (translate [tracball-offset-x, tracball-offset-y, (+ 10 tracball-offset-z)]
+                      (translate [trackball-offset-x, trackball-offset-y, (+ 10 tracball-offset-z)]
                                  (color-red trackball-hole))))
         (if magnet-holes magnet-stiffness-booster)
         screw-insert-outers-right)
@@ -455,16 +458,18 @@
           mono-plate-mid
           (color-yellow mono-plate-left)
           (color-blue mono-plate-right)))))
-(if  mono-mode
-  (spit "things/mono-plate-print-left.scad" (write-scad mono-plate-left)))
+(if mono-mode
+  (spit "things/mono-plate-print-left.scad" (write-scad mono-plate-left))
+  (spit "things/left-plate-print.scad" (write-scad plate-left)))
 
-(if  mono-mode
-  (spit "things/mono-plate-print-right.scad" (write-scad mono-plate-right)))
+(if mono-mode
+  (spit "things/mono-plate-print-right.scad" (write-scad mono-plate-right))
+  (spit "things/right-plate-print.scad" (write-scad plate-right)))
 
-(if  mono-mode
+(if mono-mode
   (spit "things/mono-plate-mid-print.scad" (write-scad mono-plate-mid)))
 
-(if  mono-mode
+(if mono-mode
   (spit "things/mono-plate.scad" (write-scad mono-plate))
   ;end if
   )

@@ -91,7 +91,7 @@
   (let [ball_radius          trackball-ball-radius
         bearing_radius       trackball-bearing-radius
         ball_hole_radius     (+ ball_radius bearing_radius)
-        ball_place_wall      2
+        ball_place_wall      trackball-place-wall
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)]
 
@@ -129,7 +129,7 @@
   (let [ball_radius          trackball-ball-radius
         bearing_radius       trackball-bearing-radius
         ball_hole_radius     (+ ball_radius bearing_radius)
-        ball_place_wall      2
+        ball_place_wall      trackball-place-wall
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
         height      20
@@ -146,7 +146,7 @@
   (let [ball_radius          trackball-ball-radius
         bearing_radius       trackball-bearing-radius
         ball_hole_radius     (+ ball_radius bearing_radius)
-        ball_place_wall      2
+        ball_place_wall      trackball-place-wall
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
         height      57
@@ -164,7 +164,7 @@
   (let [ball_radius          trackball-ball-radius
         bearing_radius       trackball-bearing-radius
         ball_hole_radius     (+ ball_radius bearing_radius)
-        ball_place_wall      2
+        ball_place_wall      trackball-place-wall
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)
         height      75

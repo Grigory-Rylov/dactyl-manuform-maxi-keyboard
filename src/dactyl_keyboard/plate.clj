@@ -174,6 +174,14 @@
    ; body projection
    (translate [0 0 bottom-height-half]
               (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline))
+
+   ; trackball case
+   (if trackball-mode
+     (translate [trackball-offset-x, trackball-offset-y, bottom-height-half]
+                (binding [*fn* trackball-fn]
+                  (cylinder
+                    (+ trackball-ball-radius trackball-bearing-radius trackball-place-wall), plate-height))))
+
    ; borders
    (if (> plate-border-height 0)
      (translate [0 0 (+ plate-height (/ plate-border-height 2))]
@@ -207,11 +215,49 @@
    ; end union
    ))
 
+(def plate-bumpers-left
+  (let [height 1]
+    (union
+     ;back center
+     (translate [6, 35, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+     ;back left
+     (translate [78, 3, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+
+     ;back right
+     (translate [-50, 5, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+
+
+     ;front left
+     (translate [68, -64, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+
+     ;front right
+     (translate [-50, -70, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+
+     ; end union
+
+     )
+    ))
+
+
+(def plate-bumpers-right
+  (let [height 1]
+    (union
+     plate-bumpers-left
+
+     ;trackball
+     (translate [-80, -20, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+
+     ; end union
+
+     )
+    ))
 (def plate-right
   (difference
    bottom-plate-right
    screw-insert-screw-holes-for-plate-right
-   (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+   (if mono-mode
+     (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
+   (if plate-bumpers plate-bumpers-right)
    ; end difference
    ))
 
@@ -220,7 +266,9 @@
           (difference
            bottom-plate-left
            screw-insert-screw-holes-for-plate-left
-           (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200)))
+           (if mono-mode
+             (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
+           (if plate-bumpers plate-bumpers-left)
            ; end difference
            )))
 

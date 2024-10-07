@@ -232,14 +232,14 @@
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) false))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) false))))
+   (translate [0, 0, -0.1] (screw-insert-all-shapes-left 2.9 1.7 (+ screw-head-height 0.2) false))))
 
 (def screw-insert-screw-holes-for-plate-right
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-right 1.7 1.7 (- plate-total-height screw-head-height) true))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-right 2.75 1.7 (+ screw-head-height 0.2) true))))
+   (translate [0, 0, -0.1] (screw-insert-all-shapes-right 2.9 1.7 (+ screw-head-height 0.2) true))))
 
 (def screw-insert-screw-holes-for-plate-left
   (union

@@ -28,10 +28,10 @@
 
 ; 5                   ; curvature of the rows
 
-(def centerrow (if externalThumb
-                 (dec nrows )
-                 (if extra-middle-row (- nrows 3) (- nrows 2))
-                 ))
+(def centerrow
+  (if externalThumb
+    (dec nrows)
+    (if extra-middle-row (- nrows 3) (- nrows 2))))
 
 ; controls front-back tilt
 (def centercol 2)
@@ -87,6 +87,9 @@
 
 (def thumbs-count 3)
 
+(def plate-bumpers true)
+(def plate-bumper-radius 5)
+
 ;;;;;;;;;;;;;;;;;;;;
 ;; Column offsets ;;
 ;;;;;;;;;;;;;;;;;;;;
@@ -107,14 +110,14 @@
 
 (defn last-column-offset [row]
   (cond
-    (= row 0) [0 2.82 -4.5]
-    (= row 1) [0 -18 5.64]
+    (= row 0)    [0 2.82 -4.5]
+    (= row 1)    [0 -18 5.64]
     ; pinky finger1
-    (= row 2) [0 -20 5.64]
+    (= row 2)    [0 -20 5.64]
     ; pinky finger2
-    (= row 3) [0 -7.8 3]
+    (= row 3)    [0 -7.8 3]
     ; index finger1
-    (= row 4) [0 -5.8 3]
+    (= row 4)    [0 -5.8 3]
     ; index finger2
     :else        [0 -2 0]))
 
@@ -214,8 +217,12 @@
 (def trackball-bearing-diameter 2)
 (def trackball-mount-distance 27)
 (def trackball-mount-diameter 6)
+(def trackball-place-wall 2)
 
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
 (def trackball-fn 100)
+(def trackball-offset-x -68)
+(def trackball-offset-y -30)
+(def tracball-offset-z 56)
