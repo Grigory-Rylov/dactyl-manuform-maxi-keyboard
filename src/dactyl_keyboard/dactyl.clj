@@ -120,7 +120,7 @@
                         (import
                          "osik_logo.stl"))))
     ;split logo
-    (translate [( + -3 thumb-x-offset), -65.5, 80]
+    (translate [(+ -3 thumb-x-offset), -65.5, 80]
                (rotate [(deg2rad 90), 0, (deg2rad 9)]
                        (color-yellow
                         (import
@@ -222,7 +222,7 @@
                        ;            (binding [*fn* trackball-fn]
                        ;              (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
                        (color-blue
-                        (translate [-14, 16, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 36)))))
+                        (translate [-13, 16, 5.5] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 39)))))
                        ; end union
                        )
                       (translate [0, 0, -20] (rotate [0, 0, (deg2rad 0)] (color-red (cube 80 80 10))))
@@ -363,36 +363,34 @@
 (spit "things/right-test.scad"
       (write-scad
        (union
-       (difference
-        (union
-         key-holes-right
-         ;pinky-connectors
-         ;pinky-walls
-         connectors
-         (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
-         (if (> thumbs-count 0) thumb-connectors)
-         (if magnet-holes magnet-connectors)
+        (difference
+         (union
+          key-holes-right
+          ;pinky-connectors
+          ;pinky-walls
+          connectors
+          (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
+          (if (> thumbs-count 0) thumb-connectors)
+          (if magnet-holes magnet-connectors)
 
-         (difference
-          (union case-walls (binding [*fn* 50])
-                 (if magnet-holes magnet-stiffness-booster)
-                 screw-insert-outers-right)
-          controller-hole
-          screw-insert-holes-right
-          (if magnet-holes magnet-place))
+          (difference
+           (union case-walls (binding [*fn* 50])
+                  (if magnet-holes magnet-stiffness-booster)
+                  screw-insert-outers-right)
+           controller-hole
+           screw-insert-holes-right
+           (if magnet-holes magnet-place))
 
-         thumbcaps
-         caps
-         controller-body
-         usb-connector-body-place
-         ; end union
-         )
-        controller-hole
+          thumbcaps
+          caps
+          controller-body
+          usb-connector-body-place
+          ; end union
+          )
+         controller-hole
 
-        (translate [0 0 -20] (cube 350 350 40)))
-        (translate [-25, -46.0, 0] (rotate [0, 0, (deg2rad -6)] internal-controller-plate-case))
-        )
-       ))
+         (translate [0 0 -20] (cube 350 350 40)))
+        (translate [-25, -46.0, 0] (rotate [0, 0, (deg2rad -6)] internal-controller-plate-case)))))
 
 (spit "things/right-external-thumb-test.scad"
       (write-scad

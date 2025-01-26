@@ -55,11 +55,13 @@
 ;external case for controller and ports
 (def niceNanoMode false)
 (def controller-plate-height 1.5)
+; external controller holder
 (def external-controller false)
 (def external-controller-height 14)
 (def external-controller-width
   (if niceNanoMode 25 33))
 
+(def reset-hole-enabled false)
 ; magnet holes for external wrist rest
 (def magnet-holes true)
 (def magnet-height 2)
@@ -223,8 +225,8 @@
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
 (def trackball-fn 20)
-(def trackball-offset-x -68)
-(def trackball-offset-y -30)
+(def trackball-offset-x -64)
+(def trackball-offset-y -35)
 (def tracball-offset-z 56)
 
 (def fn-value 2) ; 60 in release

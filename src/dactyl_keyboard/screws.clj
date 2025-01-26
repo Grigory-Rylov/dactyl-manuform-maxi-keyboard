@@ -97,7 +97,7 @@
 
             ; thumb
             (if trackball-mode
-              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-38 17 0]))
+              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-34 17 0]))
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
               )
 
