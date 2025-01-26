@@ -41,7 +41,7 @@
 (def controllerBottomHeight 1.0)
 (def roundCornerHeight 1)
 (def roundCornerRadius 1)
-(def totalControllerBoxHeight 6)
+(def totalControllerBoxHeight 5.5)
 (def totalControllerBoxLen (+ controllerLen roundCornerRadius roundCornerRadius))
 (def totalControllerBoxWidth (+ controllerWidth roundCornerRadius roundCornerRadius))
 (def controllerWiringHoleWidth 4)
@@ -472,32 +472,17 @@
         holderWidth (+ buttonWidth 1)]
 
     (union
-
      ; controller body
      (translate
       [controller-body-x-offset-wireless
        controller-body-y-offset
        (+ totalControllerBoxHeight topOffset)]
       controller-holder-body)
-
-     ; bracing left
-     (translate
-      [(/ (- controllerCaseWidth bracingWidth) 2),
-       -0.15,
-       (/ totalControllerBoxHeight 2)]
-      (color-green bracingLeft))
-
-     ; bracing right
-     (translate
-      [(/ (- controllerCaseWidth bracingWidth) -2),
-       (- (* first_column_y_offset -1) 0.12),
-       (/ totalControllerBoxHeight 2)]
-      (color-blue bracingRight))
      ; end union
      )))
 
 (def external-case-holes
-  (let [zOffset -2]
+  (let [zOffset -3]
     (union
      ; button
      (translate
@@ -546,7 +531,7 @@
      (translate
       [controller-body-x-offset-wireless,
        controller-body-y-offset,
-       (+ (/ (+ totalControllerBoxHeight 2) 2) zOffset 1)]
+       (+ (/ (+ totalControllerBoxHeight 2) 2) zOffset 0)]
 
       (translate [0, 0, controllerBottomHeight]
                  (cube controllerWidth, (- controllerLen controllerYOffset), (+ totalControllerBoxHeight 4))))

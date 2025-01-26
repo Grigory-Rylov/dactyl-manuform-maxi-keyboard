@@ -73,6 +73,21 @@
     (place2 (translate (wall-locate2 dx2 dy2) post2))
     (place2 (translate (wall-locate3 dx2 dy2) post2)))))
 
+; only top wall
+(defn wall-brace-no-bottom [place1 dx1 dy1 post1 place2 dx2 dy2 post2]
+  (union
+   (hull
+    (place1 post1)
+    (place1 (translate (wall-locate1 dx1 dy1) post1))
+    (place1 (translate (wall-locate2 dx1 dy1) post1))
+    (place1 (translate (wall-locate3 dx1 dy1) post1))
+    (place2 post2)
+    (place2 (translate (wall-locate1 dx2 dy2) post2))
+    (place2 (translate (wall-locate2 dx2 dy2) post2))
+    (place2 (translate (wall-locate3 dx2 dy2) post2)))
+   ))
+
+
 (defn wall-brace-top [place1 dx1 dy1 post1 place2 dx2 dy2 post2]
   (union
    (hull
@@ -102,6 +117,10 @@
 
 (defn key-wall-brace [x1 y1 dx1 dy1 post1 x2 y2 dx2 dy2 post2]
   (wall-brace (partial key-place x1 y1) dx1 dy1 post1
+              (partial key-place x2 y2) dx2 dy2 post2))
+
+(defn key-wall-brace-top [x1 y1 dx1 dy1 post1 x2 y2 dx2 dy2 post2]
+  (wall-brace-no-bottom (partial key-place x1 y1) dx1 dy1 post1
               (partial key-place x2 y2) dx2 dy2 post2))
 
 

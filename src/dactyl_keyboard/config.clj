@@ -226,3 +226,5 @@
 (def trackball-offset-x -68)
 (def trackball-offset-y -30)
 (def tracball-offset-z 56)
+
+(def fn-value 2) ; 60 in release

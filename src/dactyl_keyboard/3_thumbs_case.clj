@@ -85,8 +85,7 @@
       (if mono-mode
         (wall-brace-top (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post)
         ; else
-        (wall-brace (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post)
-        )
+        (wall-brace (partial left-key-place y -1) -1 0 web-post (partial left-key-place (inc y) 1) -1 0 web-post))
       (hull (key-place 0 (inc y) web-post-tl)
             (key-place 0 y web-post-bl)
             (left-key-place (inc y) 1 web-post)
@@ -104,17 +103,19 @@
      (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
 
    ;front connections between colums
-   (for [x (range 3 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
+   (for [x (range 4 ncols)]
+     (color-blue
+      (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br)))
 
    ; last and last -1 columns
-;   (color-yellow
-;    (key-wall-brace 4 cornerrow ;x1 y1
-;                    -0.5 -1 ;dx1 dy1
-;                    web-post-bl ; post1
-;                    4 cornerrow ;x2 y2
-;                    0 -1 ; dx1 dy1
-;                    web-post-br ; post2
-;                    ))
+   ;   (color-yellow
+   ;    (key-wall-brace 4 cornerrow ;x1 y1
+   ;                    -0.5 -1 ;dx1 dy1
+   ;                    web-post-bl ; post1
+   ;                    4 cornerrow ;x2 y2
+   ;                    0 -1 ; dx1 dy1
+   ;                    web-post-br ; post2
+   ;                    ))
 
    ;;front
    ; connections between colums
@@ -124,22 +125,75 @@
 
 
    ;wall between key 1 and thumb
-   (key-wall-brace 2 cornerrow 1 -1 web-post-bl 2 cornerrow 0 -1 web-post-br)
+   ; TODO remove bottom wall
+   (color PIN
+    (key-wall-brace-top
+     2 ; x1
+     cornerrow ; y1
+     0 ; dx1
+     -0.5 ; dy1
+     web-post-bl ; post1
+     2 ; x2
+     cornerrow ; y2
+     0 ; dx2
+     -1 ; dy2
+     web-post-br))
+
 
    ;wall near thumb cluster
-   (wall-brace
-    (partial key-place 1 cornerrow) 1 0 web-post-br
-    (partial key-place 2 cornerrow) 1 -1 web-post-bl)
+   ;(color-blue(wall-brace
+   ; (partial key-place 1 cornerrow) 1 0 web-post-br
+   ; (partial key-place 2 cornerrow) 1 -1 web-post-bl))
 
    ; thumb walls
-   (wall-brace
-    thumb-r-place 0 -1 web-post-bl
-    thumb-r-place 0.5 -1 thumb-post-br)
+   (color MAG
+          (wall-brace
+           thumb-r-place 0 -1 web-post-bl
+           thumb-r-place 0.5 -1 thumb-post-br))
 
-   (wall-brace
-    thumb-r-place 1 -1 thumb-post-tr
-    (partial key-place 1 cornerrow) 1 0 web-post-br)
-   (wall-brace thumb-r-place 1 0 web-post-br thumb-r-place 1 -1 thumb-post-tr)
+   ; diagonal
+
+   (color ORA
+          (hull
+           (key-place 2 cornerrow (translate (wall-locate3 0 -0.5) web-post-bl))
+           (key-place 2 cornerrow (translate (wall-locate1 0 0) web-post-bl))
+           (key-place 1 cornerrow (translate (wall-locate1 0 0) web-post-br))
+
+           )
+          )
+
+   (color CYA
+          (hull
+           (key-place 2 cornerrow (translate (wall-locate3 0 -1) web-post-br))
+           (key-place 2 cornerrow web-post-br)
+           (key-place 3 cornerrow web-post-bl)
+           (key-place 3 cornerrow (translate (wall-locate3 0 -1) web-post-bl))
+            )
+          )
+
+
+   ;(color-green
+   ;  (wall-brace
+   ;   thumb-r-place 1.3 -1 thumb-post-tr
+   ;   (partial key-place 1 cornerrow) 2.1 -0.6 web-post-br))
+
+   (color DGR
+          (hull
+           (key-place 2 cornerrow (translate (wall-locate2 0 -0.5) web-post-bl))
+           (key-place 2 cornerrow (translate (wall-locate3 0 -1) web-post-br))
+
+           (key-place 3 cornerrow (translate (wall-locate3 0 -1) web-post-bl))
+           (thumb-r-place thumb-post-tr)
+
+           (thumb-r-place (translate (wall-locate2 1.68 -0.6) thumb-post-tr))
+
+           ;end hull
+           ))
+
+   ; thub right back corner
+   (color-yellow
+    (wall-brace thumb-r-place 1 0 web-post-br thumb-r-place 1.50 -0.6 thumb-post-tr))
+
    (wall-brace thumb-m-place 0 -1 web-post-br thumb-m-place 0 -1 web-post-bl)
    (wall-brace thumb-l-place 0 -1 web-post-br thumb-l-place 0 -1 web-post-bl)
    (wall-brace thumb-l-place 0 1 web-post-tr thumb-l-place 0 1 web-post-tl)

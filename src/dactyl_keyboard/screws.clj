@@ -90,15 +90,17 @@
 
               (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
               )
+
+            (if (= external-controller false)
+              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
+              )
+
             ; thumb
             (if trackball-mode
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-38 17 0]))
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
               )
 
-            (if (= external-controller false)
-              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
-              )
 
             ; bottom right
             (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))

@@ -102,17 +102,18 @@
        (translate thumborigin)
        (translate move)))
 
+(def thumb-x-offset 10)
 ; convexer
 (defn thumb-r-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [-15 -10 5] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
 
 ; right
 (defn thumb-m-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [10 -36 22] [-32 -14 -7] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [10 -36 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
 
 ; middle
 (defn thumb-l-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [6 -30 28] [-47.0 -20.5 -19] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [6 -30 28] [(+ -47.0 thumb-x-offset) -20.5 -19] shape)))
 
 ; left
 

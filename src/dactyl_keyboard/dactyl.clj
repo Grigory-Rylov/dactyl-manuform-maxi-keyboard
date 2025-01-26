@@ -13,6 +13,7 @@
             [dactyl-keyboard.case-common :refer :all]
             [dactyl-keyboard.keycaps :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
+            [dactyl-keyboard.controller-holder-internal :refer :all]
             [dactyl-keyboard.screws :refer :all]
             [dactyl-keyboard.magnet-holder :refer :all]
             [dactyl-keyboard.connectors :refer :all]
@@ -119,7 +120,7 @@
                         (import
                          "osik_logo.stl"))))
     ;split logo
-    (translate [-3, -65.5, 80]
+    (translate [( + -3 thumb-x-offset), -65.5, 80]
                (rotate [(deg2rad 90), 0, (deg2rad 9)]
                        (color-yellow
                         (import
@@ -224,7 +225,7 @@
                         (translate [-14, 16, 0] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 36)))))
                        ; end union
                        )
-                      (translate [0, 0, -20] (rotate [0,0, (deg2rad 0)](color-red (cube 80 80 10))))
+                      (translate [0, 0, -20] (rotate [0, 0, (deg2rad 0)] (color-red (cube 80 80 10))))
                       ; end hole dif
                       ))))
         ; end
@@ -361,6 +362,7 @@
 
 (spit "things/right-test.scad"
       (write-scad
+       (union
        (difference
         (union
          key-holes-right
@@ -387,7 +389,10 @@
          )
         controller-hole
 
-        (translate [0 0 -20] (cube 350 350 40)))))
+        (translate [0 0 -20] (cube 350 350 40)))
+        (translate [-25, -46.0, 0] (rotate [0, 0, (deg2rad -6)] internal-controller-plate-case))
+        )
+       ))
 
 (spit "things/right-external-thumb-test.scad"
       (write-scad
@@ -507,6 +512,9 @@
             ;thumbs-screw-insert-holes
             ))
           (translate [0 0 -10] (cube 350 350 40))))))
+
+(spit "things/controller_holder_internal.scad"
+      (write-scad internal-controller-plate-case))
 
 (spit "things/trackball_case.scad"
       (write-scad trackball-case))
