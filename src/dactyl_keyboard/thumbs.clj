@@ -109,11 +109,11 @@
 
 ; right
 (defn thumb-m-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [10 -36 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
 
 ; middle
 (defn thumb-l-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [6 -30 28] [(+ -47.0 thumb-x-offset) -20.5 -19] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape)))
 
 ; left
 
