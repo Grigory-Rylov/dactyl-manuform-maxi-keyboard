@@ -6,7 +6,8 @@
             [scad-clj.model :refer :all]
             [unicode-math.core :refer :all]
             [dactyl-keyboard.common :refer :all]
-            [dactyl-keyboard.config :refer :all]))
+            [dactyl-keyboard.config :refer :all]
+            [dactyl-keyboard.3-thumbs-case :refer :all]))
 
 (def lock-cylinder
   (let [radius 0.75
@@ -98,14 +99,28 @@
     (difference
      ; outer sphere
      (union
-      (binding [*fn* trackball-fn] (sphere ball_place_radius))
+
+      (intersection
+       (binding [*fn* trackball-fn] (sphere ball_place_radius))
+
+       (union
+        ;outer shpere
+        (difference
+         (binding [*fn* trackball-fn] (sphere ball_place_radius))
+         ; top hole
+         (translate [0, 0, (+ (/ ball_place_radius 2) 2)]
+                    (cube (* ball_place_radius 2) (* ball_place_radius 2) ball_place_radius))
+         ; end difference
+         )
+        (scale [1, 0.5, 0.30] (binding [*fn* trackball-fn] (sphere (+ ball_hole_radius 10))))
+        ; end intersection
+        ))
+
       ;(translate [0, 0, -23] lense-holder)
       controller-holder)
-     ; inner hole
+
+     ; inner ball hole
      (binding [*fn* trackball-fn] (sphere ball_hole_radius))
-     ; top hole
-     (translate [0, 0, (/ ball_place_radius 2)]
-                (cube (* ball_place_radius 2) (* ball_place_radius 2) ball_place_radius))
 
      (translate [0, 0, -23] (rotate [0, 0, (deg2rad 90)] sensor-hole))
      ;(translate [0, -22.8, 0] lock-hole)
@@ -117,7 +132,11 @@
      (place_bearing bearing_place_radius -120, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
 
      ; end difference
-     )))
+     )
+    ; end let
+    )
+  ; end def
+  )
 
 (def trackball-inner-hole
   (let [ball_radius          trackball-ball-radius
@@ -138,19 +157,35 @@
      )))
 
 (def trackball-walls
-  (let [ball_radius          trackball-ball-radius
-        bearing_radius       trackball-bearing-radius
-        ball_hole_radius     (+ ball_radius bearing_radius)
-        ball_place_wall      trackball-place-wall
-        ball_place_radius    (+ ball_hole_radius ball_place_wall)
-        bearing_place_radius (+ ball_radius bearing_radius)
-        height               57
-        wall                 2
-        height-offset        4
-        holder-diameter      (+ trackball-mount-distance trackball-mount-diameter 4)]
+  (let [ball_radius                 trackball-ball-radius
+        bearing_radius              trackball-bearing-radius
+        ball_hole_radius            (+ ball_radius bearing_radius)
+        ball_place_wall             trackball-place-wall
+        ball_place_radius           (+ ball_hole_radius ball_place_wall)
+        bearing_place_radius        (+ ball_radius bearing_radius)
+        height                      57
+        bottom_height               47
+        top_height                  10
+        wall                        2
+        height-offset               2
+        holder-diameter             (+ trackball-mount-distance trackball-mount-diameter 4)]
     (difference
-     (translate [0 0, (- (/ height -2) height-offset)]
-                (binding [*fn* trackball-fn] (cylinder ball_place_radius height)))
+     (union
+      ;top cylinder
+
+      (difference
+       (color PIN
+              (translate [0 0, (- (/ top_height -2) height-offset)]
+                         (binding [*fn* trackball-fn] (cylinder ball_place_radius top_height))))
+
+       (rotate [(deg2rad 0) (deg2rad -35) (deg2rad 6)] (cube 200 200 31))
+
+       ;end difference top ring
+       )
+      ;bottom cylinder
+      (color PUR
+             (translate [0 0, (- (/ bottom_height -2) height-offset top_height)]
+                        (binding [*fn* trackball-fn] (cylinder ball_place_radius bottom_height)))))
      (translate [0 0, (/ height -2)]
                 (binding [*fn* trackball-fn] (cylinder (- ball_place_radius wall) height)))
      (color CYA (translate [18 6, -44] (cube 28 31 50)))

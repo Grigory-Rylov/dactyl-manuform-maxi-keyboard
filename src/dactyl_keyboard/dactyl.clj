@@ -215,14 +215,14 @@
                      trackball-walls
                      (difference ; dif
                       (union
-                       (color-yellow
-                        (translate [-13, -12, 3] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
+                       ;(color-yellow
+                       ; (translate [-13, -12, 3] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
                        ;(color-green
                        ; (translate [-12, 16, -6]
                        ;            (binding [*fn* trackball-fn]
                        ;              (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
-                       (color-blue
-                        (translate [-13, 16, 5.5] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 39)))))
+                       ;(color-blue
+                       ; (translate [-13, 16, 5.5] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 39)))))
                        ; end union
                        )
                       (translate [0, 0, -20] (rotate [0, 0, (deg2rad 0)] (color-red (cube 80 80 10))))
