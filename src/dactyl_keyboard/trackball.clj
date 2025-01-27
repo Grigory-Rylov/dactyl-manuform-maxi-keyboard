@@ -127,9 +127,9 @@
      ;(translate [0, 22.8, 0] (rotate [0, 0, (deg2rad 180)] lock-hole))
 
      ;bearing place
-     (place_bearing bearing_place_radius 0, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-     (place_bearing bearing_place_radius 120, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-     (place_bearing bearing_place_radius -120, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
 
      ; end difference
      )
@@ -164,8 +164,8 @@
         ball_place_radius           (+ ball_hole_radius ball_place_wall)
         bearing_place_radius        (+ ball_radius bearing_radius)
         height                      57
-        bottom_height               47
-        top_height                  10
+        bottom_height               43
+        top_height                  (- height bottom_height)
         wall                        2
         height-offset               2
         holder-diameter             (+ trackball-mount-distance trackball-mount-diameter 4)]

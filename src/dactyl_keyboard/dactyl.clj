@@ -210,7 +210,7 @@
 
         (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
                    (union
-                    (translate [0, 0, -16] (color-red trackball-case))
+                    (translate [0, 0, -18] (color-red trackball-case))
                     (difference ; dif
                      trackball-walls
                      (difference ; dif
