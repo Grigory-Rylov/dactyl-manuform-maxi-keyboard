@@ -64,7 +64,13 @@
 
      (minkowski
       (cube width height depth)
-      (cylinder 7.7 1)))))
+      (cylinder 7.7 1))
+
+     (minkowski
+      (cube (- width 3)  ( - height 3)  (+ depth 4))
+      (cylinder 7.7 1))
+     ; end union
+     )))
 
 (defn place_bearing [radius zAngle yAngle object]
   (rotate [0, (deg2rad yAngle), (deg2rad zAngle)] (translate [radius, 0, 0] object)))
@@ -76,11 +82,13 @@
   (let [radius      3
         hole-radius 1
         distance    trackball-mount-distance
-        height      20]
+        height      20
+        zOffset -16
+        ]
     (difference
      (union
-      (translate [0, (/ distance 2), -15] (binding [*fn* 20] (cylinder radius height)))
-      (translate [0, (/ distance -2), -15] (binding [*fn* 20] (cylinder radius height)))
+      (translate [0, (/ distance 2), zOffset] (binding [*fn* 20] (cylinder radius height)))
+      (translate [0, (/ distance -2), zOffset] (binding [*fn* 20] (cylinder radius height)))
       ; end union
       )
      (translate [0, (/ distance 2), -25] (binding [*fn* 20] (cylinder hole-radius height)))
@@ -96,6 +104,7 @@
         ball_place_radius    (+ ball_hole_radius ball_place_wall)
         bearing_place_radius (+ ball_radius bearing_radius)]
 
+    (union
     (difference
      ; outer sphere
      (union
@@ -112,26 +121,32 @@
                     (cube (* ball_place_radius 2) (* ball_place_radius 2) ball_place_radius))
          ; end difference
          )
-        (scale [1, 0.5, 0.30] (binding [*fn* trackball-fn] (sphere (+ ball_hole_radius 10))))
+        (scale [1, 0.5, 0.26] (binding [*fn* trackball-fn] (sphere (+ ball_hole_radius 10))))
         ; end intersection
         ))
 
       ;(translate [0, 0, -23] lense-holder)
-      controller-holder)
+      (color PIN controller-holder))
 
      ; inner ball hole
      (binding [*fn* trackball-fn] (sphere ball_hole_radius))
 
-     (translate [0, 0, -23] (rotate [0, 0, (deg2rad 90)] sensor-hole))
+     (translate [0, 0, -24] (rotate [0, 0, (deg2rad 90)] sensor-hole))
      ;(translate [0, -22.8, 0] lock-hole)
      ;(translate [0, 22.8, 0] (rotate [0, 0, (deg2rad 180)] lock-hole))
 
+     ;bearing place
+;     (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+;     (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+;     (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+
+     ; end difference
+     )
      ;bearing place
      (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
      (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
      (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
 
-     ; end difference
      )
     ; end let
     )

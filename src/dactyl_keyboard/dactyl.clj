@@ -210,24 +210,10 @@
 
         (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
                    (union
-                    (translate [0, 0, -18] (color-red trackball-case))
-                    (difference ; dif
-                     trackball-walls
-                     (difference ; dif
-                      (union
-                       ;(color-yellow
-                       ; (translate [-13, -12, 3] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 40)))))
-                       ;(color-green
-                       ; (translate [-12, 16, -6]
-                       ;            (binding [*fn* trackball-fn]
-                       ;              (cylinder tracball-hole-cylinder-rad tracball-hole-cylinder-height))))
-                       ;(color-blue
-                       ; (translate [-13, 16, 5.5] (scale [1, 1, 0.55] (binding [*fn* trackball-fn] (sphere 39)))))
-                       ; end union
-                       )
-                      (translate [0, 0, -20] (rotate [0, 0, (deg2rad 0)] (color-red (cube 80 80 10))))
-                      ; end hole dif
-                      ))))
+                    (translate [0, 0, -18] trackball-case)
+                    trackball-walls)
+                   ; end translate tb
+                   )
         ; end
         )
 
@@ -514,8 +500,19 @@
 (spit "things/controller_holder_internal.scad"
       (write-scad internal-controller-plate-case))
 
-(spit "things/trackball_case.scad"
+(spit "things/trackball_basket.scad"
       (write-scad trackball-case))
+
+(spit "things/trackball_case.scad"
+      (write-scad
+       (difference
+        (translate [trackball-offset-x, trackball-offset-y, (- tracball-offset-z 10)]
+                   (union
+                    (translate [0, 0, -18] trackball-case)
+                    trackball-walls))
+        (translate [0 0 -20] (cube 350 350 40)))
+       ; end write
+       ))
 
 (defn -main [dum] 1)
 

@@ -224,9 +224,9 @@
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
-(def trackball-fn 20)
+(def trackball-fn 100)
 (def trackball-offset-x -64)
 (def trackball-offset-y -35)
 (def tracball-offset-z 56)
 
-(def fn-value 2) ; 60 in release
+(def fn-value 60) ; 60 in release
