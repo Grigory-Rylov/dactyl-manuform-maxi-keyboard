@@ -18,7 +18,7 @@
        (translate
         [0
          0
-         (+ (/ web-thickness -2) plate-thickness 2)
+         (+ (/ web-thickness -2) plate-thickness 1)
          ])))
 
 (def post-adj (/ post-size 2))
