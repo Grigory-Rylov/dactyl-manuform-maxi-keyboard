@@ -120,7 +120,7 @@
                         (import
                          "osik_logo.stl"))))
     ;split logo
-    (translate [(+ -3 thumb-x-offset), -65.5, 80]
+    (translate [(+ -7 thumb-x-offset), -65.5, 80]
                (rotate [(deg2rad 90), 0, (deg2rad 9)]
                        (color-yellow
                         (import

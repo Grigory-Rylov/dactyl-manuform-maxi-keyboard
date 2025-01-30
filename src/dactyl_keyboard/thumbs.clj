@@ -16,6 +16,10 @@
   (map + (key-position 1 cornerrow [(/ mount-width 2) (- (/ mount-height 2)) 0])
        thumb-offsets))
 
+(def thumborigin-mod
+  (map + (key-position 1 cornerrow [(/ mount-width 2) (- (/ mount-height 2)) 0])
+       thumb-offsets-mod))
+
 (defn thumb-tr-place [shape]
   (->> shape
        (rotate (deg2rad 14) [1 0 0])
@@ -115,6 +119,35 @@
 (defn thumb-l-place [shape]
   (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape)))
 
+
+
+(defn thumb-m-place-mod [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
+
+(defn thumb-r-place-mod [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
+
+;bottom right
+(defn thumb-mr-place-mod-remove [shape]
+  (->> shape
+       (rotate (deg2rad 10) [1 0 0])
+       (rotate (deg2rad -23) [0 1 0])
+       (rotate (deg2rad 25) [0 0 1])
+       (translate thumborigin-mod)
+       (translate [-24 -35 -6])))
+;bottom left
+(defn thumb-br-place-mod-remove [shape]
+  (->> shape
+       (rotate (deg2rad 6) [1 0 0])
+       (rotate (deg2rad -34) [0 1 0])
+       (rotate (deg2rad 35) [0 0 1])
+       (translate thumborigin-mod)
+       (translate [-39 -43 -16])))
+
+(defn thumb-l-place-mod [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape))
+  )
+
 ; left
 
 (defn three-thumbs-layout [shape]
@@ -122,6 +155,16 @@
    (thumb-r-place shape)
    (thumb-m-place shape)
    (thumb-l-place shape)))
+
+(defn three-thumbs-layout-mod [shape]
+  (union
+   ;(thumb-mr-place-mod shape)
+   ;(thumb-br-place-mod shape)
+   (thumb-m-place-mod shape)
+   (thumb-r-place-mod shape)
+   (thumb-l-place-mod shape)
+   ; end union
+   ))
 
 (defn five-thumbs-layout [shape]
   (union
@@ -148,6 +191,6 @@
 (defn thumb-layout [shape]
   (case thumbs-count
     0 (external-4-thumbs-layout shape)
-    3 (three-thumbs-layout shape)
+    3 (three-thumbs-layout-mod shape)
     5 (five-thumbs-layout shape)
     6 (six-thumbs-layout shape)))

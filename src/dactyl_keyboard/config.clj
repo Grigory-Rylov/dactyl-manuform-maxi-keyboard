@@ -78,7 +78,7 @@
 ; 1 - gateron standart
 ; 2 - gateron low profile
 (def mono-mode false)
-(def hot-swap 0)
+(def hot-swap 1)
 (def hot-swap-holders true)
 
 (def low-profile false)
@@ -136,6 +136,7 @@
 (def innercol-offset (if inner-column 1 0))
 
 (def thumb-offsets [6 -3 7])
+(def thumb-offsets-mod [14 -3 7])
 
 ; высота
 (def keyboard-z-offset

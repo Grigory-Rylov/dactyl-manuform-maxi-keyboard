@@ -185,8 +185,8 @@
               (union
                ; hot-swap plate
                (difference
-                (translate [0 0 (- hot-swap-vertical-offset (/ socket-height-adjust 2))]
-                           (cube (+ keyswitch-height 3.6) (+ keyswitch-width 3) (+ socket-thickness socket-height-adjust)))
+                (color-yellow(translate [0 0 (- hot-swap-vertical-offset (/ socket-height-adjust 2))]
+                           (cube (+ keyswitch-height 3.4) (+ keyswitch-width 3) (+ socket-thickness socket-height-adjust))))
                 (translate [0 0 (- (/ socket-height-adjust -2) -0.5)]
                            (cube keyswitch-height keyswitch-width (+ socket-height-adjust 2.2))))
 

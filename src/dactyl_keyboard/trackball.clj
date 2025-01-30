@@ -136,16 +136,16 @@
      ;(translate [0, 22.8, 0] (rotate [0, 0, (deg2rad 180)] lock-hole))
 
      ;bearing place
-;     (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-;     (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-;     (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
 
      ; end difference
      )
      ;bearing place
-     (place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-     (place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
-     (place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     ;(place_bearing bearing_place_radius 30, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     ;(place_bearing bearing_place_radius 160, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
+     ;(place_bearing bearing_place_radius -90, 30 (binding [*fn* trackball-fn] (sphere bearing_radius)))
 
      )
     ; end let
