@@ -62,8 +62,8 @@
 (def connectionLeftOffset1 -4.5)
 (def connectionLeftOffset2 0)
 
-(def connectionYOffset1 18.7)
-(def connectionYOffset2 19.4)
+(def connectionYOffset1 18.1)
+(def connectionYOffset2 18.5)
 
 (def magnet-place
   (let [col1 3

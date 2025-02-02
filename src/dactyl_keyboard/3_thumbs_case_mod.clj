@@ -46,6 +46,7 @@
     (key-wall-brace 3 lastrow 0 -1 web-post-bl 3 lastrow 0.5 -1 web-post-br))
    (color-green
     (key-wall-brace 3 lastrow 0.5 -1 web-post-br 4 cornerrow 0.5 -1 web-post-bl))
+
    (for [x (range 4 ncols)]
      (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
    ; TODO fix extra wall
@@ -197,23 +198,17 @@
      ;right-wall-inner
      ; back wall
      (for [x (range 0 ncols)]
-       (if (not= x 1)
-         (key-wall-brace-outer x 0 0 1 web-post-tl x 0 0 1 web-post-tr web-post-tl-c web-post-tr-c)))
+         (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl x 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
      ;(for [x (range 0 ncols)] (if (not= x 1) (key-wall-brace-inner x 0 0 1 web-post-tl x 0 0 1 web-post-tr)))
 
      (for [x (range 1 ncols)]
-       (if (not= x 2)
-         (key-wall-brace-outer x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr web-post-tl-c web-post-tr-c)))
+         (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl (dec x) 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
      ;(for [x (range 1 ncols)] (if (not= x 2) (key-wall-brace-inner x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr)))
 
-     (key-wall-brace-outer 2 0 0 1 web-post-tl 2 0 -0.2 1 web-post-tr web-post-tl-c web-post-tr-c)
      ;(key-wall-brace-inner 2 0 0 1 web-post-tl 2 0 -0.2 1 web-post-tr)
 
-     (key-wall-brace-outer 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr web-post-tl-c web-post-tr-c)
      ;(key-wall-brace-inner 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr)
 
-     (color PIN
-            (key-wall-brace-outer 1 0 0 1 web-post-tl 1 0 -0.2 1 web-post-tr web-post-tl-c web-post-tr-c))
      ;(color PIN (key-wall-brace-inner 1 0 0 1 web-post-tl 1 0 -0.2 1 web-post-tr))
 
      ; left wall
@@ -222,7 +217,7 @@
         (wall-brace-bottom (partial left-key-place y 1) -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
         (color PUR
                (hull
-                (key-wall-brace-inner-edge 0 y -1.5 0 web-post-tl-c 0 y -1.5 0 web-post-bl-c)
+                (key-wall-brace-inner-edge 0 y ( - border-outer-offset-hor-left 0.5) 0 web-post-tl-c 0 y ( - border-outer-offset-hor-left 0.5) 0 web-post-bl-c)
                 (key-wall-brace-inner-edge 0 y -1.0 0 web-post-tl-c 0 y -1.0 0 web-post-bl-c)
                 (wall3-brace-edge (partial left-key-place y -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)))))
 
@@ -231,7 +226,7 @@
         (wall-brace-bottom (partial left-key-place (dec y) -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)
         (color-yellow
          (hull
-          (key-wall-brace-inner-edge 0 (dec y) -1.5 0 web-post-bl-c 0 y -1.5 0 web-post-tl-c)
+          (key-wall-brace-inner-edge 0 (dec y) ( - border-outer-offset-hor-left 0.5) 0 web-post-bl-c 0 y (- border-outer-offset-hor-left 0.5) 0 web-post-tl-c)
           (key-wall-brace-inner-edge 0 (dec y) -1.0 0 web-post-bl-c 0 y -1.0 0 web-post-tl-c)
           (wall3-brace-edge (partial left-key-place (dec y) -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)))))
 
@@ -244,11 +239,12 @@
 
        ;top left point
        ((partial key-place firstcol firstrow)
-         (translate (wall-locate3 0 1) web-post-tl))
+         (translate (wall-locate3 0 border-outer-offset-vert-top) web-post-tl))
+
        ((partial key-place firstcol firstrow) (translate (wall-locate1 0 1) tlc))
 
        ((partial key-place firstcol firstrow) (translate (wall-locate1 -1 0) tlc))
-       ((partial key-place firstcol firstrow) (translate (wall-locate1 -1.5 0) tlc))))
+       ((partial key-place firstcol firstrow) (translate (wall-locate1 ( - border-outer-offset-hor-left 0.5) 0) tlc))))
      (bottom-hull
       (wall3-brace-edge-point (partial left-key-place 0 1) -1 0 web-post)
 
@@ -258,11 +254,11 @@
 
      ; front wall
      (for [x (range 3 ncols)]
-       (key-wall-brace-outer x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br web-post-bl-c web-post-br-c))
+       (key-wall-brace-outer x cornerrow 0 border-outer-offset-vert-bottom web-post-bl x cornerrow 0 border-outer-offset-vert-bottom web-post-br web-post-bl-c web-post-br-c))
      ;(for [x (range 3 ncols)] (key-wall-brace-inner x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
 
      (for [x (range 4 ncols)]
-       (key-wall-brace-outer x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br web-post-bl-c web-post-br-c))
+       (key-wall-brace-outer x cornerrow 0 border-outer-offset-vert-bottom web-post-bl (dec x) cornerrow 0 border-outer-offset-vert-bottom web-post-br web-post-bl-c web-post-br-c))
      ;(for [x (range 4 ncols)] (key-wall-brace-inner x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
 
      ;;;;;;;;;;;;;;;

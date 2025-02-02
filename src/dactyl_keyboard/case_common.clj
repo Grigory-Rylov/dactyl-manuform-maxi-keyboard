@@ -257,6 +257,7 @@
         br  web-post-br]
     (union
      (key-wall-brace lastcol 0 0 1 web-post-tr lastcol 0 1 0 web-post-tr)
+
      (for [y (range 0 nrows)] (key-wall-brace lastcol y 1 0 tr lastcol y 1 0 br))
      (for [y (range 0 (dec nrows))]
        (key-wall-brace lastcol y 1 0 br lastcol (inc y) 1 0 tr))
@@ -270,13 +271,15 @@
         brc  web-post-br-c]
     (color-red
       (union
-       (key-wall-brace-outer lastcol 0 0 1 tr lastcol 0 1 0 tr trc trc)
+       (key-wall-brace-outer lastcol 0 0 border-outer-offset-vert-top tr lastcol 0 1 0 tr trc trc)
+
        (for [y (range 0 nrows)]
          (key-wall-brace-outer lastcol y 1 0 tr lastcol y 1 0 br trc brc))
+
        (for [y (range 0 (dec nrows))]
          (key-wall-brace-outer lastcol y 1 0 br lastcol (inc y) 1 0 tr brc trc))
 
-       (key-wall-brace-outer lastcol cornerrow 0 -1 br lastcol cornerrow 1 0 br brc brc)))))
+       (key-wall-brace-outer lastcol cornerrow 0 border-outer-offset-vert-bottom br lastcol cornerrow 1 0 br brc brc)))))
 
 (def right-wall-no-extra-row-inner
   (let [trc  web-post-tr-c

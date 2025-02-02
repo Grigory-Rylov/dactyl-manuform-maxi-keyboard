@@ -76,20 +76,13 @@
 
 (defn screw-insert-three-thumb-shapes-right [bottom-radius top-radius height should-reset-z]
   (union
-   (if mono-mode
-     (union
-      (screw-insert 0 0 bottom-radius top-radius height [-30 -20 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
-      (screw-insert 0 0 bottom-radius top-radius height [-10 -64 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
-      ))
 
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
             ;left back
-            (if mono-mode
-              (screw-insert 0 0 bottom-radius top-radius height [10 6 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
 
-              (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
-              )
+            (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
+
 
             (if (= external-controller false)
               (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
@@ -101,9 +94,8 @@
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
               )
 
-
             ; bottom right
-            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))
+            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0]))
             ; top
             (color-yellow
              (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
