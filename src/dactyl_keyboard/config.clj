@@ -233,3 +233,11 @@
 
 (def fn-value 6) ; 60 in release
 (def wall-fn 6)
+(def border-inner-offset-vert-top 1)
+(def border-inner-offset-vert-bottom -1)
+(def border-outer-offset-vert-top 1.1)
+(def border-outer-offset-vert-bottom 1.1)
+(def border-inner-offset-hor-right 2)
+(def thumb-border-inner-offset-hor-right 1)
+(def border-inner-offset-hor-left -2)
+(def border-outer-offset-hor 2.1)

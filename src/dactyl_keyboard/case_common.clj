@@ -282,13 +282,16 @@
   (let [trc  web-post-tr-c
         brc  web-post-br-c]
     (union
-     (key-wall-brace-inner lastcol 0 0 1 trc lastcol 0 1 0 trc)
-     (for [y (range 0 nrows)] (key-wall-brace-inner lastcol y 1 0 trc lastcol y 1 0 brc))
-     (for [y (range 0 (dec nrows))]
-       (key-wall-brace-inner lastcol y 1 0 brc lastcol (inc y) 1 0 trc))
+     ;top corne
+     (key-wall-brace-inner lastcol 0 0 border-inner-offset-vert-top trc lastcol 0 border-inner-offset-hor-right 0 trc)
 
+     (for [y (range 0 nrows)] (key-wall-brace-inner lastcol y border-inner-offset-hor-right 0 trc lastcol y border-inner-offset-hor-right 0 brc))
+     (for [y (range 0 (dec nrows))]
+       (key-wall-brace-inner lastcol y border-inner-offset-hor-right 0 brc lastcol (inc y) border-inner-offset-hor-right 0 trc))
+
+     ;bottom corner
      (color-green
-       (key-wall-brace-inner lastcol cornerrow 0 -1 brc lastcol cornerrow 1 0 brc)))))
+       (key-wall-brace-inner lastcol cornerrow 0 border-inner-offset-vert-bottom brc lastcol cornerrow border-inner-offset-hor-right 0 brc)))))
 
 (def right-wall
   (if extra-middle-row right-wall-extra-middle-row right-wall-no-extra-row))
@@ -301,7 +304,8 @@
 (def left-wall
   (let [tr  web-post-tl
         br  web-post-bl]
-    (union (key-wall-brace 0 0 0 1 web-post-tl 0 0 offset-wall-x 0 web-post-tl)
+    (union
+     (key-wall-brace 0 0 0 1 web-post-tl 0 0 offset-wall-x 0 web-post-tl)
            (for [y (range 0 nrows)]
              (key-wall-brace 0 y offset-wall-x 0 tr 0 y offset-wall-x 0 br))
            (for [y (range 0 (dec nrows))]
