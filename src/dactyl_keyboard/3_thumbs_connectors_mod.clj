@@ -116,45 +116,7 @@
            (thumb-m-place-mod web-post-tl)
            (key-place 0 cornerrow web-post-bl)
            (thumb-m-place-mod web-post-tr)
-           (key-place 0 cornerrow web-post-br)
-           ;(thumb-r-place-mod thumb-post-tl)
-           ;(key-place 1 cornerrow web-post-bl)
-
-           ;      (thumb-r-place-mod thumb-post-tr)
-           ;(thumb-r-place-mod (translate (wall-locate3 0 thumb_offset) thumb-post-tr))
-
-           ;      (key-place 1 cornerrow web-post-br)
-
-
-           ;(key-place 2 lastrow web-post-bl)
-
-           ;(thumb-r-place-mod thumb-post-tr)
-           ;(thumb-r-place-mod (translate (wall-locate3 0 thumb_offset ) thumb-post-tr))
-
-           ;(key-place 2 lastrow web-post-bl)
-
-           ;(thumb-r-place-mod thumb-post-br)
-           ;(thumb-r-place-mod (translate (wall-locate3 0 thumb_offset ) thumb-post-br))
-           ;(wall-brace-no-bottom-place thumb-r-place-mod 0 thumb_offset web-post-tl)
-
-           ;       (key-place 3 cornerrow web-post-bl)
-
-           ;(key-place 3 lastrow web-post-bl)
-           ;(key-place 2 lastrow web-post-tr)
-           ;(key-place 3 lastrow web-post-tl)
-           ;(key-place 3 cornerrow web-post-bl)
-           ;(key-place 3 lastrow web-post-tr)
-           ;(key-place 3 cornerrow web-post-br)
-           ;(key-place 4 cornerrow web-post-bl)
-           ))
-
-   (color CYA
-          (hull
-           (key-place 1 lastrow web-post-tl)
-           (key-place 1 lastrow web-post-tr)
-
-           (thumb-r-place-mod thumb-post-tr)
-           (thumb-r-place-mod thumb-post-tl)))
+           (key-place 0 cornerrow web-post-br)))
 
    (color YEL
           (hull
@@ -167,17 +129,18 @@
      (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-tr))
      (thumb-r-place-mod (translate (wall-locate1 0 1) thumb-post-tr))
 
+     ;     (key-place 2 lastrow web-post-tl)
      (key-place 3 cornerrow web-post-bl)
-     (key-place 1 lastrow web-post-tr)
-     ;
-     ))
-   (color-yellow
-    (hull
      (key-place 1 cornerrow web-post-br)
-     (key-place 3 cornerrow web-post-bl)
-     (key-place 1 lastrow web-post-tr)
      ;
      ))
+   ;   (color-yellow
+   ;    (hull
+   ;     (key-place 1 cornerrow web-post-br)
+   ;     (key-place 3 cornerrow web-post-bl)
+   ;     (key-place 1 lastrow web-post-tr)
+   ;     ;
+   ;     ))
 
    (color-green
     (hull
@@ -191,23 +154,43 @@
    (color-orange
     (hull
      (thumb-r-place-mod thumb-post-tl)
-     (key-place 1 lastrow web-post-tl)
+     ;(key-place 1 lastrow web-post-tl)
+     ;(key-wall-brace-inner-point 1 cornerrow 0 -1 web-post-bl)
+     (key-wall-brace-inner-point 1 cornerrow 0.7 -1 web-post-bl)
      (key-place 0 cornerrow web-post-br)
-     (thumb-m-place-mod thumb-post-tr)))
+     (thumb-m-place-mod thumb-post-tr)
+     ))
 
-   (color RED
-          (hull
-           (key-place 1 lastrow web-post-tl)
-           (key-place 1 cornerrow web-post-bl)
+   (key-wall-brace-inner 1 cornerrow 0 -1 web-post-bl-c 1 cornerrow 0 -1 web-post-br-c)
 
-           (key-place 0 cornerrow web-post-br)))
-
-   (color ORA
+   (color-yellow
      (hull
-      (key-place 1 lastrow web-post-tl)
-      (key-place 1 cornerrow web-post-bl)
-      (key-place 1 lastrow web-post-tr)
-      (key-place 1 cornerrow web-post-br)))
+      (key-place 0 cornerrow web-post-br)
+
+      (key-wall-brace-inner-point 1 cornerrow 0.7 -1 web-post-bl)
+
+      (key-wall-brace-inner-point 1 cornerrow 0 -1 web-post-bl)
+      (key-wall-brace-inner-point 1 cornerrow 0 0 web-post-bl)
+      (key-wall-brace-inner-point 0 cornerrow 0 0 web-post-br)))
+
+   ;(key-wall-brace-inner 1 cornerrow 0 -1 web-post-bl-c 0 cornerrow 0 -1 web-post-br-c)
+   (key-wall-brace-inner 2 cornerrow 0 -1 web-post-bl-c 1 cornerrow 0 -1 web-post-br-c)
+
+   (color CYA
+          (hull
+           (thumb-r-place-mod (translate (wall-locate1 0 1) thumb-post-tr))
+           (thumb-r-place-mod (translate (wall-locate1 0 1) thumb-post-tl))
+
+           (key-wall-brace-inner-point 1 cornerrow 0.7 -1 web-post-bl)
+
+           (key-wall-brace-inner-point 1 cornerrow 0 0 web-post-br)))
+   ;   (color RED
+   ;          (hull
+   ;           (key-place 1 lastrow web-post-tl)
+   ;           (key-place 1 cornerrow web-post-bl)
+   ;
+   ;           (key-place 0 cornerrow web-post-br)))
+
 
    (color-red
     (triangle-hulls

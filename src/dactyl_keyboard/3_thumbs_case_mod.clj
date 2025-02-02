@@ -144,9 +144,6 @@
      ;;;;;;;;;;;;;;;
      ; thumb walls
      ;;;;;;;;;;;;;;;
-     (color-green
-      (wall-brace-inner thumb-r-place-mod 0 -1 web-post-bl-c thumb-r-place-mod 0 -1 thumb-post-br-c))
-
      (color D_RED
             (wall-brace-inner thumb-m-place-mod 0 -1 web-post-br-c thumb-m-place-mod 0 -1 web-post-bl-c))
 
@@ -186,7 +183,11 @@
               ((partial key-place 3 cornerrow) (translate (wall-locate1 0 -1) web-post-bl-c))))
             )
 
+     (color-green
+      (wall-brace-inner thumb-r-place-mod 0 -1 web-post-bl-c thumb-r-place-mod 0 -1 thumb-post-br-c))
+
      (color D_GRE (wall-brace-inner thumb-r-place-mod 1 0 web-post-tr-c thumb-r-place-mod 1 0 web-post-br-c))
+     (color D_RED (wall-brace-inner thumb-r-place-mod 0 1 tlc thumb-r-place-mod 0 1 trc))
 
      ; thumb corners
      (color-green (wall-brace-inner thumb-r-place-mod 1 0 brc thumb-r-place-mod 0 -1 brc))
