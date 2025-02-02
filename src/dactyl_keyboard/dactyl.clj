@@ -233,6 +233,48 @@
        (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
      (translate [0 0 -20] (cube 350 350 40)))))
 
+(def model-keymatrix-right
+  (union
+   key-holes-right
+   connectors
+   thumb-right
+   thumb-connectors
+   key-matrix-border))
+
+(def model-right-case
+  (let [tracball-hole-cylinder-rad    20
+        tracball-hole-cylinder-height 20]
+    (difference
+     (union
+      logo-right
+      screw-holders-right
+
+      (if trackball-mode
+        (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
+                   (union
+                    (translate [0, 0, -18] trackball-case)
+                    trackball-walls)
+                   ; end translate tb
+                   )
+        ; end
+        )
+
+      (difference
+       (union
+        (difference case-walls
+                    (if trackball-mode
+                      (translate [trackball-offset-x, trackball-offset-y, (+ 10 tracball-offset-z)]
+                                 (color-red trackball-hole))))
+        (if magnet-holes magnet-stiffness-booster)
+        screw-insert-outers-right)
+       controller-hole
+       screw-insert-holes-right
+
+       (if magnet-holes magnet-place)))
+     (if mono-mode
+       (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
+     (translate [0 0 -20] (cube 350 350 40)))))
+
 (def model-left
   (mirror [1, 0, 0]
           (union
@@ -321,6 +363,14 @@
   (spit "things/right.scad"
         (write-scad model-right)))
 
+(spit "things/right-case.scad" (write-scad model-right-case))
+(spit "things/right-keymatrix.scad" (write-scad model-keymatrix-right))
+(spit "things/right.scad"
+      (write-scad
+        (union
+         model-right-case
+         (color-green model-keymatrix-right))))
+
 
 (spit "things/left.scad"
       (write-scad model-mono-left))
@@ -378,21 +428,6 @@
          (translate [0 0 -20] (cube 350 350 40)))
         (translate [-25, -46.0, 0] (rotate [0, 0, (deg2rad -6)] internal-controller-plate-case)))))
 
-(spit "things/right-external-thumb-test.scad"
-      (write-scad
-       (difference
-        (union
-         key-holes-right
-         ;pinky-connectors
-         ;pinky-walls
-         connectors
-         (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
-         external-4-thumbs-connectors
-         case-walls
-         external-thumbcaps
-         caps)
-
-        (translate [0 0 -20] (cube 350 350 40)))))
 
 (if magnet-holes
   (spit "things/right-wrist-connector.scad"

@@ -78,14 +78,14 @@
 ; 1 - gateron standart
 ; 2 - gateron low profile
 (def mono-mode false)
-(def hot-swap 1)
+(def hot-swap 0)
 (def hot-swap-holders true)
 
 (def low-profile false)
 (def cols-angle true)
 (def plate-height 2)
 (def plate-border-height 0)
-(def trackball-mode true)
+(def trackball-mode false)
 
 (def thumbs-count 3)
 
@@ -132,6 +132,8 @@
 (def lastrow (if extra-middle-row (dec nrows) nrows))
 (def cornerrow (if extra-middle-row (dec lastrow) (dec nrows)))
 (def lastcol (dec ncols))
+(def firstcol 0)
+(def firstrow 0)
 (def extra-cornerrow (if extra-row lastrow cornerrow))
 (def innercol-offset (if inner-column 1 0))
 
@@ -160,7 +162,6 @@
 ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
 (def wall-thickness 3)
 (def wall-thickness0 1)
-(def wall-fn 20)
 
 ; wall thickness parameter; originally 5
 
@@ -225,9 +226,10 @@
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
-(def trackball-fn 100)
+(def trackball-fn 20)
 (def trackball-offset-x -64)
 (def trackball-offset-y -35)
 (def tracball-offset-z 56)
 
-(def fn-value 60) ; 60 in release
+(def fn-value 6) ; 60 in release
+(def wall-fn 6)

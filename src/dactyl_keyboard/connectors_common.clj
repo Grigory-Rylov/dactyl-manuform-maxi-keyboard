@@ -10,16 +10,26 @@
             [dactyl-keyboard.config :refer :all]))
 
 (def web-thickness 1)
-(def post-size 0.1) ; 0.1
+(def post-size 0.1)
 (def web-post
   (->>
    (binding [*fn* wall-fn] (sphere web-thickness))
-   ;(cube post-size post-size web-thickness)
        (translate
         [0
          0
-         (+ (/ web-thickness -2) plate-thickness 1)
+         (+ (/ web-thickness -2) plate-thickness -0.2)
          ])))
+
+(def swap-z 3)
+
+(def web-post-cube
+  (->>
+   (cube post-size post-size plate-thickness)
+   (translate
+    [0
+     0
+     (+ (/ plate-thickness -2) plate-thickness 0.1)
+     ])))
 
 (def post-adj (/ post-size 2))
 (def web-post-tr
@@ -32,6 +42,16 @@
   (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
 
 
+(def web-post-tr-c
+  (translate [(- (/ mount-width 2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post-cube))
+(def web-post-tl-c
+  (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post-cube))
+(def web-post-bl-c
+  (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post-cube))
+(def web-post-br-c
+  (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post-cube))
+
+
 (def thumb-post-tr
   (translate [(- (/ mount-width 2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post))
 (def thumb-post-tl
@@ -40,6 +60,15 @@
   (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
 (def thumb-post-br
   (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post))
+
+(def thumb-post-tr-c
+  (translate [(- (/ mount-width 2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post-cube))
+(def thumb-post-tl-c
+  (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height 2) post-adj) 0] web-post-cube))
+(def thumb-post-bl-c
+  (translate [(+ (/ mount-width -2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post-cube))
+(def thumb-post-br-c
+  (translate [(- (/ mount-width 2) post-adj) (+ (/ mount-height -2) post-adj) 0] web-post-cube))
 
 
 ; wide posts for 1.5u keys in the main cluster

@@ -90,7 +90,7 @@
 (def thumb_offset 0.2)
 (def three-thumbs-connectors-no-extra-row-mod
   (union
-   (color PIN
+   (color PUR
           (triangle-hulls    ; top two
            (thumb-m-place-mod web-post-tr)
            (thumb-m-place-mod web-post-br)
@@ -111,7 +111,7 @@
    ;        (thumb-r-place-mod (translate (wall-locate3 0 thumb_offset) thumb-post-tr))
    ;        ))
 
-   (color PUR
+   (color GRE
           (triangle-hulls    ; top two to the main keyboard, starting on the left
            (thumb-m-place-mod web-post-tl)
            (key-place 0 cornerrow web-post-bl)
@@ -148,7 +148,7 @@
            ;(key-place 4 cornerrow web-post-bl)
            ))
 
-   (color PIN
+   (color CYA
           (hull
            (key-place 1 lastrow web-post-tl)
            (key-place 1 lastrow web-post-tr)
@@ -156,16 +156,17 @@
            (thumb-r-place-mod thumb-post-tr)
            (thumb-r-place-mod thumb-post-tl)))
 
-   (hull
-    ;(thumb-r-place-mod (translate (wall-locate3 0 thumb_offset ) thumb-post-tr))
-    ;(thumb-r-place-mod (translate (wall-locate3 0 thumb_offset ) thumb-post-br))
-    (thumb-r-place-mod thumb-post-tr)
-    (thumb-r-place-mod thumb-post-br)
-    (key-place 3 cornerrow web-post-bl))
+   (color YEL
+          (hull
+           (wall-brace-inner-edge thumb-r-place-mod 1 0 web-post-br-c thumb-r-place-mod 1 0 web-post-tr-c)
+           (key-place 3 cornerrow web-post-bl)))
+
    ; triangle between thumb and 2 col
    (color-blue
     (hull
-     (thumb-r-place-mod thumb-post-tr)
+     (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-tr))
+     (thumb-r-place-mod (translate (wall-locate1 0 1) thumb-post-tr))
+
      (key-place 3 cornerrow web-post-bl)
      (key-place 1 lastrow web-post-tr)
      ;
@@ -188,11 +189,11 @@
      ))
 
    (color-orange
-     (hull
-      (thumb-r-place-mod thumb-post-tl)
-      (key-place 1 lastrow web-post-tl)
-      (key-place 0 cornerrow web-post-br)
-      (thumb-m-place-mod thumb-post-tr)))
+    (hull
+     (thumb-r-place-mod thumb-post-tl)
+     (key-place 1 lastrow web-post-tl)
+     (key-place 0 cornerrow web-post-br)
+     (thumb-m-place-mod thumb-post-tr)))
 
    (color RED
           (hull
@@ -201,11 +202,12 @@
 
            (key-place 0 cornerrow web-post-br)))
 
-   (hull
-    (key-place 1 lastrow web-post-tl)
-    (key-place 1 cornerrow web-post-bl)
-    (key-place 1 lastrow web-post-tr)
-    (key-place 1 cornerrow web-post-br))
+   (color ORA
+     (hull
+      (key-place 1 lastrow web-post-tl)
+      (key-place 1 cornerrow web-post-bl)
+      (key-place 1 lastrow web-post-tr)
+      (key-place 1 cornerrow web-post-br)))
 
    (color-red
     (triangle-hulls
