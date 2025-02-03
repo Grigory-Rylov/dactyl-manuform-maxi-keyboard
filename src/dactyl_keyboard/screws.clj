@@ -82,18 +82,19 @@
            (union
             ;left back
 
-            (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
+            (color-blue
+             (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)]))
+            ; bottom left controller-plate-height
 
 
             (if (= external-controller false)
-              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
-              )
+              (color-blue
+               (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
 
             ; thumb
             (if trackball-mode
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-34 17 0]))
-              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
-              )
+              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0])))
 
             ; bottom right
             (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0]))
@@ -122,13 +123,15 @@
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
             ;left back
-            (color-blue (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)])) ; bottom left controller-plate-height
+            (color-blue
+             (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)]))
+            ; bottom left controller-plate-height
 
             ; thumb
             (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
             (if (= external-controller false)
-              (color-blue (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)]))
-              )
+              (color-blue
+               (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
 
             ; back right
             (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))
@@ -220,68 +223,165 @@
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-right 1.7 1.7 (- plate-total-height screw-head-height) false))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-right 2.75 1.7 (+ screw-head-height 0.2) false))))
+   (translate [0, 0, -0.1]
+              (screw-insert-all-shapes-right 2.75 1.7 (+ screw-head-height 0.2) false))))
 
 (def screw-insert-screw-holes-left
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) false))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-left 2.9 1.7 (+ screw-head-height 0.2) false))))
+   (translate [0, 0, -0.1]
+              (screw-insert-all-shapes-left 2.9 1.7 (+ screw-head-height 0.2) false))))
 
 (def screw-insert-screw-holes-for-plate-right
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-right 1.7 1.7 (- plate-total-height screw-head-height) true))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-right 2.9 1.7 (+ screw-head-height 0.2) true))))
+   (translate [0, 0, -0.1]
+              (screw-insert-all-shapes-right 2.9 1.7 (+ screw-head-height 0.2) true))))
 
 (def screw-insert-screw-holes-for-plate-left
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) true))
 
-   (translate [0, 0, -0.1] (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) true))))
+   (translate [0, 0, -0.1]
+              (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) true))))
 
 (def header-screw
   (let [header-diameter 6
-        header-rad (/ header-diameter 2)
-        header-height 3
-        screw-rad (/ 3.5 2)]
+        header-rad      (/ header-diameter 2)
+        header-height   3
+        screw-rad       (/ 3.5 2)]
     (union
      (binding [*fn* 20] (cylinder header-rad, header-height))
-     (translate [0,0, -5] (binding [*fn* 20] (cylinder screw-rad, 10)))
-     )
-    )
-  )
+     (translate [0, 0, -5] (binding [*fn* 20] (cylinder screw-rad, 10))))))
+
+(defn header-screw-place-shape [shape]
+  (let [header-diameter       6
+        header-height         5
+        nut-height            4
+        screw-rad             (/ 3.5 2)
+        screw-nut-holder-rad  (/ (+ screw-nut-diameter 2) 2)
+        screw-nut-rad         (/ screw-nut-diameter 2)]
+    (translate [0, 0, -6.3] shape)))
+
+(def screw-place-cylinder
+  (let [header-diameter       6
+        header-height         5
+        nut-height            4
+        screw-rad             (/ 3.5 2)
+        screw-nut-holder-rad  (/ (+ screw-nut-diameter 2) 2)
+        screw-nut-rad         (/ screw-nut-diameter 2)]
+    (binding [*fn* 20] (cylinder screw-nut-holder-rad, header-height))))
+
 (defn screw-insert-head [column row x y z shape]
   (let [header-diameter 6
-        header-rad (/ header-diameter 2)
-        header-height 5
-        screw-rad (/ 3.5 2)]
+        header-rad      (/ header-diameter 2)
+        header-height   5
+        screw-rad       (/ 3.5 2)]
     (key-place column row
-               (translate [x y z] shape
-               ))
-
-  ))
+               (translate [x y z] shape))))
 
 (defn screw-insert-head-thumb [x y z shape]
   (let [header-diameter 6
-        header-rad (/ header-diameter 2)
-        header-height 5
-        screw-rad (/ 3.5 2)]
+        header-rad      (/ header-diameter 2)
+        header-height   5
+        screw-rad       (/ 3.5 2)]
     (thumb-l-place-mod
-               (translate [x y z] shape))
+     (translate [x y z] shape))))
 
-    ))
-(def keymatrix-screw-insert-right
+(defn keymatrix-screw-place-right [shape]
   (union
-   (screw-insert-head lastcol firstrow 11 0 3 header-screw)
-   (screw-insert-head lastcol cornerrow 11 0 3 header-screw)
-   (screw-insert-head firstcol firstrow -11 0 3 header-screw)
-   (screw-insert-head firstcol cornerrow -11 0 3 header-screw)
+   (screw-insert-head lastcol firstrow 11 0 3 shape)
+   (screw-insert-head lastcol cornerrow 11 0 3 shape)
+   (screw-insert-head firstcol firstrow -11 0 3 shape)
+   (screw-insert-head firstcol cornerrow -11 0 3 shape)
+   (screw-insert-head-thumb -11 0 3 shape)))
 
-   ( screw-insert-head-thumb -11 0 3 header-screw)
+(def horizontal-cube
+  (cube 10 5 4))
 
-   )
-  )
+(def vertical-cube
+  (cube 5 10 4))
+
+(def keymatrix-holders-top
+  (header-screw-place-shape
+   (hull
+    screw-place-cylinder
+    (translate [0 5 0] horizontal-cube))))
+
+(def keymatrix-holders-bottom
+  (header-screw-place-shape
+   (hull
+    screw-place-cylinder
+    (translate [0 -5 0] horizontal-cube))))
+
+(def keymatrix-holders-left
+  (header-screw-place-shape
+   (hull
+    screw-place-cylinder
+    (translate [-2 0 0] vertical-cube))))
+
+(def keymatrix-holders-light-left
+  (header-screw-place-shape
+   screw-place-cylinder))
+
+(def keymatrix-holders-thumb-left
+  (header-screw-place-shape
+   (hull
+    screw-place-cylinder
+    (translate [-4 0 0] vertical-cube))))
+
+(def keymatrix-holders-right
+  (header-screw-place-shape
+   (hull
+    screw-place-cylinder
+    (translate [6 0 0] vertical-cube))))
+
+(def keymatrix-holders
+  (union
+   ;top
+   (screw-insert-head 1 firstrow 0 11 3 keymatrix-holders-top)
+   (screw-insert-head 3 firstrow 0 11 3 keymatrix-holders-top)
+
+   ;bottom
+   (screw-insert-head 3 cornerrow 0 -11 3 keymatrix-holders-bottom)
+
+   ;right
+   (screw-insert-head lastcol firstrow 11 0 3 keymatrix-holders-right)
+   (screw-insert-head lastcol cornerrow 11 0 3 keymatrix-holders-right)
+
+   ;left
+   (screw-insert-head firstcol firstrow -11 0 3 keymatrix-holders-left)
+   (screw-insert-head firstcol cornerrow -11 0 3 keymatrix-holders-light-left)
+   ;thumb left
+   (screw-insert-head-thumb -11 0 3 keymatrix-holders-thumb-left)))
+
+(def keymatrix-screw-insert-right
+  (keymatrix-screw-place-right header-screw))
+
+
+(def case-screw-holders-holes-right
+  (let [header-diameter       6
+        header-height         5
+        nut-height            4
+        screw-rad             (/ 3.5 2)
+        screw-nut-holder-rad  (/ (+ screw-nut-diameter 2) 2)
+        screw-nut-rad         (/ screw-nut-diameter 2)]
+    (keymatrix-screw-place-right
+     (header-screw-place-shape
+      (binding [*fn* 20] (cylinder screw-nut-holder-rad, (+ header-height 2)))))))
+
+(def case-screw-nut-holes-right
+  (let [header-diameter       6
+        header-height         5
+        nut-height            4
+        screw-rad             (/ 3.5 2)
+        screw-nut-holder-rad  (/ (+ screw-nut-diameter 2) 2)
+        screw-nut-rad         (/ screw-nut-diameter 2)]
+    (keymatrix-screw-place-right
+     (header-screw-place-shape
+      (translate [0, 0, 0.6] (binding [*fn* 20] (cylinder screw-nut-rad, nut-height)))))))

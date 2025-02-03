@@ -203,7 +203,7 @@
                         (binding [*fn* trackball-fn] (cylinder ball_place_radius bottom_height)))))
      (translate [0 0, (/ height -2)]
                 (binding [*fn* trackball-fn] (cylinder (- ball_place_radius wall) height)))
-     (color CYA (translate [18 6, -44] (cube 28 31 50)))
+     (color CYA (translate [18 7, -44] (cube 28 27 50)))
 
      ;end union
      )))
@@ -221,6 +221,6 @@
     (union
      (translate [0 0, (/ height -2)]
                 (binding [*fn* trackball-fn] (cylinder (- ball_place_radius 0) height)))
-     (color CYA (translate [18 6, -55] (cube 28 31 50)))
+     (color CYA (translate [18 7, -55] (cube 28 27 50)))
      ;end union
      )))

@@ -235,13 +235,13 @@
 
 (def model-keymatrix-right
   (difference
-    (union
-     key-holes-right
-     connectors
-     thumb-right
-     thumb-connectors
-     key-matrix-border)
-    (color-yellow keymatrix-screw-insert-right)))
+   (union
+    key-holes-right
+    connectors
+    thumb-right
+    thumb-connectors
+    key-matrix-border)
+   (color-yellow keymatrix-screw-insert-right)))
 
 (def model-right-case
   (let [tracball-hole-cylinder-rad    20
@@ -263,7 +263,9 @@
 
       (difference
        (union
+        keymatrix-holders
         (difference case-walls
+                    case-screw-holders-holes-right
                     (if trackball-mode
                       (translate [trackball-offset-x, trackball-offset-y, (+ 10 tracball-offset-z)]
                                  (color-red trackball-hole))))
@@ -272,7 +274,10 @@
        controller-hole
        screw-insert-holes-right
 
-       (if magnet-holes magnet-place)))
+       (if magnet-holes magnet-place)
+       case-screw-nut-holes-right
+       ; end difference
+       ))
      (if mono-mode
        (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
      (translate [0 0 -20] (cube 350 350 40)))))

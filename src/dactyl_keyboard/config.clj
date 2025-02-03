@@ -85,7 +85,7 @@
 (def cols-angle true)
 (def plate-height 2)
 (def plate-border-height 0)
-(def trackball-mode false)
+(def trackball-mode true)
 
 (def thumbs-count 3)
 
@@ -226,13 +226,13 @@
 (def trackball-ball-radius (/ trackball-ball-diameter 2))
 (def trackball-bearing-radius (/ trackball-bearing-diameter 2))
 (def trackball-mount-radius (/ trackball-mount-diameter 2))
-(def trackball-fn 20)
-(def trackball-offset-x -64)
+(def trackball-fn 100)
+(def trackball-offset-x -69)
 (def trackball-offset-y -35)
 (def tracball-offset-z 56)
 
-(def fn-value 6) ; 60 in release
-(def wall-fn 6)
+(def fn-value 60) ; 60 in release
+(def wall-fn 20)
 (def border-inner-offset-vert-top 1)
 (def border-inner-offset-vert-bottom -1)
 (def border-outer-offset-vert-top 1.1)
@@ -242,3 +242,4 @@
 (def border-inner-offset-hor-left -2)
 (def border-outer-offset-hor-right 2.1)
 (def border-outer-offset-hor-left -2.1)
+(def screw-nut-diameter 4.0)
