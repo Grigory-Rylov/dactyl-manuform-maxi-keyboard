@@ -6,6 +6,7 @@
             [scad-clj.model :refer :all]
             [unicode-math.core :refer :all]
             [dactyl-keyboard.common :refer :all]
+            [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]
             [dactyl-keyboard.case-common :refer :all]))
 
@@ -241,3 +242,46 @@
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) true))
 
    (translate [0, 0, -0.1] (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) true))))
+
+(def header-screw
+  (let [header-diameter 6
+        header-rad (/ header-diameter 2)
+        header-height 3
+        screw-rad (/ 3.5 2)]
+    (union
+     (binding [*fn* 20] (cylinder header-rad, header-height))
+     (translate [0,0, -5] (binding [*fn* 20] (cylinder screw-rad, 10)))
+     )
+    )
+  )
+(defn screw-insert-head [column row x y z shape]
+  (let [header-diameter 6
+        header-rad (/ header-diameter 2)
+        header-height 5
+        screw-rad (/ 3.5 2)]
+    (key-place column row
+               (translate [x y z] shape
+               ))
+
+  ))
+
+(defn screw-insert-head-thumb [x y z shape]
+  (let [header-diameter 6
+        header-rad (/ header-diameter 2)
+        header-height 5
+        screw-rad (/ 3.5 2)]
+    (thumb-l-place-mod
+               (translate [x y z] shape))
+
+    ))
+(def keymatrix-screw-insert-right
+  (union
+   (screw-insert-head lastcol firstrow 11 0 3 header-screw)
+   (screw-insert-head lastcol cornerrow 11 0 3 header-screw)
+   (screw-insert-head firstcol firstrow -11 0 3 header-screw)
+   (screw-insert-head firstcol cornerrow -11 0 3 header-screw)
+
+   ( screw-insert-head-thumb -11 0 3 header-screw)
+
+   )
+  )

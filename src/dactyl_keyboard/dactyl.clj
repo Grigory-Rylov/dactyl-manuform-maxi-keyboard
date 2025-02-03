@@ -234,12 +234,14 @@
      (translate [0 0 -20] (cube 350 350 40)))))
 
 (def model-keymatrix-right
-  (union
-   key-holes-right
-   connectors
-   thumb-right
-   thumb-connectors
-   key-matrix-border))
+  (difference
+    (union
+     key-holes-right
+     connectors
+     thumb-right
+     thumb-connectors
+     key-matrix-border)
+    (color-yellow keymatrix-screw-insert-right)))
 
 (def model-right-case
   (let [tracball-hole-cylinder-rad    20
@@ -367,9 +369,9 @@
 (spit "things/right-keymatrix.scad" (write-scad model-keymatrix-right))
 (spit "things/right.scad"
       (write-scad
-        (union
-         model-right-case
-         (color-green model-keymatrix-right))))
+       (union
+        model-right-case
+        (color-green model-keymatrix-right))))
 
 
 (spit "things/left.scad"
