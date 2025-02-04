@@ -272,7 +272,6 @@
         (if magnet-holes magnet-stiffness-booster)
         screw-insert-outers-right)
        controller-hole
-       screw-insert-holes-right
 
        (if magnet-holes magnet-place)
        case-screw-nut-holes-right
@@ -280,7 +279,10 @@
        ))
      (if mono-mode
        (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
-     (translate [0 0 -20] (cube 350 350 40)))))
+     (translate [0 0 -20] (cube 350 350 40))
+     screw-insert-holes-right
+     ; end total diff
+     )))
 
 (def model-left
   (mirror [1, 0, 0]

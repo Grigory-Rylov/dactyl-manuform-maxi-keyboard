@@ -93,7 +93,7 @@
 
             ; thumb
             (if trackball-mode
-              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-34 17 0]))
+              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-39 17 0]))
               (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0])))
 
             ; bottom right
@@ -103,7 +103,7 @@
              (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
 
             ; bottom middle
-            (color-red (screw-insert 2 0 bottom-radius top-radius height [-4 -3 0]))
+            (color-red (screw-insert 2 0 bottom-radius top-radius height [-3 -3 0]))
 
             ; front right
             (color-blue

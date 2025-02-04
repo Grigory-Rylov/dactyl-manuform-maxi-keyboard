@@ -63,7 +63,7 @@
 
 (def reset-hole-enabled false)
 ; magnet holes for external wrist rest
-(def magnet-holes true)
+(def magnet-holes false)
 (def magnet-height 2)
 (def magnet-booster-width 1)
 (def magnet-diameter 10)

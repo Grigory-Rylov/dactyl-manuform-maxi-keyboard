@@ -283,11 +283,11 @@
       (wall-brace-outer thumb-m-place-mod 0 -1 web-post-br thumb-r-place-mod 0 -1 web-post-bl web-post-br-c web-post-bl-c))
      ; thumb - front connection wall
 
-     (color D_RED
+     (color WHI
             (wall-brace-outer thumb-r-place-mod 0 -1 thumb-post-br (partial key-place 3 cornerrow) 0 -1 web-post-bl thumb-post-br-c web-post-bl-c))
 
      ; clunky bit on the top left thumb connection  (normal connectors don't work well)
-     (color D_BLU (bottom-hull
+     (color NBL (bottom-hull
       (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
       (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
       (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
