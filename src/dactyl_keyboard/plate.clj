@@ -37,7 +37,7 @@
   (key-places filled-plate))
 
 (def thumb-fill
-  (if (> thumbs-count 0) (thumb-layout filled-plate) filled-plate))
+  (if (> thumbs-count 0) (thumb-layout-right filled-plate) filled-plate))
 
 
 (def single-plate-right
@@ -125,11 +125,11 @@
 
 (def thumb-right
   (union
-   (thumb-layout single-plate-right)))
+   (thumb-layout-right single-plate-right)))
 
 (def thumb-left
   (union
-   (thumb-layout single-plate-left)))
+   (thumb-layout-left single-plate-left)))
 
 (def external-thumb-right
   (union
@@ -142,7 +142,7 @@
     connectors
     thumb-fill
     (if (= externalThumb false) thumb-right)
-    (if (= externalThumb false) thumb-connectors)
+    (if (= externalThumb false) thumb-connectors-right)
     case-walls)))
 
 (def case-walls-outline

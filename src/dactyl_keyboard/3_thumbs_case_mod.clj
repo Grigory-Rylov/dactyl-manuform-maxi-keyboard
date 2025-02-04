@@ -99,7 +99,7 @@
   )
 (def thumb_offset 0.2)
 
-(def three-thumb-case-matrix-border
+(def three-thumb-case-matrix-border-right
   (let [tlc web-post-tl-c
         trc web-post-tr-c
         brc web-post-br-c

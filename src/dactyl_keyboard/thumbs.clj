@@ -61,6 +61,7 @@
        (rotate (deg2rad 35) [0 0 1])
        (translate thumborigin)
        (translate [-39 -43 -16])))
+
 (defn thumb-bl-place [shape]
   (->> shape
        (rotate (deg2rad 6) [1 0 0])
@@ -127,6 +128,33 @@
 (defn thumb-r-place-mod [shape]
   (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
 
+(defn thumb-l-place-mod [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape))
+  )
+
+(defn thumb-m2-place-mod [shape]
+  ;  (->> shape
+  ;       (rotate (deg2rad 10) [1 0 0])
+  ;       (rotate (deg2rad -33) [0 1 0])
+  ;       (rotate (deg2rad 25) [0 0 1])
+  ;       (translate thumborigin-mod)
+  ;       (translate [-24 -35 -6]))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -23 thumb-x-offset) -30 -10] shape))
+
+  )
+
+(defn thumb-l2-place-mod [shape]
+;  (->> shape
+;       (rotate (deg2rad 6) [1 0 0])
+;       (rotate (deg2rad -34) [0 1 0])
+;       (rotate (deg2rad 35) [0 0 1])
+;       (translate thumborigin-mod)
+;       (translate [-39 -43 -16]))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -36.0 thumb-x-offset) -36.5 -23.5] shape))
+  )
+
+
+
 ;bottom right
 (defn thumb-mr-place-mod-remove [shape]
   (->> shape
@@ -144,9 +172,6 @@
        (translate thumborigin-mod)
        (translate [-39 -43 -16])))
 
-(defn thumb-l-place-mod [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape))
-  )
 
 ; left
 
@@ -165,6 +190,21 @@
    (thumb-l-place-mod shape)
    ; end union
    ))
+
+(defn five-thumbs-layout-mod [shape]
+  (union
+   ;(thumb-mr-place-mod shape)
+   ;(thumb-br-place-mod shape)
+   (thumb-m-place-mod shape)
+   (thumb-r-place-mod shape)
+   (thumb-l-place-mod shape)
+
+   (thumb-l2-place-mod shape)
+   (thumb-m2-place-mod shape)
+
+   ; end union
+   ))
+
 
 (defn five-thumbs-layout [shape]
   (union
@@ -188,9 +228,16 @@
    (color-green (thumb-bottom-place shape))
    (color-blue (thumb-top-place shape))))
 
-(defn thumb-layout [shape]
+(defn thumb-layout-right [shape]
   (case thumbs-count
     0 (external-4-thumbs-layout shape)
     3 (three-thumbs-layout-mod shape)
+    5 (five-thumbs-layout shape)
+    6 (six-thumbs-layout shape)))
+
+(defn thumb-layout-left [shape]
+  (case thumbs-count
+    0 (external-4-thumbs-layout shape)
+    3 (five-thumbs-layout-mod shape)
     5 (five-thumbs-layout shape)
     6 (six-thumbs-layout shape)))

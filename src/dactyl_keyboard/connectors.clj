@@ -11,6 +11,7 @@
             [dactyl-keyboard.3-thumbs-connectors :refer :all]
             [dactyl-keyboard.3-thumbs-connectors-mod :refer :all]
             [dactyl-keyboard.5-thumbs-connectors :refer :all]
+            [dactyl-keyboard.5-thumbs-connectors-mod :refer :all]
             [dactyl-keyboard.6-thumbs-connectors :refer :all]
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]))
@@ -54,10 +55,17 @@
              (key-place (inc column) (inc row) tl))))))
   )
 
-(def thumb-connectors
+(def thumb-connectors-right
   (case thumbs-count
     0 external-4-thumbs-connectors
     3 three-thumbs-connectors-mod
+    5 five-thumbs-connectors
+    6 six-thumbs-connectors))
+
+(def thumb-connectors-left
+  (case thumbs-count
+    0 external-4-thumbs-connectors
+    3 five-thumbs-connectors-mod
     5 five-thumbs-connectors
     6 six-thumbs-connectors))
 

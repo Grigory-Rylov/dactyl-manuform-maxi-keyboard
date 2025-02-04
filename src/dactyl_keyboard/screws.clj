@@ -293,7 +293,16 @@
     (thumb-l-place-mod
      (translate [x y z] shape))))
 (def keymatrix-screw-offset 13)
+
 (defn keymatrix-screw-place-right [shape]
+  (union
+   (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 shape)
+   (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 shape)
+   (screw-insert-head firstcol firstrow (* -1 keymatrix-screw-offset) 0 3 shape)
+   (screw-insert-head firstcol 1 (* -1 keymatrix-screw-offset) 0 3 shape)
+   (screw-insert-head-thumb (* -1 keymatrix-screw-offset) 0 3 shape)))
+
+(defn keymatrix-screw-place-left [shape]
   (union
    (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 shape)
    (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 shape)
@@ -362,6 +371,9 @@
 
 (def keymatrix-screw-insert-right
   (keymatrix-screw-place-right header-screw))
+
+(def keymatrix-screw-insert-left
+  (keymatrix-screw-place-left header-screw))
 
 
 (def case-screw-holders-holes-right

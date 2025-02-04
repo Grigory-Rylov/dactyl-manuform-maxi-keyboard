@@ -36,7 +36,7 @@
 
 (def thumbcaps
   (union
-   (thumb-layout (sa-cap 1))))
+   (thumb-layout-right (sa-cap 1))))
 
 (def external-thumbcaps
   (union
@@ -205,7 +205,7 @@
 
       ;(color-green controller-hole)
       (if (= externalThumb false) thumb-right)
-      (if (= externalThumb false) thumb-connectors)
+      (if (= externalThumb false) thumb-connectors-right)
       (if trackball-mode
 
         (translate [trackball-offset-x, trackball-offset-y, tracball-offset-z]
@@ -239,8 +239,8 @@
     key-holes-right
     connectors
     thumb-right
-    thumb-connectors
-    key-matrix-border)
+    thumb-connectors-right
+    key-matrix-border-right)
    (color-yellow keymatrix-screw-insert-right)))
 
 (def model-right-case
@@ -299,7 +299,7 @@
                (if (= external-controller false) screw-holders-left))
 
              (if (= externalThumb false) thumb-left)
-             (if (= externalThumb false) thumb-connectors)
+             (if (= externalThumb false) thumb-connectors-right)
 
              (difference
               (union case-walls
@@ -320,6 +320,53 @@
            ;end union
            )))
 
+(def model-left-case
+  (mirror [1, 0, 0]
+          (union
+           (difference
+            (union
+             key-holes-left
+             ;pinky-connectors1
+             ;pinky-walls
+             connectors
+             logo-left
+             (if mono-mode
+               screw-holders-mid-left
+               (if (= external-controller false) screw-holders-left))
+
+             (if (= externalThumb false) thumb-left)
+             (if (= externalThumb false) thumb-connectors-right)
+
+             (difference
+              (union case-walls
+                     (if magnet-holes magnet-stiffness-booster)
+                     screw-insert-outers-left)
+              screw-insert-holes-left
+              controller-hole
+              (if magnet-holes magnet-place)))
+
+            ;side cut
+            (if mono-mode
+              (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
+
+            (translate [0 0 -20] (cube 350 350 40))
+            ;end difference
+            )
+           (if mono-mode case-holders-left)
+           ;end union
+           )))
+
+(def model-keymatrix-left
+  (mirror [1, 0, 0]
+          (difference
+           (union
+            key-holes-left
+            connectors
+            thumb-left
+            thumb-connectors-left
+            key-matrix-border-left)
+           (color-yellow keymatrix-screw-insert-left))))
+
 (def model-mono-right
   (difference
    (translate [mono_body_offsetX, 0, 0] model-right)
@@ -338,7 +385,7 @@
     ;pinky-walls
     connectors
     (if (> thumbs-count 0) thumb-left)
-    (if (> thumbs-count 0) thumb-connectors)
+    (if (> thumbs-count 0) thumb-connectors-right)
     (difference
      (union case-walls
             (if magnet-holes magnet-stiffness-booster)
@@ -355,7 +402,7 @@
     ;pinky-connectors
     ;pinky-walls
     thumb-right
-    thumb-connectors
+    thumb-connectors-right
     (difference
      (union external-thumbs-case-walls
             ;thumbs-screw-insert-outers
@@ -366,11 +413,7 @@
    (translate [0 0 -20] (cube 350 350 40))))
 
 
-(if mono-mode
-  (spit "things/right.scad"
-        (write-scad model-mono-right))
-  (spit "things/right.scad"
-        (write-scad model-right)))
+;(spit "things/right.scad" (write-scad model-right))
 
 (spit "things/right-case.scad" (write-scad model-right-case))
 (spit "things/right-keymatrix.scad" (write-scad model-keymatrix-right))
@@ -380,9 +423,9 @@
         model-right-case
         (color-green model-keymatrix-right))))
 
+(spit "things/left-case.scad" (write-scad model-left-case))
+(spit "things/left-keymatrix.scad" (write-scad model-keymatrix-left))
 
-(spit "things/left.scad"
-      (write-scad model-mono-left))
 
 (def caps
   (if extra-middle-row
@@ -415,7 +458,7 @@
           ;pinky-walls
           connectors
           (if (> thumbs-count 0) thumb-right) ; TODO remove condition in test
-          (if (> thumbs-count 0) thumb-connectors)
+          (if (> thumbs-count 0) thumb-connectors-right)
           (if magnet-holes magnet-connectors)
 
           (difference
@@ -531,7 +574,7 @@
           (union
            ;external-thumb-case
            thumb-right
-           thumb-connectors
+           thumb-connectors-right
            (difference
             (union external-thumbs-case-walls
                    ;thumbs-screw-insert-outers

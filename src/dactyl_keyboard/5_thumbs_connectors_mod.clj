@@ -10,8 +10,7 @@
             [dactyl-keyboard.thumbs :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
-
-(def five-thumbs-connectors-extra-row
+(def five-thumbs-connectors-extra-row-mod
   (union
    (triangle-hulls    ; top two
     (thumb-tl-place web-post-tr)
@@ -86,8 +85,8 @@
     (key-place 3 lastrow web-post-tr)
     (key-place 4 cornerrow web-post-bl))))
 
-(def five-thumbs-connectors-no-extra-row
-  (union
+(def five-thumbs-connectors-no-extra-row-mod
+ (let [] (union
    (triangle-hulls    ; top two
     (thumb-tl-place web-post-tr)
     (thumb-tl-place web-post-br)
@@ -169,9 +168,9 @@
     (key-place 2 cornerrow web-post-bl)
     (key-place 2 lastrow web-post-tr)
     (key-place 2 cornerrow web-post-br)
-    (key-place 3 cornerrow web-post-bl))))
+    (key-place 3 cornerrow web-post-bl)))))
 
-(def five-thumbs-connectors
+(def five-thumbs-connectors-mod
   (if extra-middle-row
-    five-thumbs-connectors-extra-row
-    five-thumbs-connectors-no-extra-row))
+    five-thumbs-connectors-extra-row-mod
+    five-thumbs-connectors-no-extra-row-mod))

@@ -89,20 +89,23 @@
 
 (def thumb_offset 0.2)
 (def three-thumbs-connectors-no-extra-row-mod
-  (union
-   (color PUR
+ (let [tlc web-post-tl-c
+       trc web-post-tr-c
+       brc web-post-br-c
+       blc web-post-bl-c] (union
+   (color RED
           (triangle-hulls    ; top two
-           (thumb-m-place-mod web-post-tr)
-           (thumb-m-place-mod web-post-br)
-           (thumb-r-place-mod thumb-post-tl)
-           (thumb-r-place-mod thumb-post-bl)))
+           (thumb-m-place-mod trc)
+           (thumb-m-place-mod brc)
+           (thumb-r-place-mod thumb-post-tl-c)
+           (thumb-r-place-mod thumb-post-bl-c)))
 
 
    (triangle-hulls    ; top two to the middle two, starting on the left
-    (thumb-m-place-mod web-post-tl)
-    (thumb-l-place-mod web-post-tr)
-    (thumb-m-place-mod web-post-bl)
-    (thumb-l-place-mod web-post-br))
+    (thumb-m-place-mod tlc)
+    (thumb-l-place-mod trc)
+    (thumb-m-place-mod blc)
+    (thumb-l-place-mod brc))
 
    ;(color PIN
    ;       (hull
@@ -199,7 +202,7 @@
      (key-place 2 cornerrow web-post-bl)
      (key-place 2 lastrow web-post-tr)
      (key-place 2 cornerrow web-post-br)
-     (key-place 3 cornerrow web-post-bl)))))
+     (key-place 3 cornerrow web-post-bl))))))
 
 (def three-thumbs-connectors-mod
   (if extra-middle-row
