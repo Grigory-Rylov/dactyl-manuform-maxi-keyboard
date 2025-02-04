@@ -12,25 +12,29 @@
 
 ;tl -> m
 (def three-thumb-connectors
-  (union
-   (triangle-hulls    ; top two
-    (thumb-m-place web-post-tr)
-    (thumb-m-place web-post-br)
-    (thumb-r-place thumb-post-tl)
-    (thumb-r-place thumb-post-bl))
+  (let [tl web-post-tl-c
+        tr web-post-tr-c
+        bl web-post-bl-c
+        br web-post-br-c]
+    (union
+     (triangle-hulls    ; top two
+      (thumb-m-place tr)
+      (thumb-m-place br)
+      (thumb-r-place tl)
+      (thumb-r-place bl))
 
-   (triangle-hulls    ; top two to the middle two, starting on the left
-    (thumb-m-place web-post-tl)
-    (thumb-l-place web-post-tr)
-    (thumb-m-place web-post-bl)
-    (thumb-l-place web-post-br))
+     (triangle-hulls    ; top two to the middle two, starting on the left
+      (thumb-m-place tl)
+      (thumb-l-place tr)
+      (thumb-m-place bl)
+      (thumb-l-place br))
 
-   (triangle-hulls    ; top two to the main keyboard, starting on the left
-    (thumb-m-place web-post-tl)
-    (key-place 0 cornerrow web-post-bl)
-    (thumb-m-place web-post-tr)
-    (key-place 0 cornerrow web-post-br)
-    (thumb-r-place thumb-post-tl)
-    (key-place 1 cornerrow web-post-bl)
-    (thumb-r-place thumb-post-tr)
-    (key-place 1 cornerrow web-post-br))))
+     (triangle-hulls    ; top two to the main keyboard, starting on the left
+      (thumb-m-place tl)
+      (key-place 0 cornerrow bl)
+      (thumb-m-place tr)
+      (key-place 0 cornerrow br)
+      (thumb-r-place tl)
+      (key-place 1 cornerrow bl)
+      (thumb-r-place tr)
+      (key-place 1 cornerrow br)))))

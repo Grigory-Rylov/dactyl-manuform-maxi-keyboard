@@ -78,7 +78,7 @@
 ; 1 - gateron standart
 ; 2 - gateron low profile
 (def mono-mode false)
-(def hot-swap 0)
+(def hot-swap 1)
 (def hot-swap-holders true)
 
 (def low-profile false)
@@ -237,9 +237,9 @@
 (def border-inner-offset-vert-bottom -1)
 (def border-outer-offset-vert-top 1.1)
 (def border-outer-offset-vert-bottom -1.1)
-(def border-inner-offset-hor-right 2)
+(def border-inner-offset-hor-right 2.5)
 (def thumb-border-inner-offset-hor-right 1)
-(def border-inner-offset-hor-left -2)
-(def border-outer-offset-hor-right 2.1)
-(def border-outer-offset-hor-left -2.1)
+(def border-inner-offset-hor-left -2.5)
+(def border-outer-offset-hor-right 2.6)
+(def border-outer-offset-hor-left -2.6)
 (def screw-nut-diameter 4.0)

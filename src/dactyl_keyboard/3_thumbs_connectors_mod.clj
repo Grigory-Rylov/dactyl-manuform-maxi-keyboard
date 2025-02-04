@@ -111,10 +111,10 @@
    ;        (thumb-r-place-mod (translate (wall-locate3 0 thumb_offset) thumb-post-tr))
    ;        ))
 
-   (color GRE
+   (color PIN
           (triangle-hulls    ; top two to the main keyboard, starting on the left
            (thumb-m-place-mod web-post-tl)
-           (key-place 0 cornerrow web-post-bl)
+           (key-place 0 cornerrow web-post-bl-c)
            (thumb-m-place-mod web-post-tr)
            (key-place 0 cornerrow web-post-br)))
 

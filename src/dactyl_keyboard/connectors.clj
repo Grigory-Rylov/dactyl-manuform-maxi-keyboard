@@ -20,34 +20,39 @@
 ;;;;;;;;;;;;;;;;;;;;
 
 (def connectors
+  (let [tl web-post-tl-c
+        tr web-post-tr-c
+        bl web-post-bl-c
+        br web-post-br-c]
   (apply union
          (concat
           ;; Row connections
           (for [column (range 0 (dec ncols))
                 row    (range 0 (if extra-middle-row lastrow nrows))]
             (triangle-hulls
-             (key-place (inc column) row web-post-tl)
-             (key-place column row web-post-tr)
-             (key-place (inc column) row web-post-bl)
-             (key-place column row web-post-br)))
+             (key-place (inc column) row tl)
+             (key-place column row tr)
+             (key-place (inc column) row bl)
+             (key-place column row br)))
 
           ;; Column connections
           (for [column columns
                 row    (range 0 cornerrow)]
             (triangle-hulls
-             (key-place column row web-post-bl)
-             (key-place column row web-post-br)
-             (key-place column (inc row) web-post-tl)
-             (key-place column (inc row) web-post-tr)))
+             (key-place column row bl)
+             (key-place column row br)
+             (key-place column (inc row) tl)
+             (key-place column (inc row) tr)))
 
           ;; Diagonal connections
           (for [column (range 0 (dec ncols))
                 row    (range 0 cornerrow)]
             (triangle-hulls
-             (key-place column row web-post-br)
-             (key-place column (inc row) web-post-tr)
-             (key-place (inc column) row web-post-bl)
-             (key-place (inc column) (inc row) web-post-tl))))))
+             (key-place column row br)
+             (key-place column (inc row)tr)
+             (key-place (inc column) row bl)
+             (key-place (inc column) (inc row) tl))))))
+  )
 
 (def thumb-connectors
   (case thumbs-count
