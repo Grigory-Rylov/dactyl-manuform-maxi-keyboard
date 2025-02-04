@@ -199,17 +199,9 @@
      ; back wall
      (for [x (range 0 ncols)]
          (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl x 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
-     ;(for [x (range 0 ncols)] (if (not= x 1) (key-wall-brace-inner x 0 0 1 web-post-tl x 0 0 1 web-post-tr)))
 
      (for [x (range 1 ncols)]
          (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl (dec x) 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
-     ;(for [x (range 1 ncols)] (if (not= x 2) (key-wall-brace-inner x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr)))
-
-     ;(key-wall-brace-inner 2 0 0 1 web-post-tl 2 0 -0.2 1 web-post-tr)
-
-     ;(key-wall-brace-inner 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr)
-
-     ;(color PIN (key-wall-brace-inner 1 0 0 1 web-post-tl 1 0 -0.2 1 web-post-tr))
 
      ; left wall
      (for [y (range 0 lastrow)]

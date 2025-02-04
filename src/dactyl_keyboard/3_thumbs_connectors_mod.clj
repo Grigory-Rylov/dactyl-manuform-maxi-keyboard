@@ -124,9 +124,9 @@
            (key-place 3 cornerrow web-post-bl)))
 
    ; triangle between thumb and 2 col
-   (color-blue
+   (color MAG
     (hull
-     (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-tr))
+     (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-tr-c))
      (thumb-r-place-mod (translate (wall-locate1 0 1) thumb-post-tr))
 
      ;     (key-place 2 lastrow web-post-tl)
