@@ -11,11 +11,12 @@
             [dactyl-keyboard.3-thumbs-case :refer :all]
             [dactyl-keyboard.3-thumbs-case-mod :refer :all]
             [dactyl-keyboard.5-thumbs-case :refer :all]
+            [dactyl-keyboard.5-thumbs-case-mod :refer :all]
             [dactyl-keyboard.6-thumbs-case :refer :all]
             [dactyl-keyboard.connectors :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
-(def case-walls
+(def case-walls-right
   (cond
     (= externalThumb true)  no-thumb-case-walls
     (= thumbs-count 3)      (union
@@ -23,6 +24,16 @@
                              ;(color  YEL three-thumb-case-matrix-border)
                              )
     (= thumbs-count 5)      fifth-thumb-case-walls
+    :else                   six-thumb-case-walls))
+
+(def case-walls-left
+  (cond
+    (= externalThumb true)  no-thumb-case-walls
+    (= thumbs-count 3)      (union
+                             (difference three-thumb-case-walls-mod three-thumb-case-matrix-border-right)
+                             ;(color  YEL three-thumb-case-matrix-border)
+                             )
+    (= thumbs-count 5)      fifth-thumb-case-walls-mod
     :else                   six-thumb-case-walls))
 
 (def external-thumbs-case-walls
@@ -37,5 +48,5 @@
   )
 
 (def key-matrix-border-left
-  three-thumb-case-matrix-border-right
+  five-thumb-case-matrix-border-right-mod
   )

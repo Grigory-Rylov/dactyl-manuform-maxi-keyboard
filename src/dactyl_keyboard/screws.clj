@@ -292,7 +292,7 @@
         screw-rad       (/ 3.5 2)]
     (thumb-l-place-mod
      (translate [x y z] shape))))
-(def keymatrix-screw-offset 13)
+(def keymatrix-screw-offset 12.6)
 
 (defn keymatrix-screw-place-right [shape]
   (union

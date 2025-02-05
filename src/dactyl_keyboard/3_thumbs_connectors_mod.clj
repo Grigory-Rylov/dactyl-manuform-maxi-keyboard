@@ -202,7 +202,9 @@
      (key-place 2 cornerrow web-post-bl)
      (key-place 2 lastrow web-post-tr)
      (key-place 2 cornerrow web-post-br)
-     (key-place 3 cornerrow web-post-bl))))))
+     (key-place 3 cornerrow web-post-bl)))
+
+                           )))
 
 (def three-thumbs-connectors-mod
   (if extra-middle-row

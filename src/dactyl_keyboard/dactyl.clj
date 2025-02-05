@@ -219,7 +219,7 @@
 
       (difference
        (union
-        (difference case-walls
+        (difference case-walls-right
                     (if trackball-mode
                       (translate [trackball-offset-x, trackball-offset-y, (+ 10 tracball-offset-z)]
                                  (color-red trackball-hole))))
@@ -264,7 +264,7 @@
       (difference
        (union
         keymatrix-holders
-        (difference case-walls
+        (difference case-walls-right
                     case-screw-holders-holes-right
                     (if trackball-mode
                       (translate [trackball-offset-x, trackball-offset-y, (+ 10 tracball-offset-z)]
@@ -302,7 +302,7 @@
              (if (= externalThumb false) thumb-connectors-right)
 
              (difference
-              (union case-walls
+              (union case-walls-right
                      (if magnet-holes magnet-stiffness-booster)
                      screw-insert-outers-left)
               screw-insert-holes-left
@@ -338,7 +338,7 @@
              (if (= externalThumb false) thumb-connectors-right)
 
              (difference
-              (union case-walls
+              (union case-walls-right
                      (if magnet-holes magnet-stiffness-booster)
                      screw-insert-outers-left)
               screw-insert-holes-left
@@ -357,7 +357,7 @@
            )))
 
 (def model-keymatrix-left
-  (mirror [1, 0, 0]
+  (mirror [0, 0, 0]
           (difference
            (union
             key-holes-left
@@ -387,7 +387,7 @@
     (if (> thumbs-count 0) thumb-left)
     (if (> thumbs-count 0) thumb-connectors-right)
     (difference
-     (union case-walls
+     (union case-walls-right
             (if magnet-holes magnet-stiffness-booster)
             screw-insert-outers-left)
      controller-hole
@@ -462,7 +462,7 @@
           (if magnet-holes magnet-connectors)
 
           (difference
-           (union case-walls (binding [*fn* 50])
+           (union case-walls-right (binding [*fn* 50])
                   (if magnet-holes magnet-stiffness-booster)
                   screw-insert-outers-right)
            controller-hole

@@ -11,8 +11,107 @@
             [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
+(def five-thumb-case-matrix-border-right-mod
+  (let [tlc web-post-tl-c
+        trc web-post-tr-c
+        brc web-post-br-c
+        blc web-post-bl-c]
+    (union
+     right-wall-inner
+     ; back wall
+     (for [x (range 0 ncols)]
+       (key-wall-brace-inner x 0 0 border-inner-offset-vert-top web-post-tl-c x 0 0 border-inner-offset-vert-top web-post-tr-c))
 
-(def fifth-thumb-case-walls-middle-row
+     (for [x (range 1 ncols)]
+       (key-wall-brace-inner x 0 0 border-inner-offset-vert-top web-post-tl-c (dec x) 0 0 border-inner-offset-vert-top web-post-tr-c))
+
+     ; left wall
+     (for [y (range 0 lastrow)]
+       (color D_GRE
+              (key-wall-brace-inner 0 y border-inner-offset-hor-left 0 web-post-tl-c 0 y border-inner-offset-hor-left 0 web-post-bl-c)))
+
+     (for [y (range 1 lastrow)]
+       (color D_RED
+              (key-wall-brace-inner 0 y border-inner-offset-hor-left 0 web-post-tl-c 0 (dec y) border-inner-offset-hor-left 0 web-post-bl-c)))
+
+     ; left top corner
+     (color YEL (key-wall-brace-inner firstcol 0 0 border-inner-offset-vert-top tlc firstcol 0 border-inner-offset-hor-left 0 tlc))
+
+     ; front wall
+     (for [x (range 3 ncols)]
+       (key-wall-brace-inner x cornerrow 0 border-inner-offset-vert-bottom web-post-bl-c x cornerrow 0 border-inner-offset-vert-bottom web-post-br-c))
+
+     (for [x (range 4 ncols)]
+       (key-wall-brace-inner x cornerrow 0 border-inner-offset-vert-bottom web-post-bl-c (dec x) cornerrow 0 border-inner-offset-vert-bottom web-post-br-c))
+
+
+     ;;;;;;;;;;;;;;;
+     ; thumb walls
+     ;;;;;;;;;;;;;;;
+     (color D_RED
+            (wall-brace-inner thumb-m2-place-mod 0 border-inner-offset-vert-bottom web-post-br-c thumb-m2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
+
+     ;diagonal between thumb and bottom left key
+     (color D_BLA
+            (wall-brace-inner
+             (partial key-place 0 cornerrow) border-inner-offset-hor-left  0 web-post-bl-c
+             thumb-m-place-mod 0 border-inner-offset-vert-top web-post-tl-c))
+
+     (color D_RED
+            (wall-brace-inner thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tr-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tl-c))
+     (color D_PUR
+            (wall-brace-inner thumb-l2-place-mod 0 border-inner-offset-vert-bottom  web-post-br-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom  web-post-bl-c))
+
+     (color D_BLU
+            (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod border-inner-offset-hor-left 0 web-post-bl-c))
+     (color D_BLU
+            (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c))
+
+     (color D_GRE
+            (wall-brace-inner
+             thumb-l-place-mod border-inner-offset-hor-left 0 web-post-bl-c
+             thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-tl-c))
+
+     ; thumb corners
+     (color-yellow (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
+     (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tl-c)
+
+     ; thumb tweeners
+     (color D_BLU
+            (wall-brace-inner thumb-m2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-br-c))
+     (color GRE
+            (wall-brace-inner thumb-m-place-mod 0 border-inner-offset-vert-top web-post-tl-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tr-c))
+     (color D_PUR
+            (wall-brace-inner thumb-m-place-mod 0 border-inner-offset-vert-bottom web-post-br-c thumb-r-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
+
+     ; thumb - front connection wall
+     (color MAG ;(wall-brace-inner
+            ; thumb-r-place-mod 0 -1 thumb-post-br-c
+            ; (partial key-place 3 cornerrow) 0 -1 web-post-bl-c)
+            (union
+             (hull
+              (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-br-c))
+              (thumb-r-place-mod (translate (wall-locate1 0 border-inner-offset-vert-bottom) thumb-post-br-c))
+              ((partial key-place 3 cornerrow) web-post-bl-c)
+              ((partial key-place 3 cornerrow) (translate (wall-locate1 0 border-inner-offset-vert-bottom) web-post-bl-c))))
+            )
+
+     ;right thumb
+
+     (color D_GRE (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-tr-c thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-br-c))
+     (color D_RED (wall-brace-inner thumb-r-place-mod 0 1 tlc thumb-r-place-mod 0 1 trc))
+
+     ; thumb corners
+    (color D_GRE (wall-brace-inner
+                  thumb-r-place-mod thumb-border-inner-offset-hor-right 0 brc
+                  thumb-m2-place-mod 0  border-inner-offset-vert-bottom brc
+                  ))
+     (color-blue (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 trc thumb-r-place-mod 0 1 trc))
+
+     ))
+  )
+
+(def fifth-thumb-case-walls-middle-row-mod
   (union
    right-wall
    ; back wall
@@ -97,7 +196,7 @@
   ;
   )
 
-(def fifth-thumb-case-walls-no-middle-row
+(def fifth-thumb-case-walls-no-middle-row-mod
   (union
    right-wall
    ; back wall
@@ -200,7 +299,7 @@
   ;
   )
 
-(def fifth-thumb-case-walls
+(def fifth-thumb-case-walls-mod
   (if extra-middle-row
-    fifth-thumb-case-walls-middle-row
-    fifth-thumb-case-walls-no-middle-row))
+    fifth-thumb-case-walls-middle-row-mod
+    fifth-thumb-case-walls-no-middle-row-mod))

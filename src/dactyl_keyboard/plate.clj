@@ -143,21 +143,21 @@
     thumb-fill
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors-right)
-    case-walls)))
+    case-walls-right)))
 
 (def case-walls-outline
-  (cut case-walls))
+  (cut case-walls-right))
 
 (def wall-shape-right
   (cut
    (translate [0 0 -0.1]
-              (union case-walls
+              (union case-walls-right
                      screw-insert-outers-right))))
 
 (def wall-shape-left
   (cut
    (translate [0 0 -0.1]
-              (union case-walls
+              (union case-walls-right
                      screw-insert-outers-left))))
 
 
