@@ -150,7 +150,7 @@
 ;       (rotate (deg2rad 35) [0 0 1])
 ;       (translate thumborigin-mod)
 ;       (translate [-39 -43 -16]))
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -36.0 thumb-x-offset) -36.5 -23.5] shape))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -35.0 thumb-x-offset) -35.5 -22.5] shape))
   )
 
 
