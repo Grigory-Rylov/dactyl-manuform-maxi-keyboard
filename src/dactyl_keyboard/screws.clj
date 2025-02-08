@@ -107,7 +107,7 @@
 
             ; front right
             (color-blue
-             (screw-insert lastcol lastrow bottom-radius top-radius height [-5 6 0]))
+             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0]))
 
             ; end union
             ))))
@@ -134,7 +134,7 @@
                (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
 
             ; back right
-            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))
+            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0]))
             ; top
             (color-yellow
              (screw-insert 2 lastrow bottom-radius top-radius height [-9 -21 0]))
@@ -144,7 +144,7 @@
 
             ; front right
             (color-blue
-             (screw-insert lastcol lastrow bottom-radius top-radius height [-5 6 0]))
+             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0]))
 
             ; end union
             ))))
