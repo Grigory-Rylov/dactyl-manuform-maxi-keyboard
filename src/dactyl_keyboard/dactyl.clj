@@ -321,7 +321,7 @@
            )))
 
 (def model-left-case
-  (mirror [0, 0, 0]
+  (mirror [1, 0, 0]
           (union
            (difference
             (union
