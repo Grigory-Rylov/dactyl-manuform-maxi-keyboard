@@ -30,7 +30,7 @@
   (cond
     (= externalThumb true)  no-thumb-case-walls
     (= thumbs-count 3)      (union
-                             (difference three-thumb-case-walls-mod three-thumb-case-matrix-border-right)
+                             (difference fifth-thumb-case-walls-mod five-thumb-case-matrix-border-left-mod)
                              ;(color  YEL three-thumb-case-matrix-border)
                              )
     (= thumbs-count 5)      fifth-thumb-case-walls-mod
@@ -48,5 +48,5 @@
   )
 
 (def key-matrix-border-left
-  five-thumb-case-matrix-border-right-mod
+  five-thumb-case-matrix-border-left-mod
   )

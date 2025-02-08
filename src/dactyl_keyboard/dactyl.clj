@@ -137,10 +137,10 @@
                                 (import
                                  "osik_logo.stl")))))
     ;split logo
-    (translate [-12.5, -66.5, 80]
-               (rotate [(deg2rad 90), 0, (deg2rad 9)]
+    (translate [-59.5, -3, 85]
+               (rotate [(deg2rad 90), 0, (deg2rad 90)]
                        (color-yellow
-                        (mirror [1, 0, 0]
+                        (mirror [0, 0, 0]
                                 (import
                                  "osik_logo.stl")))))))
 
@@ -321,33 +321,21 @@
            )))
 
 (def model-left-case
-  (mirror [1, 0, 0]
+  (mirror [0, 0, 0]
           (union
            (difference
             (union
-             key-holes-left
-             ;pinky-connectors1
-             ;pinky-walls
-             connectors
              logo-left
-             (if mono-mode
-               screw-holders-mid-left
-               (if (= external-controller false) screw-holders-left))
-
-             (if (= externalThumb false) thumb-left)
-             (if (= externalThumb false) thumb-connectors-right)
+             screw-holders-left
 
              (difference
-              (union case-walls-right
+              (union case-walls-left
                      (if magnet-holes magnet-stiffness-booster)
                      screw-insert-outers-left)
               screw-insert-holes-left
               controller-hole
               (if magnet-holes magnet-place)))
 
-            ;side cut
-            (if mono-mode
-              (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
 
             (translate [0 0 -20] (cube 350 350 40))
             ;end difference

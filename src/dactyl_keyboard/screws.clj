@@ -128,7 +128,7 @@
             ; bottom left controller-plate-height
 
             ; thumb
-            (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0]))
+            (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-2 0 0]))
             (if (= external-controller false)
               (color-blue
                (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
@@ -137,10 +137,10 @@
             (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [4 -5 0]))
             ; top
             (color-yellow
-             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
+             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -21 0]))
 
             ; bottom middle
-            (color-red (screw-insert 2 0 bottom-radius top-radius height [-4 -3 0]))
+            (color-red (screw-insert 2 0 bottom-radius top-radius height [-2 -3 0]))
 
             ; front right
             (color-blue

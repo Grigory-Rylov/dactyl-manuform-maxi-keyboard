@@ -167,12 +167,11 @@
      (color MAG ;(wall-brace-inner
                 ; thumb-r-place-mod 0 -1 thumb-post-br-c
                 ; (partial key-place 3 cornerrow) 0 -1 web-post-bl-c)
-            (union
              (hull
               (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-br-c))
               (thumb-r-place-mod (translate (wall-locate1 0 border-inner-offset-vert-bottom) thumb-post-br-c))
               ((partial key-place 3 cornerrow) web-post-bl-c)
-              ((partial key-place 3 cornerrow) (translate (wall-locate1 0 border-inner-offset-vert-bottom) web-post-bl-c))))
+              ((partial key-place 3 cornerrow) (translate (wall-locate1 0 border-inner-offset-vert-bottom) web-post-bl-c)))
             )
 
      ;right thumb
@@ -256,7 +255,7 @@
      ;;;;;;;;;;;;;;;
      ; thumb walls
      ;;;;;;;;;;;;;;;
-     (color-green
+     (color-red
       (wall-brace-outer thumb-r-place-mod 0 -1 web-post-bl thumb-r-place-mod 0 -1 thumb-post-br web-post-bl-c thumb-post-br-c))
 
 
@@ -275,7 +274,7 @@
       (wall-brace-outer thumb-m-place-mod 0 -1 web-post-br thumb-r-place-mod 0 -1 web-post-bl web-post-br-c web-post-bl-c))
      ; thumb - front connection wall
 
-     (color WHI
+     (color ORA
             (wall-brace-outer thumb-r-place-mod 0 -1 thumb-post-br (partial key-place 3 cornerrow) 0 -1 web-post-bl thumb-post-br-c web-post-bl-c))
 
      ; clunky bit on the top left thumb connection  (normal connectors don't work well)
@@ -329,7 +328,9 @@
              (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
              (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))
              ;(thumb-m-place-mod web-post-tl)
-             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c))))
+             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
+     ;
+     )
     ;
     ))
 

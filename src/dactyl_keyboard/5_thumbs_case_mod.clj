@@ -11,7 +11,7 @@
             [dactyl-keyboard.connectors-common :refer :all]
             [dactyl-keyboard.config :refer :all]))
 
-(def five-thumb-case-matrix-border-right-mod
+(def five-thumb-case-matrix-border-left-mod
   (let [tlc web-post-tl-c
         trc web-post-tr-c
         brc web-post-br-c
@@ -35,7 +35,8 @@
               (key-wall-brace-inner 0 y border-inner-offset-hor-left 0 web-post-tl-c 0 (dec y) border-inner-offset-hor-left 0 web-post-bl-c)))
 
      ; left top corner
-     (color YEL (key-wall-brace-inner firstcol 0 0 border-inner-offset-vert-top tlc firstcol 0 border-inner-offset-hor-left 0 tlc))
+     (color YEL
+            (key-wall-brace-inner firstcol 0 0 border-inner-offset-vert-top tlc firstcol 0 border-inner-offset-hor-left 0 tlc))
 
      ; front wall
      (for [x (range 3 ncols)]
@@ -54,13 +55,13 @@
      ;diagonal between thumb and bottom left key
      (color D_BLA
             (wall-brace-inner
-             (partial key-place 0 cornerrow) border-inner-offset-hor-left  0 web-post-bl-c
+             (partial key-place 0 cornerrow) border-inner-offset-hor-left 0 web-post-bl-c
              thumb-m-place-mod 0 border-inner-offset-vert-top web-post-tl-c))
 
      (color D_RED
             (wall-brace-inner thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tr-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tl-c))
      (color D_PUR
-            (wall-brace-inner thumb-l2-place-mod 0 border-inner-offset-vert-bottom  web-post-br-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom  web-post-bl-c))
+            (wall-brace-inner thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-br-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
 
      (color D_BLU
             (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod border-inner-offset-hor-left 0 web-post-bl-c))
@@ -73,7 +74,8 @@
              thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-tl-c))
 
      ; thumb corners
-     (color-yellow (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
+     (color-yellow
+       (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
      (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tl-c)
 
      ; thumb tweeners
@@ -91,25 +93,25 @@
             (union
              (hull
               (thumb-r-place-mod (translate (wall-locate1 1 0) thumb-post-br-c))
-              (thumb-r-place-mod (translate (wall-locate1 0 border-inner-offset-vert-bottom) thumb-post-br-c))
+              (thumb-r-place-mod
+                (translate (wall-locate1 0 border-inner-offset-vert-bottom) thumb-post-br-c))
               ((partial key-place 3 cornerrow) web-post-bl-c)
-              ((partial key-place 3 cornerrow) (translate (wall-locate1 0 border-inner-offset-vert-bottom) web-post-bl-c))))
-            )
+              ((partial key-place 3 cornerrow)
+                (translate (wall-locate1 0 border-inner-offset-vert-bottom) web-post-bl-c)))))
 
      ;right thumb
 
-     (color D_GRE (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-tr-c thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-br-c))
+     (color D_GRE
+            (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-tr-c thumb-r-place-mod thumb-border-inner-offset-hor-right 0 web-post-br-c))
      (color D_RED (wall-brace-inner thumb-r-place-mod 0 1 tlc thumb-r-place-mod 0 1 trc))
 
      ; thumb corners
-    (color D_GRE (wall-brace-inner
-                  thumb-r-place-mod thumb-border-inner-offset-hor-right 0 brc
-                  thumb-m2-place-mod 0  border-inner-offset-vert-bottom brc
-                  ))
-     (color-blue (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 trc thumb-r-place-mod 0 1 trc))
-
-     ))
-  )
+     (color D_GRE
+            (wall-brace-inner
+             thumb-r-place-mod thumb-border-inner-offset-hor-right 0 brc
+             thumb-m2-place-mod 0 border-inner-offset-vert-bottom brc))
+     (color-blue
+       (wall-brace-inner thumb-r-place-mod thumb-border-inner-offset-hor-right 0 trc thumb-r-place-mod 0 1 trc)))))
 
 (def fifth-thumb-case-walls-middle-row-mod
   (union
@@ -151,153 +153,224 @@
    (for [x (range 5 ncols)]
      (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
    ; thumb walls
-   (wall-brace thumb-mr-place 0 -1 web-post-br thumb-tr-place 0 -1 thumb-post-br)
-   (wall-brace thumb-mr-place 0 -1 web-post-br thumb-mr-place 0 -1 web-post-bl)
-   (wall-brace thumb-br-place 0 -1 web-post-br thumb-br-place 0 -1 web-post-bl)
-   (wall-brace thumb-bl-place 0 1 web-post-tr thumb-bl-place 0 1 web-post-tl)
-   (wall-brace thumb-br-place -1 0 web-post-tl thumb-br-place -1 0 web-post-bl)
-   (wall-brace thumb-bl-place -1 0 web-post-tl thumb-bl-place -1 0 web-post-bl)
+   (wall-brace thumb-m2-place-mod 0 -1 web-post-br thumb-r-place-mod 0 -1 thumb-post-br)
+   (wall-brace thumb-m2-place-mod 0 -1 web-post-br thumb-m2-place-mod 0 -1 web-post-bl)
+   (wall-brace thumb-l2-place-mod 0 -1 web-post-br thumb-l2-place-mod 0 -1 web-post-bl)
+   (wall-brace thumb-l-place-mod 0 1 web-post-tr thumb-l-place-mod 0 1 web-post-tl)
+   (wall-brace thumb-l2-place-mod -1 0 web-post-tl thumb-l2-place-mod -1 0 web-post-bl)
+   (wall-brace thumb-l-place-mod -1 0 web-post-tl thumb-l-place-mod -1 0 web-post-bl)
    ; thumb corners
-   (wall-brace thumb-br-place -1 0 web-post-bl thumb-br-place 0 -1 web-post-bl)
-   (wall-brace thumb-bl-place -1 0 web-post-tl thumb-bl-place 0 1 web-post-tl)
+   (wall-brace thumb-l2-place-mod -1 0 web-post-bl thumb-l2-place-mod 0 -1 web-post-bl)
+   (wall-brace thumb-l-place-mod -1 0 web-post-tl thumb-l-place-mod 0 1 web-post-tl)
    ; thumb tweeners
-   (wall-brace thumb-mr-place 0 -1 web-post-bl thumb-br-place 0 -1 web-post-br)
-   (wall-brace thumb-bl-place -1 0 web-post-bl thumb-br-place -1 0 web-post-tl)
-   (wall-brace thumb-tr-place 0 -1 thumb-post-br (partial key-place 3 lastrow) 0 -1 web-post-bl)
+   (wall-brace thumb-m2-place-mod 0 -1 web-post-bl thumb-l2-place-mod 0 -1 web-post-br)
+   (wall-brace thumb-l-place-mod -1 0 web-post-bl thumb-l2-place-mod -1 0 web-post-tl)
+   (wall-brace thumb-r-place-mod 0 -1 thumb-post-br (partial key-place 3 lastrow) 0 -1 web-post-bl)
    ; clunky bit on the top left thumb connection  (normal connectors don't work well)
    (bottom-hull
     (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
     (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr)))
+    (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+    (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr)))
    (hull
     (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
     (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr))
-    (thumb-tl-place web-post-tl))
+    (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+    (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))
+    (thumb-m-place-mod web-post-tl))
    (hull
     (left-key-place cornerrow -1 web-post)
     (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
     (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
     (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-tl-place web-post-tl))
+    (thumb-m-place-mod web-post-tl))
    (hull
     (left-key-place cornerrow -1 web-post)
     (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
     (key-place 0 cornerrow web-post-bl)
-    (thumb-tl-place web-post-tl))
+    (thumb-m-place-mod web-post-tl))
    (hull
-    (thumb-bl-place web-post-tr)
-    (thumb-bl-place (translate (wall-locate1 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr))
-    (thumb-tl-place web-post-tl)))
+    (thumb-l-place-mod web-post-tr)
+    (thumb-l-place-mod (translate (wall-locate1 -0.3 1) web-post-tr))
+    (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+    (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))
+    (thumb-m-place-mod web-post-tl)))
   ;
   )
 
 (def fifth-thumb-case-walls-no-middle-row-mod
-  (union
-   right-wall
-   ; back wall
-   (for [x (range 0 ncols)]
-     (if (not= x 1) (key-wall-brace x 0 0 1 web-post-tl x 0 0 1 web-post-tr)))
-   (for [x (range 1 ncols)]
-     (if (not= x 2) (key-wall-brace x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr)))
-   (key-wall-brace 2 0 0 1 web-post-tl 2 0 -0.2 1 web-post-tr)
-   (key-wall-brace 2 0 0.0 1 web-post-tl (dec 2) 0 -0.2 1 web-post-tr)
-   (key-wall-brace 1 0 0 1 web-post-tl 1 0 -0.2 1 web-post-tr)
+  (let [left_offset_x -1.0
+        tlc           web-post-tl-c
+        trc           web-post-tr-c
+        blc           web-post-bl-c
+        brc           web-post-br-c
 
-   ; left wall
+        tl            web-post-tl
+        tr            web-post-tr
+        bl            web-post-bl
+        br            web-post-br]
+    (union
 
-   (for [y (range 0 lastrow)]
-     (color-blue
-      (union
-       (wall-brace (partial left-key-place y 1) -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
-       (hull (key-place 0 y web-post-tl)
-             (key-place 0 y web-post-bl)
-             (left-key-place y 1 web-post)
-             (left-key-place y -1 web-post)))))
-   (for [y (range 1 lastrow)]
+     right-wall-out
+     ;right-wall-inner
+     ; back wall
+     (for [x (range 0 ncols)]
+       (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl x 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
+
+     (for [x (range 1 ncols)]
+       (key-wall-brace-outer x 0 0 border-outer-offset-vert-top web-post-tl (dec x) 0 0 border-outer-offset-vert-top web-post-tr web-post-tl-c web-post-tr-c))
+
+     ; left wall
+     (for [y (range 0 lastrow)]
+       (union
+        (wall-brace-bottom (partial left-key-place y 1) -1 0 web-post (partial left-key-place y -1) -1 0 web-post)
+        (color PUR
+               (hull
+                (key-wall-brace-inner-edge 0 y (- border-outer-offset-hor-left 0.5) 0 web-post-tl-c 0 y (- border-outer-offset-hor-left 0.5) 0 web-post-bl-c)
+                (key-wall-brace-inner-edge 0 y -1.0 0 web-post-tl-c 0 y -1.0 0 web-post-bl-c)
+                (wall3-brace-edge (partial left-key-place y -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)))))
+
+     (for [y (range 1 lastrow)]
+       (union
+        (wall-brace-bottom (partial left-key-place (dec y) -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)
+        (color-yellow
+         (hull
+          (key-wall-brace-inner-edge 0 (dec y) (- border-outer-offset-hor-left 0.5) 0 web-post-bl-c 0 y (- border-outer-offset-hor-left 0.5) 0 web-post-tl-c)
+          (key-wall-brace-inner-edge 0 (dec y) -1.0 0 web-post-bl-c 0 y -1.0 0 web-post-tl-c)
+          (wall3-brace-edge (partial left-key-place (dec y) -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)))))
+
+
+     ;top left corner
+     (color-orange
+      (hull
+       ;left top point
+       (wall3-brace-edge-point (partial left-key-place 0 1) -1 0 web-post)
+
+       ;top left point
+       ((partial key-place firstcol firstrow)
+         (translate (wall-locate3 0 border-outer-offset-vert-top) web-post-tl))
+
+       ((partial key-place firstcol firstrow) (translate (wall-locate1 0 1) tlc))
+
+       ((partial key-place firstcol firstrow) (translate (wall-locate1 -1 0) tlc))
+       ((partial key-place firstcol firstrow)
+         (translate (wall-locate1 (- border-outer-offset-hor-left 0.5) 0) tlc))))
+     (bottom-hull
+      (wall3-brace-edge-point (partial left-key-place 0 1) -1 0 web-post)
+
+      ;top left point
+      ((partial key-place firstcol firstrow)
+        (translate (wall-locate3 0 1) web-post-tl)))
+
+     ; front wall
+     (for [x (range 3 ncols)]
+       (key-wall-brace-outer x cornerrow 0 border-outer-offset-vert-bottom bl x cornerrow 0 border-outer-offset-vert-bottom web-post-br blc brc))
+     ;(for [x (range 3 ncols)] (key-wall-brace-inner x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
+
+     (for [x (range 4 ncols)]
+       (key-wall-brace-outer x cornerrow 0 border-outer-offset-vert-bottom bl (dec x) cornerrow 0 border-outer-offset-vert-bottom br blc brc))
+     ;(for [x (range 4 ncols)] (key-wall-brace-inner x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
+
+
+     ;;;;;;;;;;;;;;;
+     ; thumb walls
+     ;;;;;;;;;;;;;;;
+     (color D_RED
+            (wall-brace-outer thumb-m2-place-mod 0 border-inner-offset-vert-bottom bl thumb-m2-place-mod 0 border-inner-offset-vert-bottom thumb-post-br br bl))
+
+     ;diagonal between thumb and bottom left key
+
+
+     (color D_RED
+            (wall-brace-outer thumb-l-place-mod 0 border-inner-offset-vert-top tr thumb-l-place-mod 0 border-inner-offset-vert-top tl trc tlc))
+     (color PIN
+            (wall-brace-outer thumb-l2-place-mod 0 border-inner-offset-vert-bottom br thumb-l2-place-mod 0 border-inner-offset-vert-bottom bl brc blc))
+
+     (color D_BLU
+            (wall-brace-outer thumb-l-place-mod border-inner-offset-hor-left 0 tl thumb-l-place-mod border-inner-offset-hor-left 0 bl tlc blc))
+     (color D_BLU
+            (wall-brace-outer thumb-l2-place-mod border-inner-offset-hor-left 0 tl thumb-l2-place-mod border-inner-offset-hor-left 0 bl tlc blc))
+
+     (color D_GRE
+            (wall-brace-outer
+             thumb-l-place-mod border-inner-offset-hor-left 0 bl
+             thumb-l2-place-mod border-inner-offset-hor-left 0 tl blc tlc))
+
+     (color YEL (wall-brace-outer thumb-m2-place-mod 0 -1 br thumb-r-place-mod 0 -1 thumb-post-br brc brc))
+
+     ; thumb corners
      (color-yellow
-      (union
-       (wall-brace (partial left-key-place (dec y) -1) -1 0 web-post (partial left-key-place y 1) -1 0 web-post)
-       (hull (key-place 0 y web-post-tl)
-             (key-place 0 (dec y) web-post-bl)
-             (left-key-place y 1 web-post)
-             (left-key-place (dec y) -1 web-post)))))
-   ; left top corner
-   (color-green
-    (wall-brace
-     (partial key-place 0 0) ; place 1
-     0 1 ; dx1 dy1
-     web-post-tl ; post1
-     (partial left-key-place 0 1) ; place2
-     0 0.5 ; dx2 dy2
-     web-post ; post2
-     ))
-   (color-red
-    (wall-brace (partial left-key-place 0 1) ; place1
-                0 0.5 ; dx1 dy1
-                web-post ; post1
-                (partial left-key-place 0 1) ; place2
-                -1 0 ; dx2 dy2
-                web-post ;post2
-                ))
+       (wall-brace-outer thumb-l2-place-mod border-inner-offset-hor-left 0 bl thumb-l2-place-mod 0 border-inner-offset-vert-bottom bl blc blc))
+     (wall-brace-outer thumb-l-place-mod border-inner-offset-hor-left 0 tl thumb-l-place-mod 0 border-inner-offset-vert-top tl tlc tlc)
 
-   ; front wall
-   (for [x (range 3 ncols)]
-     (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
-   (for [x (range 4 ncols)]
-     (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
-   ; thumb walls
-   (wall-brace thumb-mr-place 0 -1 web-post-br thumb-tr-place 0 -1 thumb-post-br)
-   (wall-brace thumb-mr-place 0 -1 web-post-br thumb-mr-place 0 -1 web-post-bl)
-   (wall-brace thumb-br-place 0 -1 web-post-br thumb-br-place 0 -1 web-post-bl)
-   (wall-brace thumb-bl-place 0 1 web-post-tr thumb-bl-place 0 1 web-post-tl)
-   (wall-brace thumb-br-place -1 0 web-post-tl thumb-br-place -1 0 web-post-bl)
-   (wall-brace thumb-bl-place -1 0 web-post-tl thumb-bl-place -1 0 web-post-bl)
-   ; thumb corners
-   (wall-brace thumb-br-place -1 0 web-post-bl thumb-br-place 0 -1 web-post-bl)
-   (wall-brace thumb-bl-place -1 0 web-post-tl thumb-bl-place 0 1 web-post-tl)
-   ; thumb tweeners
-   (wall-brace thumb-mr-place 0 -1 web-post-bl thumb-br-place 0 -1 web-post-br)
-   (wall-brace thumb-bl-place -1 0 web-post-bl thumb-br-place -1 0 web-post-tl)
-   ; thumb - front connection wall
+     ; thumb tweeners
+     (color D_BLU
+            (wall-brace-outer thumb-m2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-br-c blc brc))
 
-   (wall-brace thumb-tr-place 0 -1 thumb-post-br (partial key-place 3 cornerrow) 0 -1 web-post-bl)
 
-   ; clunky bit on the top left thumb connection  (normal connectors don't work well)
-   (bottom-hull
-    (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
-    (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr)))
-   (hull
-    (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
-    (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr))
-    (thumb-tl-place web-post-tl))
-   (hull
-    (left-key-place cornerrow -1 web-post)
-    (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
-    (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
-    (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
-    (thumb-tl-place web-post-tl))
-   (hull
-    (left-key-place cornerrow -1 web-post)
-    (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
-    (key-place 0 cornerrow web-post-bl)
-    (thumb-tl-place web-post-tl))
-   (hull
-    (thumb-bl-place web-post-tr)
-    (thumb-bl-place (translate (wall-locate1 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate2 -0.3 1) web-post-tr))
-    (thumb-bl-place (translate (wall-locate3 -0.3 1) web-post-tr))
-    (thumb-tl-place web-post-tl)))
-  ;
-  )
+     ; thumb and front
+     (color ORA
+            (wall-brace-outer thumb-r-place-mod 0 -1 thumb-post-br (partial key-place 3 cornerrow) 0 -1 web-post-bl thumb-post-br-c web-post-bl-c))
+
+     ; clunky bit on the top left thumb connection  (normal connectors don't work well)
+     (color NBL
+            (bottom-hull
+             (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
+             (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
+             (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+             (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))))
+
+     (color GRE
+            (hull
+             (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
+             (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
+             (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+             (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))
+             ;(thumb-m-place-mod web-post-tl)
+             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
+     (color PIN
+            (hull
+             (left-key-place cornerrow -1 web-post)
+             (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
+             (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
+             (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
+             ;(thumb-m-place-mod web-post-tl)
+             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
+     (color RED
+            (difference
+             (hull
+              (left-key-place cornerrow -1 web-post)
+              (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
+
+              (key-wall-brace-inner-point 0 cornerrow -1.5 0 blc)
+
+              ;                 (wall3-brace-edge-point (partial web-post-tl-c cornerrow -1) 0 1 web-post-bl-c)
+              ;(thumb-m-place-mod web-post-tl)
+              (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c))
+             (wall-brace-inner
+              (partial key-place 0 cornerrow) -1 0 web-post-bl-c
+              thumb-m-place-mod 0 1 web-post-tl-c)
+             ; end diff
+             ))
+
+     ;(color GRE
+     ;            (wall-brace-inner thumb-m-place-mod 0 1 web-post-tl-c thumb-l-place-mod 0 1 web-post-tr-c))
+     (color CYA
+            (hull
+             ;(thumb-l-place-mod web-post-tr)
+             ;(wall-brace-no-bottom thumb-l-place-mod 0 1 web-post-tr-c thumb-m-place-mod 0 1 web-post-tl-c )
+             (wall1-brace-edge-point thumb-l-place-mod 0 1 web-post-tr-c)
+             (thumb-l-place-mod (translate (wall-locate1 0 1) web-post-tr))
+             (thumb-l-place-mod (translate (wall-locate2 -0.3 1) web-post-tr))
+             (thumb-l-place-mod (translate (wall-locate3 -0.3 1) web-post-tr))
+             ;(thumb-m-place-mod web-post-tl)
+             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
+
+
+     ;
+     )
+    ;
+    ))
 
 (def fifth-thumb-case-walls-mod
   (if extra-middle-row
