@@ -330,28 +330,19 @@
              (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
      (color PIN
             (hull
-             (left-key-place cornerrow -1 web-post)
-             (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
-             (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
+             ;(left-key-place cornerrow -1 web-post)
+             (key-wall-brace-inner-edge 0 cornerrow (- border-outer-offset-hor-left 0.5) 0 web-post-bl-c 0 cornerrow (- border-outer-offset-hor-left 0.5) 0 web-post-bl-c)
+             ;(left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
+             ;(left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
              (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
+
+             ;(wall3-brace-edge (partial left-key-place cornerrow -1) -1 0 web-post (partial left-key-place cornerrow 1) -1 0 web-post)
+
              ;(thumb-m-place-mod web-post-tl)
-             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)))
-     (color RED
-            (difference
-             (hull
-              (left-key-place cornerrow -1 web-post)
-              (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
-
-              (key-wall-brace-inner-point 0 cornerrow -1.5 0 blc)
-
-              ;                 (wall3-brace-edge-point (partial web-post-tl-c cornerrow -1) 0 1 web-post-bl-c)
-              ;(thumb-m-place-mod web-post-tl)
-              (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c))
-             (wall-brace-inner
-              (partial key-place 0 cornerrow) -1 0 web-post-bl-c
-              thumb-m-place-mod 0 1 web-post-tl-c)
-             ; end diff
+             (wall1-brace-edge-point thumb-m-place-mod 0 1 web-post-tl-c)
+             ; end hull
              ))
+
 
      ;(color GRE
      ;            (wall-brace-inner thumb-m-place-mod 0 1 web-post-tl-c thumb-l-place-mod 0 1 web-post-tr-c))
