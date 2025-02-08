@@ -273,7 +273,7 @@
         header-height         5
         nut-height            4
         screw-rad             (/ 3.5 2)
-        screw-nut-holder-rad  (/ (+ screw-nut-diameter 2) 2)
+        screw-nut-holder-rad  (/ (+ screw-nut-diameter 3) 2)
         screw-nut-rad         (/ screw-nut-diameter 2)]
     (binding [*fn* 20] (cylinder screw-nut-holder-rad, header-height))))
 
@@ -387,6 +387,8 @@
      (header-screw-place-shape
       (binding [*fn* 20] (cylinder screw-nut-holder-rad, (+ header-height 2)))))))
 
+(def case-screw-holders-holes-left case-screw-holders-holes-right)
+
 (def case-screw-nut-holes-right
   (let [header-diameter       6
         header-height         5
@@ -397,3 +399,5 @@
     (keymatrix-screw-place-right
      (header-screw-place-shape
       (translate [0, 0, 0.6] (binding [*fn* 20] (cylinder screw-nut-rad, nut-height)))))))
+
+(def case-screw-nut-holes-left case-screw-nut-holes-right)

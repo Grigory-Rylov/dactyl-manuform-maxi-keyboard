@@ -322,26 +322,35 @@
 
 (def model-left-case
   (mirror [0, 0, 0]
-          (union
-           (difference
-            (union
-             logo-left
-             screw-holders-left
+          (difference
+           (union
+            (difference
+             (union
+              logo-left
+              screw-holders-left
 
-             (difference
-              (union case-walls-left
-                     (if magnet-holes magnet-stiffness-booster)
-                     screw-insert-outers-left)
-              screw-insert-holes-left
-              controller-hole
-              (if magnet-holes magnet-place)))
+              keymatrix-holders
+              (difference
+               (union case-walls-left
+                      (if magnet-holes magnet-stiffness-booster)
+                      screw-insert-outers-left)
+               case-screw-holders-holes-left
+               screw-insert-holes-left
+               controller-hole
+               (if magnet-holes magnet-place)
+
+               ))
 
 
-            (translate [0 0 -20] (cube 350 350 40))
-            ;end difference
+             (translate [0 0 -20] (cube 350 350 40))
+             case-screw-nut-holes-left
+             ;end difference
+             )
+            (if mono-mode case-holders-left)
+            ;end union
             )
-           (if mono-mode case-holders-left)
-           ;end union
+           screw-insert-holes-left
+           ;total diff
            )))
 
 (def model-keymatrix-left
