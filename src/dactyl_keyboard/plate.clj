@@ -36,7 +36,10 @@
 (def key-fills
   (key-places filled-plate))
 
-(def thumb-fill
+(def thumb-fill-left
+  (if (> thumbs-count 0) (thumb-layout-left filled-plate) filled-plate))
+
+(def thumb-fill-right
   (if (> thumbs-count 0) (thumb-layout-right filled-plate) filled-plate))
 
 
@@ -135,15 +138,27 @@
   (union
    (external-4-thumbs-layout single-plate-right)))
 
-(def model-outline
+(def model-outline-right
   (project
    (union
     key-fills
+    key-matrix-border-right
     connectors
-    thumb-fill
+    thumb-fill-right
     (if (= externalThumb false) thumb-right)
     (if (= externalThumb false) thumb-connectors-right)
     case-walls-right)))
+
+(def model-outline-left
+  (project
+   (union
+    key-fills
+    key-matrix-border-left
+    connectors
+    thumb-fill-left
+    (if (= externalThumb false) thumb-left)
+    (if (= externalThumb false) thumb-connectors-left)
+    case-walls-left)))
 
 (def case-walls-outline
   (cut case-walls-right))
@@ -171,9 +186,10 @@
 
 (def bottom-plate-right
   (union
+
    ; body projection
    (translate [0 0 bottom-height-half]
-              (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline))
+              (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline-right))
 
    ; trackball case
    (if trackball-mode
@@ -200,7 +216,7 @@
   (union
    ; body projection
    (translate [0 0 bottom-height-half]
-              (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline))
+              (extrude-linear {:height plate-height :twist 0 :convexity 0} model-outline-left))
    ; borders
    (if (> plate-border-height 0)
      (translate [0 0 (+ plate-height (/ plate-border-height 2))]
@@ -221,17 +237,17 @@
      ;back center
      (translate [6, 35, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
      ;back left
-     (translate [78, 3, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+     (translate [68, 3, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
 
      ;back right
      (translate [-50, 5, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
 
 
      ;front left
-     (translate [68, -64, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+     (translate [58, -64, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
 
      ;front right
-     (translate [-50, -70, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
+     (translate [-35, -70, (/ height 2)] (binding [*fn* 20] (cylinder plate-bumper-radius height)))
 
      ; end union
 
@@ -255,8 +271,6 @@
   (difference
    bottom-plate-right
    screw-insert-screw-holes-for-plate-right
-   (if mono-mode
-     (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
    (if plate-bumpers plate-bumpers-right)
    ; end difference
    ))
@@ -266,8 +280,6 @@
           (difference
            bottom-plate-left
            screw-insert-screw-holes-for-plate-left
-           (if mono-mode
-             (color-green (translate [(- -50 mono_body_offsetX), 0, 0] (cube 100 200 200))))
            (if plate-bumpers plate-bumpers-left)
            ; end difference
            )))

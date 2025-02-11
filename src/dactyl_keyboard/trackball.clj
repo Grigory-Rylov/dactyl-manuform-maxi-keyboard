@@ -190,10 +190,10 @@
 
       (difference
        (color PIN
-              (translate [0 0, (- (/ top_height -2) height-offset)]
-                         (binding [*fn* trackball-fn] (cylinder ball_place_radius top_height))))
+              (translate [0 0, (- (/ top_height -2) height-offset -1.5)]
+                         (binding [*fn* trackball-fn] (cylinder ball_place_radius (+ top_height 3)))))
 
-       (rotate [(deg2rad 0) (deg2rad -35) (deg2rad 6)] (cube 200 200 31))
+       (translate [0,0,7] (rotate [(deg2rad 0) (deg2rad -39) (deg2rad 6)] (cube 200 200 40)))
 
        ;end difference top ring
        )

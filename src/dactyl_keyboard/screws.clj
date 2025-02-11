@@ -14,14 +14,15 @@
 ;; SCREW ;;
 ;;;;;;;;;;;
 
-(defn screw-insert-shape [bottom-radius top-radius height]
+(defn screw-insert-shape [bottom-radius top-radius height use-sphere]
   (union
    (->>
     (binding [*fn* 30]
       (cylinder [bottom-radius top-radius] height)))
-   (translate [0 0 (/ height 2)] (->> (binding [*fn* 30] (sphere top-radius))))))
+   (if use-sphere
+     (translate [0 0 (/ height 2)] (->> (binding [*fn* 30] (sphere top-radius)))))))
 
-(defn screw-insert [column row bottom-radius top-radius height offset]
+(defn screw-insert [column row bottom-radius top-radius height offset use-sphere]
   (let [shift-right   (= column lastcol)
         shift-left    (= column 0)
         shift-up      (and (not (or shift-right shift-left)) (= row 0))
@@ -33,81 +34,88 @@
                           (if shift-left
                             (map + (left-key-position row 0) (wall-locate3 -1 0))
                             (key-position column row (map + (wall-locate2 1 0) [(/ mount-width 2) 0 0])))))]
-    (->> (screw-insert-shape bottom-radius top-radius height)
+    (->> (screw-insert-shape bottom-radius top-radius height use-sphere)
          (translate (map + offset [(first position) (second position) (/ height 2)])))))
 
 (defn screw-insert-six-shapes [bottom-radius top-radius height]
   (union
-   (screw-insert 0 0 bottom-radius top-radius height [6.5 3 controller-plate-height]) ; bottom left
+   (screw-insert 0 0 bottom-radius top-radius height [6.5 3 controller-plate-height] true) ; bottom left
    ; thumb
    (color-green
-    (screw-insert 0 lastrow bottom-radius top-radius height [-6 -25 0]))
+    (screw-insert 0 lastrow bottom-radius top-radius height [-6 -25 0] true))
 
    ; top right
    (color-gray
-    (screw-insert lastcol lastrow bottom-radius top-radius height [-12 3 0]))
+    (screw-insert lastcol lastrow bottom-radius top-radius height [-12 3 0] true))
 
    ; bottom right
-   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-1.1 0 0]))
+   (color-gray
+    (screw-insert lastcol 0 bottom-radius top-radius height [-1.1 0 0] true))
    ; top
    (color-yellow
     (case thumbs-count
-      0  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
-      3  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0])
-      5  (screw-insert 1 lastrow bottom-radius top-radius height [-4 -18 0])
-      6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0])))
+      0  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0] true)
+      3  (screw-insert 2 lastrow bottom-radius top-radius height [-6 -25 0] true)
+      5  (screw-insert 1 lastrow bottom-radius top-radius height [-4 -18 0] true)
+      6  (screw-insert 0 lastrow bottom-radius top-radius height [10 -44 0] true)))
 
    ; bottom middle
-   (color-red (screw-insert 2 0 bottom-radius top-radius height [-4 -3 0]))
+   (color-red (screw-insert 2 0 bottom-radius top-radius height [-4 -3 0] true))
 
    ; top left
    (color-blue
     (case thumbs-count
-      0  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
-      3  (screw-insert lastcol lastrow bottom-radius top-radius height [-9 -14 0])
-      5  (screw-insert 0 3 bottom-radius top-radius height [-1 20 controller-plate-height])
-      6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0])))
+      0  (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0] true)
+      3  (screw-insert lastcol lastrow bottom-radius top-radius height [-9 -14 0] true)
+      5  (screw-insert 0 3 bottom-radius top-radius height [-1 20 controller-plate-height] true)
+      6  (screw-insert 0 lastrow bottom-radius top-radius height [-4 1 0] true)))
 
    ; top middle
    (if (= thumbs-count 6)
-     (screw-insert 2 lastrow bottom-radius top-radius height [-3 -5 0]))
+     (screw-insert 2 lastrow bottom-radius top-radius height [-3 -5 0] true))
 
    ; end union
    ))
+
+(defn screw-insert-controller-holder-top [bottom-radius top-radius height should-reset-z]
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (color-blue
+           (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)] true))
+          ; bottom left controller-plate-height
+          ))
+
+(defn screw-insert-controller-holder-bottom [bottom-radius top-radius height should-reset-z]
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (color-yellow
+           (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)] false))))
+
 
 (defn screw-insert-three-thumb-shapes-right [bottom-radius top-radius height should-reset-z]
   (union
 
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
-            ;left back
-
-            (color-blue
-             (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)]))
-            ; bottom left controller-plate-height
-
-
-            (if (= external-controller false)
-              (color-blue
-               (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
 
             ; thumb
             (if trackball-mode
-              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-39 17 0]))
-              (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0])))
+              (color-green
+               (screw-insert 0 lastrow bottom-radius top-radius height [-39 17 0] true))
+              (color-green
+               (screw-insert 0 lastrow bottom-radius top-radius height [-12 2 0] true)))
 
             ; bottom right
-            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0]))
+            (color-gray
+             (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0] true))
             ; top
             (color-yellow
-             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0]))
+             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -4 0] true))
 
             ; bottom middle
-            (color-red (screw-insert 2 0 bottom-radius top-radius height [-3 -3 0]))
+            (color-red (screw-insert 2 0 bottom-radius top-radius height [-3 -3 0] true))
 
             ; front right
             (color-blue
-             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0]))
+             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0] true))
 
             ; end union
             ))))
@@ -116,35 +124,31 @@
   (union
    (if mono-mode
      (union
-      (screw-insert 0 0 bottom-radius top-radius height [-10 -20 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
-      (screw-insert 0 0 bottom-radius top-radius height [-10 -64 (if should-reset-z 0 controller-plate-height)]) ; bottom left controller-plate-height
+      (screw-insert 0 0 bottom-radius top-radius height [-10 -20 (if should-reset-z 0 controller-plate-height)] true) ; bottom left controller-plate-height
+      (screw-insert 0 0 bottom-radius top-radius height [-10 -64 (if should-reset-z 0 controller-plate-height)] true) ; bottom left controller-plate-height
       ))
 
    (rotate [0, 0, (deg2rad board-z-angle)]
            (union
-            ;left back
-            (color-blue
-             (screw-insert 0 0 bottom-radius top-radius height [7.5 5.5 (if should-reset-z 0 controller-plate-height)]))
             ; bottom left controller-plate-height
 
             ; thumb
-            (color-green (screw-insert 0 lastrow bottom-radius top-radius height [-1 0 0]))
-            (if (= external-controller false)
-              (color-blue
-               (screw-insert 0 lastrow bottom-radius top-radius height [-2 43 (if should-reset-z 0 controller-plate-height)])))
+            (color-green
+             (screw-insert 0 lastrow bottom-radius top-radius height [-1 0 0] true))
 
             ; back right
-            (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0]))
+            (color-gray
+             (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0] true))
             ; top
             (color-yellow
-             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -21 0]))
+             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -21 0] true))
 
             ; bottom middle
-            (color-red (screw-insert 2 0 bottom-radius top-radius height [-2 -3 0]))
+            (color-red (screw-insert 2 0 bottom-radius top-radius height [-2 -3 0] true))
 
             ; front right
             (color-blue
-             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0]))
+             (screw-insert lastcol lastrow bottom-radius top-radius height [-14 -3 0] true))
 
             ; end union
             ))))
@@ -152,24 +156,26 @@
 (defn screw-insert-0-thumb [bottom-radius top-radius height]
   (union
    ; bottom left
-   (screw-insert 0 0 bottom-radius top-radius height [9 7 0])
+   (screw-insert 0 0 bottom-radius top-radius height [9 7 0] true)
    ; thumb
-   (color-green (screw-insert 0 lastrow bottom-radius top-radius height [15 -12 0]))
+   (color-green
+    (screw-insert 0 lastrow bottom-radius top-radius height [15 -12 0] true))
 
    ; top right
    (color-blue
-    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0]))
+    (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0] true))
    ; bottom right
-   (color-gray (screw-insert lastcol 0 bottom-radius top-radius height [-2 5 0]))
+   (color-gray
+    (screw-insert lastcol 0 bottom-radius top-radius height [-2 5 0] true))
    ; top
    ;   (color-yellow
    ;     (screw-insert 2 lastrow bottom-radius top-radius height [-6 2 0]))
 
    ; bottom middle
-   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0]))
+   (color-red (screw-insert 3 0 bottom-radius top-radius height [-7 -2.5 0] true))
 
    ; top left
-   (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0])
+   (screw-insert lastcol lastrow bottom-radius top-radius height [-2 -6 0] true)
 
    ; end union
    ))
@@ -199,16 +205,29 @@
 (def screw-insert-bottom-radius (/ 4.4 2))
 (def screw-insert-top-radius (/ 4.4 2))
 (def screw-insert-holes-right
-  (screw-insert-all-shapes-right screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false))
+  (union
+   (screw-insert-all-shapes-right screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)
+   (screw-insert-controller-holder-top screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)
+   (screw-insert-controller-holder-bottom screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)))
+
 (def screw-insert-holes-left
-  (screw-insert-all-shapes-left screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false))
+  (union
+   (screw-insert-all-shapes-left screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)
+   (screw-insert-controller-holder-top screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)
+   (screw-insert-controller-holder-bottom screw-insert-bottom-radius screw-insert-top-radius screw-insert-height false)))
 
 ; Wall Thickness W:\t1.65
 (def screw-insert-outers-right
-  (screw-insert-all-shapes-right (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false))
+  (union
+   (screw-insert-all-shapes-right (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)
+   (screw-insert-controller-holder-top (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)
+   (screw-insert-controller-holder-bottom (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)))
 
 (def screw-insert-outers-left
-  (screw-insert-all-shapes-left (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false))
+  (union
+   (screw-insert-all-shapes-left (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)
+   (screw-insert-controller-holder-top (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)
+   (screw-insert-controller-holder-bottom (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) false)))
 
 (def screw-insert-outers-for-plate-right
   (screw-insert-all-shapes-right (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) true))
@@ -222,6 +241,11 @@
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-right 1.7 1.7 (- plate-total-height screw-head-height) false))
+   (translate [0, 0, (- plate-total-height screw-head-height -1)]
+              (screw-insert-controller-holder-top 2.9 2.9 screw-head-height false))
+
+   (translate [0, 0, (- plate-total-height screw-head-height -1)]
+              (screw-insert-controller-holder-bottom 2.9 2.9 screw-head-height false))
 
    (translate [0, 0, -0.1]
               (screw-insert-all-shapes-right 2.75 1.7 (+ screw-head-height 0.2) false))))
@@ -231,6 +255,10 @@
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) false))
 
+   (translate [0, 0, (- plate-total-height screw-head-height)]
+              (screw-insert-controller-holder-top 2.9 2.9 screw-head-height false))
+   (translate [0, 0, (- plate-total-height screw-head-height)]
+              (screw-insert-controller-holder-bottom 2.9 2.9 screw-head-height false))
    (translate [0, 0, -0.1]
               (screw-insert-all-shapes-left 2.9 1.7 (+ screw-head-height 0.2) false))))
 
@@ -238,17 +266,36 @@
   (union
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-right 1.7 1.7 (- plate-total-height screw-head-height) true))
-
    (translate [0, 0, -0.1]
-              (screw-insert-all-shapes-right 2.9 1.7 (+ screw-head-height 0.2) true))))
+              (screw-insert-all-shapes-right 2.9 1.7 (+ screw-head-height 0.2) true))
+
+   (translate [0, 0, (- plate-total-height screw-head-height)]
+              (screw-insert-controller-holder-top 1.7 1.7 (- plate-total-height screw-head-height) true))
+   (translate [0, 0, -0.1]
+              (screw-insert-controller-holder-top 2.75 1.7 (+ screw-head-height 0.2) true))
+
+   (translate [0, 0, (- plate-total-height screw-head-height 1.0)]
+              (screw-insert-controller-holder-bottom 3 3 screw-head-height false))))
 
 (def screw-insert-screw-holes-for-plate-left
   (union
+   ;screw hole
    (translate [0, 0, (- plate-total-height screw-head-height)]
               (screw-insert-all-shapes-left 1.7 1.7 (- plate-total-height screw-head-height) true))
-
+   ; screw headers holes
    (translate [0, 0, -0.1]
-              (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) true))))
+              (screw-insert-all-shapes-left 2.75 1.7 (+ screw-head-height 0.2) true))
+
+   ;(translate [0, 0, (- plate-total-height screw-head-height 1)]
+   ;           (screw-insert-controller-holder-top  2.9 1.7 (+ screw-head-height 0.2) true))
+   (translate [0, 0, (- plate-total-height screw-head-height)]
+              (screw-insert-controller-holder-top 1.7 1.7 (- plate-total-height screw-head-height) true))
+   (translate [0, 0, -0.1]
+              (screw-insert-controller-holder-top 2.75 1.7 (+ screw-head-height 0.2) true))
+
+   ;bottom controller screw hole
+   (translate [0, 0, (- plate-total-height screw-head-height 1.0)]
+              (screw-insert-controller-holder-bottom 3 3 screw-head-height false))))
 
 (def header-screw
   (let [header-diameter 6
@@ -292,6 +339,7 @@
         screw-rad       (/ 3.5 2)]
     (thumb-l-place-mod
      (translate [x y z] shape))))
+
 (def keymatrix-screw-offset 12.6)
 
 (defn keymatrix-screw-place-right [shape]
