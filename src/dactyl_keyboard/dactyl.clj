@@ -120,8 +120,8 @@
                         (import
                          "osik_logo.stl"))))
     ;split logo
-    (translate [(+ -7 thumb-x-offset), -65.5, 80]
-               (rotate [(deg2rad 90), 0, (deg2rad 9)]
+    (translate [-57, -10, 85]
+               (rotate [(deg2rad 90), 0, (deg2rad -90)]
                        (color-yellow
                         (import
                          "osik_logo.stl"))))))
@@ -354,7 +354,7 @@
            )))
 
 (def model-keymatrix-left
-  (mirror [1, 0, 0]
+  (mirror [0, 0, 0]
           (difference
            (union
             key-holes-left

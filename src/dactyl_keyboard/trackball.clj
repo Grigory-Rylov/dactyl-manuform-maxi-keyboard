@@ -121,7 +121,7 @@
                     (cube (* ball_place_radius 2) (* ball_place_radius 2) ball_place_radius))
          ; end difference
          )
-        (scale [1, 0.5, 0.26] (binding [*fn* trackball-fn] (sphere (+ ball_hole_radius 10))))
+        (translate [0,0,-3] (scale [1, 0.5, 0.26] (binding [*fn* trackball-fn] (sphere (+ ball_hole_radius 10)))))
         ; end intersection
         ))
 

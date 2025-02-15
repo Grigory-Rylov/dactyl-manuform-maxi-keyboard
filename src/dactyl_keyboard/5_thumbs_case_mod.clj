@@ -276,7 +276,7 @@
      ; thumb walls
      ;;;;;;;;;;;;;;;
      (color D_RED
-            (wall-brace-outer thumb-m2-place-mod 0 border-inner-offset-vert-bottom bl thumb-m2-place-mod 0 border-inner-offset-vert-bottom thumb-post-br br bl))
+            (wall-brace-outer thumb-m2-place-mod 0 border-inner-offset-vert-bottom bl thumb-m2-place-mod 0 border-inner-offset-vert-bottom thumb-post-br brc blc))
 
      ;diagonal between thumb and bottom left key
 

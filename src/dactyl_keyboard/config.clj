@@ -78,7 +78,7 @@
 ; 1 - gateron standart
 ; 2 - gateron low profile
 (def mono-mode false)
-(def hot-swap 1)
+(def hot-swap 0)
 (def hot-swap-holders true)
 
 (def low-profile false)
@@ -160,7 +160,7 @@
 (def wall-xy-offset 10)
 
 ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
-(def wall-thickness 3)
+(def wall-thickness 4)
 (def wall-thickness0 1)
 
 ; wall thickness parameter; originally 5

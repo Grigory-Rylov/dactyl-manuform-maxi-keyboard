@@ -268,18 +268,19 @@
   (let [tr   web-post-tr
         br   web-post-br
         trc  web-post-tr-c
-        brc  web-post-br-c]
+        brc  web-post-br-c
+        offsetX 1.2]
     (color-red
       (union
-       (key-wall-brace-outer lastcol 0 0 border-outer-offset-vert-top tr lastcol 0 1 0 tr trc trc)
+       (key-wall-brace-outer lastcol 0 0 border-outer-offset-vert-top tr lastcol 0 offsetX 0 tr trc trc)
 
        (for [y (range 0 nrows)]
-         (key-wall-brace-outer lastcol y 1 0 tr lastcol y 1 0 br trc brc))
+         (key-wall-brace-outer lastcol y offsetX 0 tr lastcol y offsetX 0 br trc brc))
 
        (for [y (range 0 (dec nrows))]
-         (key-wall-brace-outer lastcol y 1 0 br lastcol (inc y) 1 0 tr brc trc))
+         (key-wall-brace-outer lastcol y offsetX 0 br lastcol (inc y) offsetX 0 tr brc trc))
 
-       (key-wall-brace-outer lastcol cornerrow 0 border-outer-offset-vert-bottom br lastcol cornerrow 1 0 br brc brc)))))
+       (key-wall-brace-outer lastcol cornerrow 0 border-outer-offset-vert-bottom br lastcol cornerrow offsetX 0 br brc brc)))))
 
 (def right-wall-no-extra-row-inner
   (let [trc  web-post-tr-c

@@ -108,49 +108,41 @@
        (translate move)))
 
 (def thumb-x-offset 10)
+
 ; convexer
 (defn thumb-r-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
 
 ; right
 (defn thumb-m-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
 
 ; middle
 (defn thumb-l-place [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape)))
 
-
-
-(defn thumb-m-place-mod [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
 
 (defn thumb-r-place-mod [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [14 -40 10] [(+ -15 thumb-x-offset) -10 5] shape)))
+
+(defn thumb-m-place-mod [shape]
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [12 -39 22] [(+ -32 thumb-x-offset) -14 -7] shape)))
 
 (defn thumb-l-place-mod [shape]
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape))
-  )
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [8 -44 28] [(+ -45.0 thumb-x-offset) -20.5 -21] shape)))
 
 (defn thumb-m2-place-mod [shape]
-  ;  (->> shape
-  ;       (rotate (deg2rad 10) [1 0 0])
-  ;       (rotate (deg2rad -33) [0 1 0])
-  ;       (rotate (deg2rad 25) [0 0 1])
-  ;       (translate thumborigin-mod)
-  ;       (translate [-24 -35 -6]))
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [12 -39 22] [(+ -23 thumb-x-offset) -30 -10] shape))
-
-  )
+  (rotate [0, 0, (deg2rad board-z-angle)]
+          (thumb-place [12 -39 22] [(+ -22 thumb-x-offset) -30.5 -9.5] shape)))
 
 (defn thumb-l2-place-mod [shape]
-;  (->> shape
-;       (rotate (deg2rad 6) [1 0 0])
-;       (rotate (deg2rad -34) [0 1 0])
-;       (rotate (deg2rad 35) [0 0 1])
-;       (translate thumborigin-mod)
-;       (translate [-39 -43 -16]))
-  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -35.0 thumb-x-offset) -35.5 -22.5] shape))
+  (rotate [0, 0, (deg2rad board-z-angle)] (thumb-place [8 -44 28] [(+ -35.0 thumb-x-offset) -36.5 -23] shape))
   )
 
 
@@ -163,6 +155,7 @@
        (rotate (deg2rad 25) [0 0 1])
        (translate thumborigin-mod)
        (translate [-24 -35 -6])))
+
 ;bottom left
 (defn thumb-br-place-mod-remove [shape]
   (->> shape
