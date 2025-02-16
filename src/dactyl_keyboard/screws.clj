@@ -141,7 +141,7 @@
              (screw-insert lastcol 0 bottom-radius top-radius height [-3 5 0] true))
             ; top
             (color-yellow
-             (screw-insert 2 lastrow bottom-radius top-radius height [-9 -21 0] true))
+             (screw-insert 2 lastrow bottom-radius top-radius height [-7 -22 0] true))
 
             ; bottom middle
             (color-red (screw-insert 2 0 bottom-radius top-radius height [-2 -3 0] true))
@@ -333,12 +333,8 @@
                (translate [x y z] shape))))
 
 (defn screw-insert-head-thumb [x y z shape]
-  (let [header-diameter 6
-        header-rad      (/ header-diameter 2)
-        header-height   5
-        screw-rad       (/ 3.5 2)]
     (thumb-l-place-mod
-     (translate [x y z] shape))))
+     (translate [x y z] shape)))
 
 (def keymatrix-screw-offset 12.6)
 
@@ -390,15 +386,19 @@
   (header-screw-place-shape
    (hull
     screw-place-cylinder
-    (translate [-4 0 0] vertical-cube))))
+    (translate [-6 0 0] (cube 9 10 4)))))
 
-(def keymatrix-holders-right
+(def keymatrix-holders-thumb-left2
+  (header-screw-place-shape
+    (translate [-4 0 0] (cube 5 10 4))))
+
+(def keymatrix-holders-body-right
   (header-screw-place-shape
    (hull
     screw-place-cylinder
     (translate [4 0 0] vertical-cube))))
 
-(def keymatrix-holders
+(def keymatrix-holders-right
   (union
    ;top
    (screw-insert-head 1 firstrow 0 keymatrix-screw-offset 3 keymatrix-holders-top)
@@ -408,14 +408,37 @@
    (screw-insert-head 3 cornerrow 0 (* -1 keymatrix-screw-offset) 3 keymatrix-holders-bottom)
 
    ;right
-   (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 keymatrix-holders-right)
-   (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 keymatrix-holders-right)
+   (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 keymatrix-holders-body-right)
+   (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 keymatrix-holders-body-right)
 
    ;left
    (screw-insert-head firstcol firstrow (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-light-left)
    (screw-insert-head firstcol 1 (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-light-left)
    ;thumb left
    (screw-insert-head-thumb (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-thumb-left)))
+
+(def keymatrix-holders-left
+  (union
+   ;top
+   (screw-insert-head 1 firstrow 0 keymatrix-screw-offset 3 keymatrix-holders-top)
+   (screw-insert-head 3 firstrow 0 keymatrix-screw-offset 3 keymatrix-holders-top)
+
+   ;bottom
+   (screw-insert-head 3 cornerrow 0 (* -1 keymatrix-screw-offset) 3 keymatrix-holders-bottom)
+
+   ;right
+   (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 keymatrix-holders-body-right)
+   (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 keymatrix-holders-body-right)
+
+   ;left
+   (screw-insert-head firstcol firstrow (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-light-left)
+   (screw-insert-head firstcol 1 (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-light-left)
+   ;thumb left
+   (screw-insert-head-thumb (* -1 keymatrix-screw-offset) 0 3 keymatrix-holders-thumb-left)
+
+   ;(thumb-l2-place-mod
+   ; (translate [(* -1 keymatrix-screw-offset) -6 3] keymatrix-holders-thumb-left2))
+   ))
 
 (def keymatrix-screw-insert-right
   (keymatrix-screw-place-right header-screw))

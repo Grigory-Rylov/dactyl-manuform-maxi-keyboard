@@ -263,7 +263,7 @@
 
       (difference
        (union
-        keymatrix-holders
+        keymatrix-holders-right
         (difference case-walls-right
                     case-screw-holders-holes-right
                     (if trackball-mode
@@ -329,11 +329,12 @@
               logo-left
               screw-holders-left
 
-              keymatrix-holders
+              (color PIN keymatrix-holders-left)
               (difference
                (union case-walls-left
                       (if magnet-holes magnet-stiffness-booster)
-                      screw-insert-outers-left)
+                      screw-insert-outers-left
+                      )
                case-screw-holders-holes-left
                screw-insert-holes-left
                controller-hole
@@ -420,6 +421,12 @@
         model-right-case
         (color-green model-keymatrix-right))))
 
+(spit "things/left.scad"
+      (write-scad
+       (union
+        model-left-case
+        (color-green model-keymatrix-left))))
+
 (spit "things/left-case.scad" (write-scad model-left-case))
 (spit "things/left-keymatrix.scad" (write-scad model-keymatrix-left))
 
@@ -444,7 +451,14 @@
     )
   ; end caps
   )
-
+(spit "things/left-test.scad"
+      (write-scad
+       (union
+        model-left-case
+        (color-green model-keymatrix-left)
+        (color PIN plate-left)
+        ))
+      )
 (spit "things/right-test.scad"
       (write-scad
        (union

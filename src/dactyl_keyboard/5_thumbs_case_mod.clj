@@ -65,17 +65,17 @@
 
      (color D_BLU
             (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod border-inner-offset-hor-left 0 web-post-bl-c))
-     (color D_BLU
-            (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c))
+     (color MAG
+            (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left-thumb 0 web-post-tl-c thumb-l2-place-mod border-inner-offset-hor-left-thumb 0 web-post-bl-c))
 
      (color D_GRE
             (wall-brace-inner
              thumb-l-place-mod border-inner-offset-hor-left 0 web-post-bl-c
-             thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-tl-c))
+             thumb-l2-place-mod border-inner-offset-hor-left-thumb 0 web-post-tl-c))
 
      ; thumb corners
      (color-yellow
-       (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left 0 web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
+       (wall-brace-inner thumb-l2-place-mod border-inner-offset-hor-left-thumb 0 web-post-bl-c thumb-l2-place-mod 0 border-inner-offset-vert-bottom web-post-bl-c))
      (wall-brace-inner thumb-l-place-mod border-inner-offset-hor-left 0 web-post-tl-c thumb-l-place-mod 0 border-inner-offset-vert-top web-post-tl-c)
 
      ; thumb tweeners
@@ -288,19 +288,19 @@
 
      (color D_BLU
             (wall-brace-outer thumb-l-place-mod border-inner-offset-hor-left 0 tl thumb-l-place-mod border-inner-offset-hor-left 0 bl tlc blc))
-     (color D_BLU
-            (wall-brace-outer thumb-l2-place-mod border-inner-offset-hor-left 0 tl thumb-l2-place-mod border-inner-offset-hor-left 0 bl tlc blc))
+     (color MAG
+            (wall-brace-outer thumb-l2-place-mod border-outer-offset-hor-left-thumb 0 tl thumb-l2-place-mod border-outer-offset-hor-left-thumb 0 bl tlc blc))
 
      (color D_GRE
             (wall-brace-outer
              thumb-l-place-mod border-inner-offset-hor-left 0 bl
-             thumb-l2-place-mod border-inner-offset-hor-left 0 tl blc tlc))
+             thumb-l2-place-mod border-outer-offset-hor-left-thumb 0 tl blc tlc))
 
      (color YEL (wall-brace-outer thumb-m2-place-mod 0 -1 br thumb-r-place-mod 0 -1 thumb-post-br brc brc))
 
      ; thumb corners
      (color-yellow
-       (wall-brace-outer thumb-l2-place-mod border-inner-offset-hor-left 0 bl thumb-l2-place-mod 0 border-inner-offset-vert-bottom bl blc blc))
+       (wall-brace-outer thumb-l2-place-mod border-outer-offset-hor-left-thumb 0 bl thumb-l2-place-mod 0 border-inner-offset-vert-bottom bl blc blc))
      (wall-brace-outer thumb-l-place-mod border-inner-offset-hor-left 0 tl thumb-l-place-mod 0 border-inner-offset-vert-top tl tlc tlc)
 
      ; thumb tweeners

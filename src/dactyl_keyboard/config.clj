@@ -240,6 +240,8 @@
 (def border-inner-offset-hor-right 2.5)
 (def thumb-border-inner-offset-hor-right 1)
 (def border-inner-offset-hor-left -2.5)
+(def border-inner-offset-hor-left-thumb -1.7)
+(def border-outer-offset-hor-left-thumb -1.8)
 (def border-outer-offset-hor-right 2.6)
 (def border-outer-offset-hor-left -2.6)
 (def screw-nut-diameter 4.0)
