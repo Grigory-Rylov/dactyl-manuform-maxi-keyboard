@@ -78,7 +78,8 @@
                  (mirror [0 1 0]))
             (if (> hot-swap 0) (mirror [0 0 0] hot-socket)))
      ; keyswitch holder hole
-     (color-yellow (translate [0, 0, (+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
+     (color-yellow
+       (translate [0, 0, (+ 0.7 (- 2.8 1.3) switch-z-offset)] (cube 5, 15.0, 1)))
 
      (->>
       top-nub-pair
@@ -119,8 +120,48 @@
                  (mirror [0 1 0]))
             (if (> hot-swap 0) (mirror [1 0 0] hot-socket)))
      ; keyswitch holder hole
-     (color-yellow (translate [0, 0, (+ 0.7 (- 2.8 1.3))] (cube 5, 15.0, 1)))
+     (color-yellow
+       (translate [0, 0, (+ 0.7 (- 2.8 1.3) switch-z-offset)] (cube 5, 15.0, 1)))
 
+     (->>
+      top-nub-pair
+      (rotate (/ π 2) [0 0 1])))))
+
+
+(def single-plate-amoeba-hole
+  (let [top-wall     (->> (cube (+ keyswitch-width 3) 1.5 plate-thickness)
+                          (translate
+                           [0
+                            (+ (/ 1.5 2) (/ keyswitch-height 2))
+                            (/ plate-thickness 2)]))
+        left-wall    (->> (cube 1.5 (+ keyswitch-height 3) plate-thickness)
+                          (translate
+                           [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                            0
+                            (/ plate-thickness 2)]))
+        side-nub     (->> (binding [*fn* 30] (cylinder 1 2.75))
+                          (rotate (/ π 2) [1 0 0])
+                          (translate [(+ (/ keyswitch-width 2)) 0 1])
+                          (hull
+                           (->> (cube 1.5 2.75 side-nub-thickness)
+                                (translate
+                                 [(+ (/ 1.5 2) (/ keyswitch-width 2))
+                                  0
+                                  (/ side-nub-thickness 2)])))
+                          (translate [0 0 (- plate-thickness side-nub-thickness)]))
+        plate-half   (union top-wall left-wall (if create-side-nubs? (with-fn 100 side-nub)))
+        top-nub      (->> (cube nub-size nub-size retention-tab-hole-thickness)
+                          (translate [(+ (/ keyswitch-width 2)) 0 (/ retention-tab-hole-thickness 2)]))
+        top-nub-pair (union top-nub
+                            (->> top-nub
+                                 (mirror [1 0 0])
+                                 (mirror [0 1 0])))]
+    (difference
+     (union plate-half
+            (->> plate-half
+                 (mirror [1 0 0])
+                 (mirror [0 1 0]))
+            amoeba-hole)
      (->>
       top-nub-pair
       (rotate (/ π 2) [0 0 1])))))
@@ -152,15 +193,15 @@
 (def model-outline-left
   (project
    (difference
-     (union
-      key-fills
-      key-matrix-border-left
-      connectors
-      thumb-fill-left
-      (if (= externalThumb false) thumb-left)
-      (if (= externalThumb false) thumb-connectors-left)
-      case-walls-left)
-     (translate [0 0 -20] (cube 350 350 40)))))
+    (union
+     key-fills
+     key-matrix-border-left
+     connectors
+     thumb-fill-left
+     (if (= externalThumb false) thumb-left)
+     (if (= externalThumb false) thumb-connectors-left)
+     case-walls-left)
+    (translate [0 0 -20] (cube 350 350 40)))))
 
 (def case-walls-outline-right
   (cut case-walls-right))

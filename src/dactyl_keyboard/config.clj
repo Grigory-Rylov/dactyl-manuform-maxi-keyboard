@@ -55,6 +55,7 @@
 ;external case for controller and ports
 (def niceNanoMode false)
 (def controller-plate-height 1.5)
+
 ; external controller holder
 (def external-controller false)
 (def external-controller-height 14)
@@ -62,6 +63,7 @@
   (if niceNanoMode 25 33))
 
 (def reset-hole-enabled false)
+
 ; magnet holes for external wrist rest
 (def magnet-holes false)
 (def magnet-height 2)
@@ -77,9 +79,10 @@
 ; 0 - no hot-swap
 ; 1 - gateron standart
 ; 2 - gateron low profile
+; 3 - amoeba king v2
 (def mono-mode false)
-(def hot-swap 0)
-(def hot-swap-holders true)
+(def hot-swap 3)
+(def hot-swap-holders false)
 
 (def low-profile false)
 (def cols-angle true)
@@ -162,6 +165,7 @@
 ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
 (def wall-thickness 4)
 (def wall-thickness0 1)
+(def switch-z-offset 1.2 )
 
 ; wall thickness parameter; originally 5
 
@@ -204,7 +208,7 @@
 (def plate-thickness
   (if low-profile
     3
-    4))
+    (if (= hot-swap 3) (+ 4 1.2) 4)))
 
 ; толщина верхних стенок
 
@@ -231,7 +235,9 @@
 (def trackball-offset-y -35)
 (def tracball-offset-z 56)
 
-(def fn-value 60) ; 60 in release
+(def fn-value 60)
+
+; 60 in release
 (def wall-fn 20)
 (def border-inner-offset-vert-top 1)
 (def border-inner-offset-vert-bottom -1)

@@ -348,10 +348,11 @@
 
 (defn keymatrix-screw-place-left [shape]
   (union
-   (screw-insert-head lastcol firstrow keymatrix-screw-offset 0 3 shape)
-   (screw-insert-head lastcol cornerrow keymatrix-screw-offset 0 3 shape)
-   (screw-insert-head firstcol firstrow (* -1 keymatrix-screw-offset) 0 3 shape)
-   (screw-insert-head firstcol 1 (* -1 keymatrix-screw-offset) 0 3 shape)
+   (screw-insert-head lastcol firstrow keymatrix-screw-offset 5 3 shape)
+   (screw-insert-head lastcol cornerrow keymatrix-screw-offset -5 3 shape)
+
+   (screw-insert-head firstcol firstrow (* -1 keymatrix-screw-offset) 5 3 shape)
+   (screw-insert-head firstcol 1 (* -1 keymatrix-screw-offset) -5 3 shape)
    (screw-insert-head-thumb (* -1 keymatrix-screw-offset) 0 3 shape)))
 
 (def horizontal-cube

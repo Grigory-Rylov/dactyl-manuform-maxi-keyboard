@@ -105,6 +105,13 @@
              (->> single-plate-left
                   (key-place column row))))))
 
+(def amoeba-holes
+    (apply union
+           (for [column columns
+                 row    rows]
+             (->> single-plate-amoeba-hole
+                  (key-place column row)))))
+
 (def controller-hole
   (if external-controller
     external-controller-holder-hole-space
@@ -333,14 +340,11 @@
               (difference
                (union case-walls-left
                       (if magnet-holes magnet-stiffness-booster)
-                      screw-insert-outers-left
-                      )
+                      screw-insert-outers-left)
                case-screw-holders-holes-left
                screw-insert-holes-left
                controller-hole
-               (if magnet-holes magnet-place)
-
-               ))
+               (if magnet-holes magnet-place)))
 
 
              (translate [0 0 -20] (cube 350 350 40))
@@ -363,7 +367,10 @@
             thumb-left
             thumb-connectors-left
             key-matrix-border-left)
-           (color-yellow keymatrix-screw-insert-left))))
+           (color-yellow keymatrix-screw-insert-left)
+           (if (= hot-swap 3) amoeba-holes)
+           ;end dif
+           )))
 
 (def model-mono-right
   (difference
@@ -451,14 +458,13 @@
     )
   ; end caps
   )
+
 (spit "things/left-test.scad"
       (write-scad
        (union
         model-left-case
         (color-green model-keymatrix-left)
-        (color PIN plate-left)
-        ))
-      )
+        (color PIN plate-left))))
 (spit "things/right-test.scad"
       (write-scad
        (union
@@ -572,7 +578,14 @@
 (spit "things/hotswap-adapt-low-debug.scad"
       (write-scad hot-socket-standart-to-low-profile))
 (spit "things/hotswap-low-debug.scad" (write-scad hot-socket-low-profile))
-(spit "things/hotswap-standart-debug.scad" (write-scad hot-socket-standart))
+(spit "things/hotswap-standart-debug.scad"
+      (write-scad hot-socket-standart))
+(spit "things/ameba-debug.scad"
+      (write-scad
+        (union
+         amoeba-holder
+         (color-green amoeba-hole)
+         )))
 
 (spit "things/right-external-controller.scad" (write-scad external-controller-case))
 

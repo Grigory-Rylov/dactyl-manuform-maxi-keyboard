@@ -185,8 +185,9 @@
               (union
                ; hot-swap plate
                (difference
-                (color-yellow(translate [0 0 (- hot-swap-vertical-offset (/ socket-height-adjust 2))]
-                           (cube (+ keyswitch-height 3.4) (+ keyswitch-width 3) (+ socket-thickness socket-height-adjust))))
+                (color-yellow
+                 (translate [0 0 (- hot-swap-vertical-offset (/ socket-height-adjust 2))]
+                            (cube (+ keyswitch-height 3.4) (+ keyswitch-width 3) (+ socket-thickness socket-height-adjust))))
                 (translate [0 0 (- (/ socket-height-adjust -2) -0.5)]
                            (cube keyswitch-height keyswitch-width (+ socket-height-adjust 2.2))))
 
@@ -227,10 +228,10 @@
                           (translate [-3.875 -2.215 0]
                                      (binding [*fn* 50] (cylinder hot-swap-radius 20)))))
               ; keyboard center hole
-              (translate [0, 0, -3] (binding [*fn* 50] (cylinder 2.3 3.2)))
+              (translate [0, 0, -3] (binding [*fn* 20] (cylinder 2.3 3.2)))
               ; 5ft - socket holes
-              (translate [-5.08 0 -3] (binding [*fn* 50] (cylinder 1.1 3.2)))
-              (translate [5.08 0 -3] (binding [*fn* 50] (cylinder 1.1 3.2)))
+              (translate [-5.08 0 -3] (binding [*fn* 20] (cylinder 1.1 3.2)))
+              (translate [5.08 0 -3] (binding [*fn* 20] (cylinder 1.1 3.2)))
 
               ;half hole
               (translate [0 (/ (+ keyswitch-width 3) -3) (- -2.05 socket-height-adjust)]
@@ -247,7 +248,120 @@
              ; end difference
              ))
 
+(defn amoeba [thickness mountHole]
+  (let [height                   18.2
+        width1                   17.58
+        width2                   18.77
+        ;thickness                1.65
+
+        screwHoleDiameter        2.44
+
+        screwHoleTopOffset       9.65
+
+        sideHeight               7.02
+        verticalOffset           -1
+
+        centerDiameter           6]
+
+    (translate [0, 0, (- -0.50 thickness)]
+               (difference
+                (union
+                 (cube width1, 18.2, thickness)
+                 (translate [0, verticalOffset, 0] (cube width2, sideHeight, thickness))
+
+                 (if mountHole
+                   (translate [0, verticalOffset, 0]
+
+                              (translate [(/ width2 -2), 0, 0]
+                                         (binding [*fn* 20] (cylinder (/ screwHoleDiameter 2) (+ thickness 6))))
+                              (translate [(/ width2 2), 0, 0]
+                                         (binding [*fn* 20] (cylinder (/ screwHoleDiameter 2) (+ thickness 6))))))
+
+
+
+                 )
+
+                (if (= mountHole false)
+                  (translate [0, verticalOffset, 0]
+
+                             (translate [(/ width2 -2), 0, 0]
+                                        (binding [*fn* 20] (cylinder (/ screwHoleDiameter 2) thickness)))
+                             (translate [(/ width2 2), 0, 0]
+                                        (binding [*fn* 20] (cylinder (/ screwHoleDiameter 2) thickness)))))
+
+
+                (binding [*fn* 20] (cylinder (/ centerDiameter 2), 5))
+                ; hot-swap socket hole
+
+                (translate [0.075 4.815 (- -2.75 socket-height-adjust)]
+                           (union
+                            (translate [2.475 0.325 0]
+                                       (binding [*fn* 20] (cylinder hot-swap-radius 20)))
+                            (translate [-3.875 -2.215 0]
+                                       (binding [*fn* 20] (cylinder hot-swap-radius 20)))))
+                ; 5ft - socket holes
+                (translate [-5.08 0 -3] (binding [*fn* 20] (cylinder 1.1 13.2)))
+                (translate [5.08 0 -3] (binding [*fn* 20] (cylinder 1.1 13.2)))
+                ;end dif
+                ))))
+
+(def amoeba-model
+  (let [thickness                1.65]
+    (amoeba thickness false)))
+
+(def amoeba-hole
+  (let [thickness                2]
+    (translate [0, 0, switch-z-offset]
+               (amoeba thickness true))))
+
+(def amoeba-holder
+  (let [zOffset                   (* -1 socket-height-adjust)
+        width2                    18.77
+        holderXOffsetRight        (/ width2 2)
+        holderXOffsetLeft         (* -1 holderXOffsetRight)
+        screwRad                  (/ 2.2 2)
+        amebaMountDiameter        3.0
+        amebaMountRad             (/ amebaMountDiameter 2)
+        amebaMountHeight          3
+        amebaScrewHoleHeight      5
+        verticalOffset            -1]
+    (translate [0, 0, 0.7]
+               (difference
+                (union
+                 ; hot-swap plate
+                 (translate [0, 0, zOffset]
+
+
+                            (translate [holderXOffsetRight, verticalOffset, 0.5]
+                                       (scale [1, 1.5, 1]
+                                              (color-red (binding [*fn* 20] (cylinder amebaMountRad amebaMountHeight)))))
+                            (translate [holderXOffsetLeft, verticalOffset, 0.5]
+                                       (scale [1, 1.5, 1]
+                                              (color-blue (binding [*fn* 20] (cylinder amebaMountRad amebaMountHeight)))))
+
+
+                            (difference
+                             (color-yellow
+                              (cube (+ keyswitch-height 3.4) (+ keyswitch-width 3) (+ socket-thickness socket-height-adjust)))
+                             (translate [0 0 -0.5]
+                                        (cube keyswitch-height keyswitch-width (+ socket-height-adjust 2.2)))
+                             ; end dif
+                             )
+
+                            ;end zOffset
+                            )
+                 ; end dif
+                 )
+                (translate [holderXOffsetRight, verticalOffset, 0]
+                           (color-red (binding [*fn* 20] (cylinder screwRad amebaScrewHoleHeight))))
+                (translate [holderXOffsetLeft, verticalOffset, 0]
+                           (color-blue (binding [*fn* 20] (cylinder screwRad amebaScrewHoleHeight))))))))
+
+
 (def hot-socket
-  (if low-profile
-    (if (= hot-swap 1) hot-socket-standart-to-low-profile hot-socket-low-profile)
-    hot-socket-standart))
+  (translate [0, 0, switch-z-offset]
+             (case hot-swap
+               0 hot-socket-standart
+               1 hot-socket-standart
+               2 hot-socket-low-profile
+               3 (union amoeba-holder))))
